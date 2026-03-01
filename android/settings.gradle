@@ -3,4 +3,10 @@ plugins { id("com.facebook.react.settings") }
 extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }
 rootProject.name = 'ChecklistApp'
 include ':app'
+// react-native-mmkv가 의존하는 Nitro 모듈 (autolinking에 없을 수 있어 수동 포함)
+include ':react-native-nitro-modules'
+project(':react-native-nitro-modules').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-nitro-modules/android')
+// react-native-reanimated가 의존하는 worklets (빌드 순서상 수동 포함)
+include ':react-native-worklets'
+project(':react-native-worklets').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-worklets/android')
 includeBuild('../node_modules/@react-native/gradle-plugin')
