@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Alert,
-  FlatList,
   KeyboardAvoidingView,
-  LayoutAnimation,
   Modal,
   Platform,
   Pressable,
@@ -11,13 +9,10 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  UIManager,
   View,
 } from 'react-native';
-
-if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
+import { RectButton, Swipeable } from 'react-native-gesture-handler';
+import DraggableFlatList, { ScaleDecorator } from 'react-native-draggable-flatlist';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Feather from 'react-native-vector-icons/Feather';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -184,27 +179,16 @@ export function GroupDetailScreen({ route }: Props) {
     ]);
   };
 
-  const moveItem = useCallback(
-    (fromIndex: number, direction: 'up' | 'down') => {
-      const toIndex = direction === 'up' ? fromIndex - 1 : fromIndex + 1;
-      if (toIndex < 0 || toIndex >= items.length) return;
-      const next = [...items];
-      const [removed] = next.splice(fromIndex, 1);
-      next.splice(toIndex, 0, removed);
-      const withOrder = next.map((t, i) => ({ ...t, order: i }));
-      LayoutAnimation.configureNext({
-        duration: 280,
-        update: {
-          type: LayoutAnimation.Types.easeInEaseOut,
-        },
-      });
+  const onDragEnd = useCallback(
+    ({ data }: { data: ChecklistItemTemplate[] }) => {
+      const withOrder = data.map((t, i) => ({ ...t, order: i }));
       setItems(withOrder);
-      const data = loadAll();
-      const other = data.templates.filter(t => t.groupId !== groupId);
-      data.templates = [...other, ...withOrder];
-      saveAll(data);
+      const store = loadAll();
+      const other = store.templates.filter(t => t.groupId !== groupId);
+      store.templates = [...other, ...withOrder];
+      saveAll(store);
     },
-    [items, groupId]
+    [groupId]
   );
 
   const styles = useMemo(
@@ -266,32 +250,19 @@ export function GroupDetailScreen({ route }: Props) {
           paddingHorizontal: 14,
         },
         itemLeft: { flex: 1, flexDirection: 'row', alignItems: 'center', minWidth: 0 },
-        itemIndex: { fontSize: 16, color: theme.textTertiary, marginRight: 10 },
         itemBody: { flex: 1, minWidth: 0 },
-        itemRight: { flexDirection: 'row', alignItems: 'center', gap: 4, marginLeft: 8 },
-        orderButtons: { flexDirection: 'row', gap: 4 },
-        orderBtn: {
-          width: 32,
-          height: 32,
-          borderRadius: 8,
-          backgroundColor: theme.orderButton,
-          alignItems: 'center',
-          justifyContent: 'center',
-        },
-        orderBtnDisabled: { backgroundColor: theme.orderButtonDisabled, opacity: 0.6 },
-        orderBtnText: { fontSize: 18, color: theme.orderButtonText, fontWeight: '600' },
-        orderBtnTextDisabled: { color: theme.orderButtonTextDisabled },
+        dragHandle: { paddingVertical: 8, paddingHorizontal: 4, marginRight: 8 },
+        dragHandleIcon: { fontSize: 18, color: theme.textTertiary },
         itemTitle: { fontSize: 16, color: theme.text },
         itemSubtitle: { fontSize: 12, color: theme.textSecondary, marginTop: 2 },
-        deleteBtn: {
-          width: 36,
-          height: 36,
-          alignItems: 'center',
+        swipeDeleteAction: {
+          backgroundColor: theme.danger,
           justifyContent: 'center',
-          borderRadius: 8,
+          alignItems: 'center',
+          paddingHorizontal: 14,
+          minWidth: 80,
         },
-        deleteBtnPressed: { opacity: 0.7 },
-        deleteBtnIcon: { fontSize: 20 },
+        swipeDeleteText: { color: '#fff', fontSize: 16, fontWeight: '600' },
         modalOverlay: {
           flex: 1,
           backgroundColor: 'rgba(0,0,0,0.5)',
@@ -376,50 +347,38 @@ export function GroupDetailScreen({ route }: Props) {
     [theme]
   );
 
-  const renderItem = ({ item, index }: { item: ChecklistItemTemplate; index: number }) => (
-    <View style={styles.itemRow}>
-      <Pressable style={styles.itemLeft} onPress={() => openEditItem(item)}>
-        <Text style={styles.itemIndex}>{index + 1}.</Text>
-        <View style={styles.itemBody}>
-          <Text style={styles.itemTitle}>{item.title}</Text>
-          {item.itemType === 'selection' && item.options?.length ? (
-            <Text style={styles.itemSubtitle}>선택형 ({item.options.length}개 보기)</Text>
-          ) : null}
-        </View>
-      </Pressable>
-      <View style={styles.itemRight}>
-        <View style={styles.orderButtons}>
-          <Pressable
-            style={[styles.orderBtn, index === 0 && styles.orderBtnDisabled]}
-            onPress={() => moveItem(index, 'up')}
-            disabled={index === 0}
-          >
-            <Text style={[styles.orderBtnText, index === 0 && styles.orderBtnTextDisabled]}>↑</Text>
+  const renderItem = ({ item, drag, isActive }: { item: ChecklistItemTemplate; drag: () => void; isActive: boolean }) => (
+    <ScaleDecorator>
+      <Swipeable
+        renderRightActions={(progress, dragX, swipeable) => {
+          const handleDelete = (it: ChecklistItemTemplate) => {
+            swipeable.close();
+            deleteItem(it);
+          };
+          return (
+            <RectButton style={styles.swipeDeleteAction} onPress={() => handleDelete(item)}>
+              <Text style={styles.swipeDeleteText}>삭제</Text>
+            </RectButton>
+          );
+        }}
+        friction={2}
+        rightThreshold={40}
+      >
+        <View style={[styles.itemRow, isActive && { opacity: 0.95 }]}>
+          <Pressable style={styles.dragHandle} onLongPress={drag} delayLongPress={150} accessibilityLabel="드래그">
+            <Text style={styles.dragHandleIcon}>≡</Text>
           </Pressable>
-          <Pressable
-            style={[styles.orderBtn, index === items.length - 1 && styles.orderBtnDisabled]}
-            onPress={() => moveItem(index, 'down')}
-            disabled={index === items.length - 1}
-          >
-            <Text
-              style={[
-                styles.orderBtnText,
-                index === items.length - 1 && styles.orderBtnTextDisabled,
-              ]}
-            >
-              ↓
-            </Text>
+          <Pressable style={styles.itemLeft} onPress={() => openEditItem(item)}>
+            <View style={styles.itemBody}>
+              <Text style={styles.itemTitle}>{item.title}</Text>
+              {item.itemType === 'selection' && item.options?.length ? (
+                <Text style={styles.itemSubtitle}>선택형 ({item.options.length}개 보기)</Text>
+              ) : null}
+            </View>
           </Pressable>
         </View>
-        <Pressable
-          style={({ pressed }) => [styles.deleteBtn, pressed && styles.deleteBtnPressed]}
-          onPress={() => deleteItem(item)}
-          accessibilityLabel="삭제"
-        >
-          <Text style={styles.deleteBtnIcon}>🗑</Text>
-        </Pressable>
-      </View>
-    </View>
+      </Swipeable>
+    </ScaleDecorator>
   );
 
   if (group == null) {
@@ -470,10 +429,11 @@ export function GroupDetailScreen({ route }: Props) {
         keyboardVerticalOffset={80}
       >
         <View style={styles.listCard}>
-          <FlatList
+          <DraggableFlatList
             data={items}
             keyExtractor={t => t.id}
             renderItem={renderItem}
+            onDragEnd={onDragEnd}
             ItemSeparatorComponent={() => <View style={styles.itemDivider} />}
             contentContainerStyle={{ paddingBottom: listPaddingBottom }}
             ListEmptyComponent={

@@ -9,6 +9,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { RectButton, Swipeable } from 'react-native-gesture-handler';
 import Feather from 'react-native-vector-icons/Feather';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -52,6 +53,14 @@ export function GroupListScreen() {
         itemContent: { flex: 1, minWidth: 0 },
         itemName: { fontSize: 17, fontWeight: '600', color: theme.text },
         itemSubtext: { fontSize: 13, color: theme.textSecondary, marginTop: 4 },
+        swipeDeleteAction: {
+          backgroundColor: theme.danger,
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingHorizontal: 16,
+          minWidth: 80,
+        },
+        swipeDeleteText: { color: '#fff', fontSize: 16, fontWeight: '600' },
         fab: {
           position: 'absolute',
           right: 20,
@@ -168,16 +177,31 @@ export function GroupListScreen() {
             : `${count}개 항목`;
 
     return (
-      <View style={styles.item}>
-        <Pressable
-          style={({ pressed }) => [styles.itemContent, pressed && styles.itemPressed]}
-          onPress={() => navigation.navigate('GroupDetail', { groupId: item.id })}
-          onLongPress={() => deleteGroup(item)}
-        >
-          <Text style={styles.itemName}>{item.name}</Text>
-          <Text style={styles.itemSubtext}>{subtext}</Text>
-        </Pressable>
-      </View>
+      <Swipeable
+        renderRightActions={(_, __, swipeable) => (
+          <RectButton
+            style={styles.swipeDeleteAction}
+            onPress={() => {
+              swipeable.close();
+              deleteGroup(item);
+            }}
+          >
+            <Text style={styles.swipeDeleteText}>삭제</Text>
+          </RectButton>
+        )}
+        friction={2}
+        rightThreshold={40}
+      >
+        <View style={styles.item}>
+          <Pressable
+            style={({ pressed }) => [styles.itemContent, pressed && styles.itemPressed]}
+            onPress={() => navigation.navigate('GroupDetail', { groupId: item.id })}
+          >
+            <Text style={styles.itemName}>{item.name}</Text>
+            <Text style={styles.itemSubtext}>{subtext}</Text>
+          </Pressable>
+        </View>
+      </Swipeable>
     );
   };
 
