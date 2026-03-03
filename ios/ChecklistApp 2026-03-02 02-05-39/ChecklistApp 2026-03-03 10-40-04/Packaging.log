@@ -1,0 +1,487 @@
+2026-03-03 01:40:00 +0000  Initial pipeline context: <IDEDistributionProcessingPipelineContext: 0x12f2f85b0; archive(resolved)="<IDEArchive: 0x600088af18f0>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodiOSEnterprise: 0x6000060dbb20>", team(resolved)="<IDEProvisioningDisambiguatableBasicTeam: 0x600013bcae00; teamID='S996Q3S6V8', teamName='JinSeung Information Technology Co., Ltd.', teamType='Enterprise', username='apple@jinsit.co.kr', isFreeProvisioningTeam='0'>">
+	Chain (16, self inclusive):
+	<IDEDistributionProcessingPipelineContext: 0x12f2f85b0; archive = "<IDEArchive: 0x600088af18f0>", distributionMethod="<IDEDistributionMethodiOSEnterprise: 0x6000060dbb20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600013bcae00; teamID='S996Q3S6V8', teamName='JinSeung Information Technology Co., Ltd.', teamType='Enterprise', username='apple@jinsit.co.kr', isFreeProvisioningTeam='0'>">
+	<IDEDistributionProcessingPipelineContext: 0x12f2f8320; archive = "<IDEArchive: 0x600088af18f0>", distributionMethod="<IDEDistributionMethodiOSEnterprise: 0x6000060dbb20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600013bcae00; teamID='S996Q3S6V8', teamName='JinSeung Information Technology Co., Ltd.', teamType='Enterprise', username='apple@jinsit.co.kr', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x12fd23500; archive = "<IDEArchive: 0x600088af18f0>", distributionMethod="<IDEDistributionMethodiOSEnterprise: 0x6000060dbb20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600013bcae00; teamID='S996Q3S6V8', teamName='JinSeung Information Technology Co., Ltd.', teamType='Enterprise', username='apple@jinsit.co.kr', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x35b4cc260; archive = "<IDEArchive: 0x600088af18f0>", distributionMethod="<IDEDistributionMethodiOSEnterprise: 0x6000060dbb20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600013bcae00; teamID='S996Q3S6V8', teamName='JinSeung Information Technology Co., Ltd.', teamType='Enterprise', username='apple@jinsit.co.kr', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x35b482920; archive = "<IDEArchive: 0x600088af18f0>", distributionMethod="<IDEDistributionMethodiOSEnterprise: 0x6000060dbb20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600013bcae00; teamID='S996Q3S6V8', teamName='JinSeung Information Technology Co., Ltd.', teamType='Enterprise', username='apple@jinsit.co.kr', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x35b4f0d90; archive = "<IDEArchive: 0x600088af18f0>", distributionMethod="<IDEDistributionMethodiOSEnterprise: 0x6000060dbb20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600013bcae00; teamID='S996Q3S6V8', teamName='JinSeung Information Technology Co., Ltd.', teamType='Enterprise', username='apple@jinsit.co.kr', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x3459daeb0; archive = "<IDEArchive: 0x600088af18f0>", distributionMethod="<IDEDistributionMethodiOSEnterprise: 0x6000060dbb20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600013bcae00; teamID='S996Q3S6V8', teamName='JinSeung Information Technology Co., Ltd.', teamType='Enterprise', username='apple@jinsit.co.kr', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x10e425630; archive = "<IDEArchive: 0x600088af18f0>", distributionMethod="<IDEDistributionMethodiOSEnterprise: 0x6000060dbb20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600013bcae00; teamID='S996Q3S6V8', teamName='JinSeung Information Technology Co., Ltd.', teamType='Enterprise', username='apple@jinsit.co.kr', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x3459daca0; archive = "<IDEArchive: 0x600088af18f0>", distributionMethod="<IDEDistributionMethodiOSEnterprise: 0x6000060dbb20>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x600013bcae00; teamID='S996Q3S6V8', teamName='JinSeung Information Technology Co., Ltd.', teamType='Enterprise', username='apple@jinsit.co.kr', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x3459daa90; archive = "<IDEArchive: 0x600088af18f0>", distributionMethod="<IDEDistributionMethodiOSEnterprise: 0x6000060dbb20>", team="(null)">
+	<IDEDistributionContext: 0x3472aadc0; archive = "<IDEArchive: 0x600088af18f0>", distributionMethod="<IDEDistributionMethodiOSEnterprise: 0x6000060dbb20>", team="(null)">
+	<IDEDistributionContext: 0x3472c1300; archive = "<IDEArchive: 0x600088af18f0>", distributionMethod="<IDEDistributionMethodiOSEnterprise: 0x6000060dbb20>", team="(null)">
+	<IDEDistributionContext: 0x12f2a11b0; archive = "<IDEArchive: 0x600088af18f0>", distributionMethod="<IDEDistributionMethodiOSEnterprise: 0x6000060dbb20>", team="(null)">
+	<IDEDistributionContext: 0x34808e230; archive = "<IDEArchive: 0x600088af18f0>", distributionMethod="(null)", team="(null)">
+	<IDEDistributionContext: 0x35b4f3c30; archive = "<IDEArchive: 0x600088af18f0>", distributionMethod="(null)", team="(null)">
+	<IDEDistributionContext: 0x35b7f9070; archive = "<IDEArchive: 0x600088af18f0>", distributionMethod="(null)", team="(null)">
+</IDEDistributionProcessingPipelineContext: 0x12f2f85b0>
+2026-03-03 01:40:00 +0000  Processing step: IDEDistributionCreateDestRootStep
+2026-03-03 01:40:00 +0000  Processing step: IDEDistributionCopyItemStep
+2026-03-03 01:40:00 +0000  Running /usr/bin/ditto '-V' '/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app' '/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app'
+2026-03-03 01:40:00 +0000  >>> Copying /Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app 
+2026-03-03 01:40:00 +0000  copying file ./_CodeSignature/CodeResources ... 
+2026-03-03 01:40:00 +0000  19083 bytes for ./_CodeSignature/CodeResources
+2026-03-03 01:40:00 +0000  copying file ./Fontisto.ttf ... 
+2026-03-03 01:40:00 +0000  313528 bytes for ./Fontisto.ttf
+2026-03-03 01:40:00 +0000  copying file ./Octicons.ttf ... 
+2026-03-03 01:40:00 +0000  49404 bytes for ./Octicons.ttf
+2026-03-03 01:40:00 +0000  copying file ./Feather.ttf ... 
+2026-03-03 01:40:00 +0000  56228 bytes for ./Feather.ttf
+2026-03-03 01:40:00 +0000  copying file ./FontAwesome6_Regular.ttf ... 
+2026-03-03 01:40:00 +0000  67976 bytes for ./FontAwesome6_Regular.ttf
+2026-03-03 01:40:00 +0000  copying file ./Entypo.ttf ... 
+2026-03-03 01:40:00 +0000  66200 bytes for ./Entypo.ttf
+2026-03-03 01:40:00 +0000  copying file ./FontAwesome5_Brands.ttf ... 
+2026-03-03 01:40:00 +0000  134040 bytes for ./FontAwesome5_Brands.ttf
+2026-03-03 01:40:00 +0000  copying file ./MaterialCommunityIcons.ttf ... 
+2026-03-03 01:40:00 +0000  1147844 bytes for ./MaterialCommunityIcons.ttf
+2026-03-03 01:40:00 +0000  copying file ./AppIcon60x60@2x.png ... 
+2026-03-03 01:40:00 +0000  24361 bytes for ./AppIcon60x60@2x.png
+2026-03-03 01:40:00 +0000  copying file ./ChecklistApp ... 
+2026-03-03 01:40:00 +0000  3611488 bytes for ./ChecklistApp
+2026-03-03 01:40:00 +0000  copying file ./AntDesign.ttf ... 
+2026-03-03 01:40:00 +0000  70344 bytes for ./AntDesign.ttf
+2026-03-03 01:40:00 +0000  copying file ./Foundation.ttf ... 
+2026-03-03 01:40:00 +0000  56976 bytes for ./Foundation.ttf
+2026-03-03 01:40:00 +0000  copying file ./Ionicons.ttf ... 
+2026-03-03 01:40:00 +0000  442604 bytes for ./Ionicons.ttf
+2026-03-03 01:40:00 +0000  copying file ./FontAwesome5_Solid.ttf ... 
+2026-03-03 01:40:00 +0000  202744 bytes for ./FontAwesome5_Solid.ttf
+2026-03-03 01:40:00 +0000  copying file ./FontAwesome5_Regular.ttf ... 
+2026-03-03 01:40:00 +0000  33736 bytes for ./FontAwesome5_Regular.ttf
+2026-03-03 01:40:00 +0000  copying file ./React-cxxreact_privacy.bundle/PrivacyInfo.xcprivacy ... 
+2026-03-03 01:40:00 +0000  552 bytes for ./React-cxxreact_privacy.bundle/PrivacyInfo.xcprivacy
+2026-03-03 01:40:00 +0000  copying file ./React-cxxreact_privacy.bundle/Info.plist ... 
+2026-03-03 01:40:00 +0000  789 bytes for ./React-cxxreact_privacy.bundle/Info.plist
+2026-03-03 01:40:00 +0000  copying file ./FontAwesome.ttf ... 
+2026-03-03 01:40:00 +0000  165548 bytes for ./FontAwesome.ttf
+2026-03-03 01:40:00 +0000  copying file ./Zocial.ttf ... 
+2026-03-03 01:40:00 +0000  25788 bytes for ./Zocial.ttf
+2026-03-03 01:40:00 +0000  copying file ./Assets.car ... 
+2026-03-03 01:40:00 +0000  204511 bytes for ./Assets.car
+2026-03-03 01:40:00 +0000  copying file ./EvilIcons.ttf ... 
+2026-03-03 01:40:00 +0000  13456 bytes for ./EvilIcons.ttf
+2026-03-03 01:40:00 +0000  copying file ./main.jsbundle ... 
+2026-03-03 01:40:00 +0000  3500837 bytes for ./main.jsbundle
+2026-03-03 01:40:00 +0000  copying file ./FontAwesome6_Solid.ttf ... 
+2026-03-03 01:40:00 +0000  423676 bytes for ./FontAwesome6_Solid.ttf
+2026-03-03 01:40:00 +0000  copying file ./PrivacyInfo.xcprivacy ... 
+2026-03-03 01:40:00 +0000  491 bytes for ./PrivacyInfo.xcprivacy
+2026-03-03 01:40:00 +0000  copying file ./LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib ... 
+2026-03-03 01:40:00 +0000  3817 bytes for ./LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib
+2026-03-03 01:40:00 +0000  copying file ./LaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib ... 
+2026-03-03 01:40:00 +0000  924 bytes for ./LaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib
+2026-03-03 01:40:00 +0000  copying file ./LaunchScreen.storyboardc/Info.plist ... 
+2026-03-03 01:40:00 +0000  258 bytes for ./LaunchScreen.storyboardc/Info.plist
+2026-03-03 01:40:00 +0000  copying file ./Frameworks/hermesvm.framework/_CodeSignature/CodeResources ... 
+2026-03-03 01:40:00 +0000  1798 bytes for ./Frameworks/hermesvm.framework/_CodeSignature/CodeResources
+2026-03-03 01:40:00 +0000  copying file ./Frameworks/hermesvm.framework/hermesvm ... 
+2026-03-03 01:40:00 +0000  5995968 bytes for ./Frameworks/hermesvm.framework/hermesvm
+2026-03-03 01:40:00 +0000  copying file ./Frameworks/hermesvm.framework/Info.plist ... 
+859 bytes for ./Frameworks/hermesvm.framework/Info.plist
+2026-03-03 01:40:00 +0000  copying file ./Frameworks/React.framework/_CodeSignature/CodeResources ... 
+2026-03-03 01:40:00 +0000  1798 bytes for ./Frameworks/React.framework/_CodeSignature/CodeResources
+2026-03-03 01:40:00 +0000  copying file ./Frameworks/React.framework/React ... 
+2026-03-03 01:40:00 +0000  10743808 bytes for ./Frameworks/React.framework/React
+2026-03-03 01:40:00 +0000  copying file ./Frameworks/React.framework/Info.plist ... 
+744 bytes for ./Frameworks/React.framework/Info.plist
+2026-03-03 01:40:00 +0000  copying file ./Frameworks/ReactNativeDependencies.framework/_CodeSignature/CodeResources ... 
+2026-03-03 01:40:00 +0000  3548 bytes for ./Frameworks/ReactNativeDependencies.framework/_CodeSignature/CodeResources
+2026-03-03 01:40:00 +0000  copying file ./Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_folly.bundle/PrivacyInfo.xcprivacy ... 
+2026-03-03 01:40:00 +0000  552 bytes for ./Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_folly.bundle/PrivacyInfo.xcprivacy
+2026-03-03 01:40:00 +0000  copying file ./Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_folly.bundle/Info.plist ... 
+2026-03-03 01:40:00 +0000  689 bytes for ./Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_folly.bundle/Info.plist
+2026-03-03 01:40:00 +0000  copying file ./Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies ... 
+2026-03-03 01:40:00 +0000  1285104 bytes for ./Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies
+2026-03-03 01:40:00 +0000  copying file ./Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_glog.bundle/PrivacyInfo.xcprivacy ... 
+2026-03-03 01:40:00 +0000  552 bytes for ./Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_glog.bundle/PrivacyInfo.xcprivacy
+2026-03-03 01:40:00 +0000  copying file ./Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_glog.bundle/Info.plist ... 
+2026-03-03 01:40:00 +0000  687 bytes for ./Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_glog.bundle/Info.plist
+2026-03-03 01:40:00 +0000  copying file ./Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_boost.bundle/PrivacyInfo.xcprivacy ... 
+2026-03-03 01:40:00 +0000  776 bytes for ./Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_boost.bundle/PrivacyInfo.xcprivacy
+2026-03-03 01:40:00 +0000  copying file ./Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_boost.bundle/Info.plist ... 
+2026-03-03 01:40:00 +0000  689 bytes for ./Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_boost.bundle/Info.plist
+2026-03-03 01:40:00 +0000  copying file ./Frameworks/ReactNativeDependencies.framework/Info.plist ... 
+2026-03-03 01:40:00 +0000  781 bytes for ./Frameworks/ReactNativeDependencies.framework/Info.plist
+2026-03-03 01:40:00 +0000  copying file ./SimpleLineIcons.ttf ... 
+2026-03-03 01:40:00 +0000  54056 bytes for ./SimpleLineIcons.ttf
+2026-03-03 01:40:00 +0000  copying file ./FontAwesome6_Brands.ttf ... 
+2026-03-03 01:40:00 +0000  209376 bytes for ./FontAwesome6_Brands.ttf
+2026-03-03 01:40:00 +0000  copying file ./embedded.mobileprovision ... 
+2026-03-03 01:40:00 +0000  23410 bytes for ./embedded.mobileprovision
+2026-03-03 01:40:00 +0000  copying file ./ReactNativeBlobUtilPrivacyInfo.bundle/PrivacyInfo.xcprivacy ... 
+2026-03-03 01:40:00 +0000  781 bytes for ./ReactNativeBlobUtilPrivacyInfo.bundle/PrivacyInfo.xcprivacy
+2026-03-03 01:40:00 +0000  copying file ./ReactNativeBlobUtilPrivacyInfo.bundle/Info.plist ... 
+2026-03-03 01:40:00 +0000  805 bytes for ./ReactNativeBlobUtilPrivacyInfo.bundle/Info.plist
+2026-03-03 01:40:00 +0000  copying file ./assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon@3x.png ... 
+2026-03-03 01:40:00 +0000  761 bytes for ./assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon@3x.png
+2026-03-03 01:40:00 +0000  copying file ./assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon@2x.png ... 
+2026-03-03 01:40:00 +0000  405 bytes for ./assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon@2x.png
+2026-03-03 01:40:00 +0000  copying file ./assets/node_modules/@react-navigation/elements/lib/module/assets/search-icon@2x.png ... 
+2026-03-03 01:40:00 +0000  589 bytes for ./assets/node_modules/@react-navigation/elements/lib/module/assets/search-icon@2x.png
+2026-03-03 01:40:00 +0000  copying file ./assets/node_modules/@react-navigation/elements/lib/module/assets/clear-icon@3x.png ... 
+2026-03-03 01:40:00 +0000  502 bytes for ./assets/node_modules/@react-navigation/elements/lib/module/assets/clear-icon@3x.png
+2026-03-03 01:40:00 +0000  copying file ./assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon.png ... 
+2026-03-03 01:40:00 +0000  290 bytes for ./assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon.png
+2026-03-03 01:40:00 +0000  copying file ./assets/node_modules/@react-navigation/elements/lib/module/assets/clear-icon@2x.png ... 
+2026-03-03 01:40:00 +0000  334 bytes for ./assets/node_modules/@react-navigation/elements/lib/module/assets/clear-icon@2x.png
+2026-03-03 01:40:00 +0000  copying file ./assets/node_modules/@react-navigation/elements/lib/module/assets/search-icon@3x.png ... 
+2026-03-03 01:40:00 +0000  839 bytes for ./assets/node_modules/@react-navigation/elements/lib/module/assets/search-icon@3x.png
+2026-03-03 01:40:00 +0000  copying file ./assets/node_modules/@react-navigation/elements/lib/module/assets/close-icon.png ... 
+2026-03-03 01:40:00 +0000  141 bytes for ./assets/node_modules/@react-navigation/elements/lib/module/assets/close-icon.png
+2026-03-03 01:40:00 +0000  copying file ./assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon-mask.png ... 
+2026-03-03 01:40:00 +0000  653 bytes for ./assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon-mask.png
+2026-03-03 01:40:00 +0000  copying file ./assets/node_modules/@react-navigation/elements/lib/module/assets/close-icon@2x.png ... 
+2026-03-03 01:40:00 +0000  201 bytes for ./assets/node_modules/@react-navigation/elements/lib/module/assets/close-icon@2x.png
+2026-03-03 01:40:00 +0000  copying file ./assets/node_modules/@react-navigation/elements/lib/module/assets/close-icon@3x.png ... 
+2026-03-03 01:40:00 +0000  266 bytes for ./assets/node_modules/@react-navigation/elements/lib/module/assets/close-icon@3x.png
+2026-03-03 01:40:00 +0000  copying file ./assets/node_modules/@react-navigation/elements/lib/module/assets/clear-icon.png ... 
+2026-03-03 01:40:00 +0000  220 bytes for ./assets/node_modules/@react-navigation/elements/lib/module/assets/clear-icon.png
+2026-03-03 01:40:00 +0000  copying file ./assets/node_modules/@react-navigation/elements/lib/module/assets/search-icon.png ... 
+2026-03-03 01:40:00 +0000  317 bytes for ./assets/node_modules/@react-navigation/elements/lib/module/assets/search-icon.png
+2026-03-03 01:40:00 +0000  copying file ./Info.plist ... 
+2026-03-03 01:40:00 +0000  1977 bytes for ./Info.plist
+2026-03-03 01:40:00 +0000  copying file ./PkgInfo ... 
+2026-03-03 01:40:00 +0000  8 bytes for ./PkgInfo
+2026-03-03 01:40:00 +0000  copying file ./MaterialIcons.ttf ... 
+2026-03-03 01:40:00 +0000  356840 bytes for ./MaterialIcons.ttf
+2026-03-03 01:40:00 +0000  copying file ./React-Core_privacy.bundle/PrivacyInfo.xcprivacy ... 
+2026-03-03 01:40:00 +0000  768 bytes for ./React-Core_privacy.bundle/PrivacyInfo.xcprivacy
+2026-03-03 01:40:00 +0000  copying file ./React-Core_privacy.bundle/Info.plist ... 
+2026-03-03 01:40:00 +0000  781 bytes for ./React-Core_privacy.bundle/Info.plist
+2026-03-03 01:40:00 +0000  /usr/bin/ditto exited with 0
+2026-03-03 01:40:00 +0000  Processing step: IDEDistributionEmbedProfileStep
+2026-03-03 01:40:00 +0000  Skipping profile for item: <IDEDistributionItem: 0x60001079e100; bundleID='react-native.React', path='<DVTFilePath:0x60001073c7e0:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/React.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600010728660; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000d7089c0; name='Apple Development: Samgon Kim (6YD4RA4LD8)', hash='D82266E8CAB0AA7A95B5ECF90FA47B6364C6BC39', serialNumber='5EE6EEB5E6B38A31572FA63CA9C3D837', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2025-07-09 06:46:26 +0000''>', entitlements='(null)', teamID='S996Q3S6V8', identifier='react-native.React', executablePath='<DVTFilePath:0x60001073fc00:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/React.framework/React'>', hardenedRuntime='0'>'>
+2026-03-03 01:40:00 +0000  Skipping profile for item: <IDEDistributionItem: 0x60001072e940; bundleID='third-party.ReactNativeDependencies', path='<DVTFilePath:0x60000cfa2f80:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600010728480; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x6000117b5380; name='Apple Development: Samgon Kim (6YD4RA4LD8)', hash='D82266E8CAB0AA7A95B5ECF90FA47B6364C6BC39', serialNumber='5EE6EEB5E6B38A31572FA63CA9C3D837', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2025-07-09 06:46:26 +0000''>', entitlements='(null)', teamID='S996Q3S6V8', identifier='third-party.ReactNativeDependencies', executablePath='<DVTFilePath:0x600088aff330:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies'>', hardenedRuntime='0'>'>
+2026-03-03 01:40:00 +0000  Skipping profile for item: <IDEDistributionItem: 0x6000106b11a0; bundleID='dev.hermesengine.iphoneos', path='<DVTFilePath:0x600088adff00:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/hermesvm.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600010728180; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x6000117bd2c0; name='Apple Development: Samgon Kim (6YD4RA4LD8)', hash='D82266E8CAB0AA7A95B5ECF90FA47B6364C6BC39', serialNumber='5EE6EEB5E6B38A31572FA63CA9C3D837', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2025-07-09 06:46:26 +0000''>', entitlements='(null)', teamID='S996Q3S6V8', identifier='dev.hermesengine.iphoneos', executablePath='<DVTFilePath:0x60001073ebe0:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/hermesvm.framework/hermesvm'>', hardenedRuntime='0'>'>
+2026-03-03 01:40:00 +0000  Processing step: IDEDistributionInfoPlistStep
+2026-03-03 01:40:00 +0000  Skipping step: IDEDistributionInfoPlistStep because it said so
+2026-03-03 01:40:00 +0000  Skipping step: IDEDistributionInfoPlistStep because it said so
+2026-03-03 01:40:00 +0000  Skipping step: IDEDistributionInfoPlistStep because it said so
+2026-03-03 01:40:00 +0000  Skipping step: IDEDistributionInfoPlistStep because it said so
+2026-03-03 01:40:00 +0000  Processing step: IDEDistributionAppThinningPlistStep
+2026-03-03 01:40:00 +0000  Skipping step: IDEDistributionAppThinningPlistStep because it said so
+2026-03-03 01:40:00 +0000  Processing step: IDEDistributionSymbolsStep
+2026-03-03 01:40:00 +0000  Skipping step: IDEDistributionSymbolsStep because it said so
+2026-03-03 01:40:00 +0000  Processing step: IDEDistributionAppThinningStep
+2026-03-03 01:40:00 +0000  Skipping step: IDEDistributionAppThinningStep because it said so
+2026-03-03 01:40:00 +0000  Processing step: IDEDistributionArchThinningStep
+2026-03-03 01:40:00 +0000  Item /Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/React.framework doesn't have the entitlement com.apple.developer.web-browser-engine.host enabled, returning ["arm64e"]
+2026-03-03 01:40:00 +0000  Archs to thin for item /Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/React.framework are ["arm64e"]
+2026-03-03 01:40:00 +0000  Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo '/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app/Frameworks/React.framework/React' '-verify_arch' 'arm64e'
+2026-03-03 01:40:00 +0000  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo exited with 1
+2026-03-03 01:40:00 +0000  Skipping architecture thinning for item "React" because arch "arm64e" wasn't found
+2026-03-03 01:40:00 +0000  Item /Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework doesn't have the entitlement com.apple.developer.web-browser-engine.host enabled, returning ["arm64e"]
+2026-03-03 01:40:00 +0000  Archs to thin for item /Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework are ["arm64e"]
+2026-03-03 01:40:00 +0000  Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo '/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies' '-verify_arch' 'arm64e'
+2026-03-03 01:40:00 +0000  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo exited with 1
+2026-03-03 01:40:00 +0000  Skipping architecture thinning for item "ReactNativeDependencies" because arch "arm64e" wasn't found
+2026-03-03 01:40:00 +0000  Item /Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/hermesvm.framework doesn't have the entitlement com.apple.developer.web-browser-engine.host enabled, returning ["arm64e"]
+2026-03-03 01:40:00 +0000  Archs to thin for item /Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/hermesvm.framework are ["arm64e"]
+2026-03-03 01:40:00 +0000  Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo '/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app/Frameworks/hermesvm.framework/hermesvm' '-verify_arch' 'arm64e'
+2026-03-03 01:40:00 +0000  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo exited with 1
+2026-03-03 01:40:00 +0000  Skipping architecture thinning for item "hermesvm" because arch "arm64e" wasn't found
+2026-03-03 01:40:00 +0000  Item /Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app doesn't have the entitlement com.apple.developer.web-browser-engine.host enabled, returning ["arm64e"]
+2026-03-03 01:40:00 +0000  Archs to thin for item /Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app are ["arm64e"]
+2026-03-03 01:40:00 +0000  Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo '/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app/ChecklistApp' '-verify_arch' 'arm64e'
+2026-03-03 01:40:00 +0000  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo exited with 1
+2026-03-03 01:40:00 +0000  Skipping architecture thinning for item "ChecklistApp" because arch "arm64e" wasn't found
+2026-03-03 01:40:00 +0000  Processing step: IDEDistributionODRStep
+2026-03-03 01:40:00 +0000  Processing step: IDEDistributionStripXattrsStep
+2026-03-03 01:40:00 +0000  Skipping stripping extended attributes because the codesign step will strip them.
+2026-03-03 01:40:00 +0000  Skipping stripping extended attributes because the codesign step will strip them.
+2026-03-03 01:40:00 +0000  Skipping stripping extended attributes because the codesign step will strip them.
+2026-03-03 01:40:00 +0000  Skipping stripping extended attributes because the codesign step will strip them.
+2026-03-03 01:40:00 +0000  Processing step: IDEDistributionCodesignStep
+2026-03-03 01:40:00 +0000  Entitlements for <IDEDistributionItem: 0x60001079e100; bundleID='react-native.React', path='<DVTFilePath:0x60001073c7e0:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/React.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600010728660; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x6000117b5380; name='Apple Development: Samgon Kim (6YD4RA4LD8)', hash='D82266E8CAB0AA7A95B5ECF90FA47B6364C6BC39', serialNumber='5EE6EEB5E6B38A31572FA63CA9C3D837', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2025-07-09 06:46:26 +0000''>', entitlements='(null)', teamID='S996Q3S6V8', identifier='react-native.React', executablePath='<DVTFilePath:0x60001073fc00:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/React.framework/React'>', hardenedRuntime='0'>'>: {
+}
+2026-03-03 01:40:00 +0000  Associated App Clip Identifiers Filter: Skipping because "com.apple.developer.associated-appclip-app-identifiers" is not present
+2026-03-03 01:40:00 +0000  Entitlements for <IDEDistributionItem: 0x60001079e100; bundleID='react-native.React', path='<DVTFilePath:0x60001073c7e0:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/React.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600010728660; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x6000117b5380; name='Apple Development: Samgon Kim (6YD4RA4LD8)', hash='D82266E8CAB0AA7A95B5ECF90FA47B6364C6BC39', serialNumber='5EE6EEB5E6B38A31572FA63CA9C3D837', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2025-07-09 06:46:26 +0000''>', entitlements='(null)', teamID='S996Q3S6V8', identifier='react-native.React', executablePath='<DVTFilePath:0x60001073fc00:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/React.framework/React'>', hardenedRuntime='0'>'> are: {
+}
+2026-03-03 01:40:00 +0000  Writing entitlements for <IDEDistributionItem: 0x60001079e100; bundleID='react-native.React', path='<DVTFilePath:0x60001073c7e0:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/React.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600010728660; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x6000117b5380; name='Apple Development: Samgon Kim (6YD4RA4LD8)', hash='D82266E8CAB0AA7A95B5ECF90FA47B6364C6BC39', serialNumber='5EE6EEB5E6B38A31572FA63CA9C3D837', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2025-07-09 06:46:26 +0000''>', entitlements='(null)', teamID='S996Q3S6V8', identifier='react-native.React', executablePath='<DVTFilePath:0x60001073fc00:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/React.framework/React'>', hardenedRuntime='0'>'> to: /var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/entitlements~~~5UO97U
+2026-03-03 01:40:00 +0000  invoking codesign: <NSConcreteTask: 0x60002c15f750; launchPath='/usr/bin/codesign', arguments='(
+    "-f",
+    "-s",
+    2D79A10832CDEF6DDD7CBBA27E2F64B7F4739464,
+    "--entitlements",
+    "/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/entitlements~~~5UO97U",
+    "--preserve-metadata=identifier,flags,runtime",
+    "--generate-entitlement-der",
+    "--strip-disallowed-xattrs",
+    "-vvv",
+    "/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app/Frameworks/React.framework"
+)'>
+2026-03-03 01:40:00 +0000  codesign output: /var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app/Frameworks/React.framework: replacing existing signature
+/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app/Frameworks/React.framework: signed bundle with Mach-O thin (arm64) [react-native.React]
+2026-03-03 01:40:00 +0000  Entitlements for <IDEDistributionItem: 0x60001072e940; bundleID='third-party.ReactNativeDependencies', path='<DVTFilePath:0x60000cfa2f80:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600010728480; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000d7d7480; name='Apple Development: Samgon Kim (6YD4RA4LD8)', hash='D82266E8CAB0AA7A95B5ECF90FA47B6364C6BC39', serialNumber='5EE6EEB5E6B38A31572FA63CA9C3D837', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2025-07-09 06:46:26 +0000''>', entitlements='(null)', teamID='S996Q3S6V8', identifier='third-party.ReactNativeDependencies', executablePath='<DVTFilePath:0x600088aff330:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies'>', hardenedRuntime='0'>'>: {
+}
+2026-03-03 01:40:00 +0000  Associated App Clip Identifiers Filter: Skipping because "com.apple.developer.associated-appclip-app-identifiers" is not present
+2026-03-03 01:40:00 +0000  Entitlements for <IDEDistributionItem: 0x60001072e940; bundleID='third-party.ReactNativeDependencies', path='<DVTFilePath:0x60000cfa2f80:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600010728480; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x6000117b5380; name='Apple Development: Samgon Kim (6YD4RA4LD8)', hash='D82266E8CAB0AA7A95B5ECF90FA47B6364C6BC39', serialNumber='5EE6EEB5E6B38A31572FA63CA9C3D837', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2025-07-09 06:46:26 +0000''>', entitlements='(null)', teamID='S996Q3S6V8', identifier='third-party.ReactNativeDependencies', executablePath='<DVTFilePath:0x600088aff330:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies'>', hardenedRuntime='0'>'> are: {
+}
+2026-03-03 01:40:00 +0000  Writing entitlements for <IDEDistributionItem: 0x60001072e940; bundleID='third-party.ReactNativeDependencies', path='<DVTFilePath:0x60000cfa2f80:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600010728480; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x6000117b5380; name='Apple Development: Samgon Kim (6YD4RA4LD8)', hash='D82266E8CAB0AA7A95B5ECF90FA47B6364C6BC39', serialNumber='5EE6EEB5E6B38A31572FA63CA9C3D837', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2025-07-09 06:46:26 +0000''>', entitlements='(null)', teamID='S996Q3S6V8', identifier='third-party.ReactNativeDependencies', executablePath='<DVTFilePath:0x600088aff330:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies'>', hardenedRuntime='0'>'> to: /var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/entitlements~~~O4fFZ0
+2026-03-03 01:40:00 +0000  invoking codesign: <NSConcreteTask: 0x60002c2905a0; launchPath='/usr/bin/codesign', arguments='(
+    "-f",
+    "-s",
+    2D79A10832CDEF6DDD7CBBA27E2F64B7F4739464,
+    "--entitlements",
+    "/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/entitlements~~~O4fFZ0",
+    "--preserve-metadata=identifier,flags,runtime",
+    "--generate-entitlement-der",
+    "--strip-disallowed-xattrs",
+    "-vvv",
+    "/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework"
+)'>
+2026-03-03 01:40:00 +0000  codesign output: /var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework: replacing existing signature
+/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework: signed bundle with Mach-O thin (arm64) [third-party.ReactNativeDependencies]
+2026-03-03 01:40:00 +0000  Entitlements for <IDEDistributionItem: 0x6000106b11a0; bundleID='dev.hermesengine.iphoneos', path='<DVTFilePath:0x600088adff00:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/hermesvm.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600010728180; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000d7d7480; name='Apple Development: Samgon Kim (6YD4RA4LD8)', hash='D82266E8CAB0AA7A95B5ECF90FA47B6364C6BC39', serialNumber='5EE6EEB5E6B38A31572FA63CA9C3D837', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2025-07-09 06:46:26 +0000''>', entitlements='(null)', teamID='S996Q3S6V8', identifier='dev.hermesengine.iphoneos', executablePath='<DVTFilePath:0x60001073ebe0:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/hermesvm.framework/hermesvm'>', hardenedRuntime='0'>'>: {
+}
+2026-03-03 01:40:00 +0000  Associated App Clip Identifiers Filter: Skipping because "com.apple.developer.associated-appclip-app-identifiers" is not present
+2026-03-03 01:40:00 +0000  Entitlements for <IDEDistributionItem: 0x6000106b11a0; bundleID='dev.hermesengine.iphoneos', path='<DVTFilePath:0x600088adff00:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/hermesvm.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600010728180; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x6000117b6700; name='Apple Development: Samgon Kim (6YD4RA4LD8)', hash='D82266E8CAB0AA7A95B5ECF90FA47B6364C6BC39', serialNumber='5EE6EEB5E6B38A31572FA63CA9C3D837', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2025-07-09 06:46:26 +0000''>', entitlements='(null)', teamID='S996Q3S6V8', identifier='dev.hermesengine.iphoneos', executablePath='<DVTFilePath:0x60001073ebe0:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/hermesvm.framework/hermesvm'>', hardenedRuntime='0'>'> are: {
+}
+2026-03-03 01:40:00 +0000  Writing entitlements for <IDEDistributionItem: 0x6000106b11a0; bundleID='dev.hermesengine.iphoneos', path='<DVTFilePath:0x600088adff00:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/hermesvm.framework'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600010728180; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x6000117b6700; name='Apple Development: Samgon Kim (6YD4RA4LD8)', hash='D82266E8CAB0AA7A95B5ECF90FA47B6364C6BC39', serialNumber='5EE6EEB5E6B38A31572FA63CA9C3D837', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2025-07-09 06:46:26 +0000''>', entitlements='(null)', teamID='S996Q3S6V8', identifier='dev.hermesengine.iphoneos', executablePath='<DVTFilePath:0x60001073ebe0:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/Frameworks/hermesvm.framework/hermesvm'>', hardenedRuntime='0'>'> to: /var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/entitlements~~~s6hkOA
+2026-03-03 01:40:00 +0000  invoking codesign: <NSConcreteTask: 0x60002c2ad6d0; launchPath='/usr/bin/codesign', arguments='(
+    "-f",
+    "-s",
+    2D79A10832CDEF6DDD7CBBA27E2F64B7F4739464,
+    "--entitlements",
+    "/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/entitlements~~~s6hkOA",
+    "--preserve-metadata=identifier,flags,runtime",
+    "--generate-entitlement-der",
+    "--strip-disallowed-xattrs",
+    "-vvv",
+    "/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app/Frameworks/hermesvm.framework"
+)'>
+2026-03-03 01:40:00 +0000  codesign output: /var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app/Frameworks/hermesvm.framework: replacing existing signature
+/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app/Frameworks/hermesvm.framework: signed bundle with Mach-O thin (arm64) [dev.hermesengine.iphoneos]
+2026-03-03 01:40:00 +0000  Entitlements for <IDEDistributionItem: 0x6000106ce700; bundleID='com.jinsit.checklist', path='<DVTFilePath:0x600088add650:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60001079c900; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x6000117b6700; name='Apple Development: Samgon Kim (6YD4RA4LD8)', hash='D82266E8CAB0AA7A95B5ECF90FA47B6364C6BC39', serialNumber='5EE6EEB5E6B38A31572FA63CA9C3D837', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2025-07-09 06:46:26 +0000''>', entitlements='{
+    "application-identifier" = "S996Q3S6V8.com.jinsit.checklist";
+    "com.apple.developer.team-identifier" = S996Q3S6V8;
+    "get-task-allow" = 1;
+}', teamID='S996Q3S6V8', identifier='com.jinsit.checklist', executablePath='<DVTFilePath:0x600010750840:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/ChecklistApp'>', hardenedRuntime='0'>'>: {
+    "application-identifier" = "S996Q3S6V8.com.jinsit.checklist";
+    "com.apple.developer.team-identifier" = S996Q3S6V8;
+    "get-task-allow" = 0;
+}
+2026-03-03 01:40:00 +0000  Associated App Clip Identifiers Filter: Skipping because "com.apple.developer.associated-appclip-app-identifiers" is not present
+2026-03-03 01:40:00 +0000  Entitlements for <IDEDistributionItem: 0x6000106ce700; bundleID='com.jinsit.checklist', path='<DVTFilePath:0x600088add650:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60001079c900; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000989e640; name='Apple Development: Samgon Kim (6YD4RA4LD8)', hash='D82266E8CAB0AA7A95B5ECF90FA47B6364C6BC39', serialNumber='5EE6EEB5E6B38A31572FA63CA9C3D837', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2025-07-09 06:46:26 +0000''>', entitlements='{
+    "application-identifier" = "S996Q3S6V8.com.jinsit.checklist";
+    "com.apple.developer.team-identifier" = S996Q3S6V8;
+    "get-task-allow" = 1;
+}', teamID='S996Q3S6V8', identifier='com.jinsit.checklist', executablePath='<DVTFilePath:0x600010750840:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/ChecklistApp'>', hardenedRuntime='0'>'> are: {
+    "application-identifier" = "S996Q3S6V8.com.jinsit.checklist";
+    "com.apple.developer.team-identifier" = S996Q3S6V8;
+    "get-task-allow" = 0;
+}
+2026-03-03 01:40:00 +0000  Writing entitlements for <IDEDistributionItem: 0x6000106ce700; bundleID='com.jinsit.checklist', path='<DVTFilePath:0x600088add650:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x60001079c900; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x60000989e640; name='Apple Development: Samgon Kim (6YD4RA4LD8)', hash='D82266E8CAB0AA7A95B5ECF90FA47B6364C6BC39', serialNumber='5EE6EEB5E6B38A31572FA63CA9C3D837', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2025-07-09 06:46:26 +0000''>', entitlements='{
+    "application-identifier" = "S996Q3S6V8.com.jinsit.checklist";
+    "com.apple.developer.team-identifier" = S996Q3S6V8;
+    "get-task-allow" = 1;
+}', teamID='S996Q3S6V8', identifier='com.jinsit.checklist', executablePath='<DVTFilePath:0x600010750840:'/Users/munkyu/Library/Developer/Xcode/Archives/2026-03-03/ChecklistApp 3-3-26, 10.39 AM.xcarchive/Products/Applications/ChecklistApp.app/ChecklistApp'>', hardenedRuntime='0'>'> to: /var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/entitlements~~~Dql7K8
+2026-03-03 01:40:00 +0000  invoking codesign: <NSConcreteTask: 0x60002c2a5950; launchPath='/usr/bin/codesign', arguments='(
+    "-f",
+    "-s",
+    2D79A10832CDEF6DDD7CBBA27E2F64B7F4739464,
+    "--entitlements",
+    "/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/entitlements~~~Dql7K8",
+    "--preserve-metadata=identifier,flags,runtime",
+    "--generate-entitlement-der",
+    "--strip-disallowed-xattrs",
+    "-vvv",
+    "/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app"
+)'>
+2026-03-03 01:40:00 +0000  codesign output: /var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app: replacing existing signature
+/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app: signed app bundle with Mach-O thin (arm64) [com.jinsit.checklist]
+2026-03-03 01:40:00 +0000  Processing step: IDEDistributionZipODRItemStep
+2026-03-03 01:40:00 +0000  Skipping step: IDEDistributionZipODRItemStep because it said so
+2026-03-03 01:40:00 +0000  Skipping step: IDEDistributionZipODRItemStep because it said so
+2026-03-03 01:40:00 +0000  Skipping step: IDEDistributionZipODRItemStep because it said so
+2026-03-03 01:40:00 +0000  Skipping step: IDEDistributionZipODRItemStep because it said so
+2026-03-03 01:40:00 +0000  Processing step: IDEDistributionCreateIPAStep
+2026-03-03 01:40:00 +0000  Running /usr/bin/ditto '-V' '-c' '-k' '--norsrc' '/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root' '/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Packages/ChecklistApp.ipa'
+2026-03-03 01:40:00 +0000  >>> Copying /var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root 
+2026-03-03 01:40:00 +0000  copying file ./Payload/ChecklistApp.app/_CodeSignature/CodeResources ... 
+2026-03-03 01:40:00 +0000  19083 bytes for ./Payload/ChecklistApp.app/_CodeSignature/CodeResources
+2026-03-03 01:40:00 +0000  copying file ./Payload/ChecklistApp.app/Fontisto.ttf ... 
+2026-03-03 01:40:00 +0000  313528 bytes for ./Payload/ChecklistApp.app/Fontisto.ttf
+2026-03-03 01:40:00 +0000  copying file ./Payload/ChecklistApp.app/Octicons.ttf ... 
+2026-03-03 01:40:00 +0000  49404 bytes for ./Payload/ChecklistApp.app/Octicons.ttf
+2026-03-03 01:40:00 +0000  copying file ./Payload/ChecklistApp.app/Feather.ttf ... 
+2026-03-03 01:40:00 +0000  56228 bytes for ./Payload/ChecklistApp.app/Feather.ttf
+2026-03-03 01:40:00 +0000  copying file ./Payload/ChecklistApp.app/FontAwesome6_Regular.ttf ... 
+2026-03-03 01:40:00 +0000  67976 bytes for ./Payload/ChecklistApp.app/FontAwesome6_Regular.ttf
+2026-03-03 01:40:00 +0000  copying file ./Payload/ChecklistApp.app/Entypo.ttf ... 
+2026-03-03 01:40:00 +0000  66200 bytes for ./Payload/ChecklistApp.app/Entypo.ttf
+2026-03-03 01:40:00 +0000  copying file ./Payload/ChecklistApp.app/FontAwesome5_Brands.ttf ... 
+2026-03-03 01:40:00 +0000  134040 bytes for ./Payload/ChecklistApp.app/FontAwesome5_Brands.ttf
+2026-03-03 01:40:00 +0000  copying file ./Payload/ChecklistApp.app/MaterialCommunityIcons.ttf ... 
+2026-03-03 01:40:00 +0000  1147844 bytes for ./Payload/ChecklistApp.app/MaterialCommunityIcons.ttf
+2026-03-03 01:40:00 +0000  copying file ./Payload/ChecklistApp.app/AppIcon60x60@2x.png ... 
+2026-03-03 01:40:00 +0000  24361 bytes for ./Payload/ChecklistApp.app/AppIcon60x60@2x.png
+2026-03-03 01:40:00 +0000  copying file ./Payload/ChecklistApp.app/ChecklistApp ... 
+2026-03-03 01:40:00 +0000  3611504 bytes for ./Payload/ChecklistApp.app/ChecklistApp
+2026-03-03 01:40:00 +0000  copying file ./Payload/ChecklistApp.app/AntDesign.ttf ... 
+2026-03-03 01:40:00 +0000  70344 bytes for ./Payload/ChecklistApp.app/AntDesign.ttf
+2026-03-03 01:40:00 +0000  copying file ./Payload/ChecklistApp.app/Foundation.ttf ... 
+2026-03-03 01:40:00 +0000  56976 bytes for ./Payload/ChecklistApp.app/Foundation.ttf
+2026-03-03 01:40:00 +0000  copying file ./Payload/ChecklistApp.app/Ionicons.ttf ... 
+2026-03-03 01:40:01 +0000  442604 bytes for ./Payload/ChecklistApp.app/Ionicons.ttf
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/FontAwesome5_Solid.ttf ... 
+2026-03-03 01:40:01 +0000  202744 bytes for ./Payload/ChecklistApp.app/FontAwesome5_Solid.ttf
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/FontAwesome5_Regular.ttf ... 
+2026-03-03 01:40:01 +0000  33736 bytes for ./Payload/ChecklistApp.app/FontAwesome5_Regular.ttf
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/React-cxxreact_privacy.bundle/PrivacyInfo.xcprivacy ... 
+2026-03-03 01:40:01 +0000  552 bytes for ./Payload/ChecklistApp.app/React-cxxreact_privacy.bundle/PrivacyInfo.xcprivacy
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/React-cxxreact_privacy.bundle/Info.plist ... 
+2026-03-03 01:40:01 +0000  789 bytes for ./Payload/ChecklistApp.app/React-cxxreact_privacy.bundle/Info.plist
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/FontAwesome.ttf ... 
+2026-03-03 01:40:01 +0000  165548 bytes for ./Payload/ChecklistApp.app/FontAwesome.ttf
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Zocial.ttf ... 
+2026-03-03 01:40:01 +0000  25788 bytes for ./Payload/ChecklistApp.app/Zocial.ttf
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Assets.car ... 
+2026-03-03 01:40:01 +0000  204511 bytes for ./Payload/ChecklistApp.app/Assets.car
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/EvilIcons.ttf ... 
+2026-03-03 01:40:01 +0000  13456 bytes for ./Payload/ChecklistApp.app/EvilIcons.ttf
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/main.jsbundle ... 
+2026-03-03 01:40:01 +0000  3500837 bytes for ./Payload/ChecklistApp.app/main.jsbundle
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/FontAwesome6_Solid.ttf ... 
+2026-03-03 01:40:01 +0000  423676 bytes for ./Payload/ChecklistApp.app/FontAwesome6_Solid.ttf
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/PrivacyInfo.xcprivacy ... 
+491 bytes for ./Payload/ChecklistApp.app/PrivacyInfo.xcprivacy
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib ... 
+2026-03-03 01:40:01 +0000  3817 bytes for ./Payload/ChecklistApp.app/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/LaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib ... 
+2026-03-03 01:40:01 +0000  924 bytes for ./Payload/ChecklistApp.app/LaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib
+copying file ./Payload/ChecklistApp.app/LaunchScreen.storyboardc/Info.plist ... 
+2026-03-03 01:40:01 +0000  258 bytes for ./Payload/ChecklistApp.app/LaunchScreen.storyboardc/Info.plist
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Frameworks/hermesvm.framework/_CodeSignature/CodeResources ... 
+2026-03-03 01:40:01 +0000  1798 bytes for ./Payload/ChecklistApp.app/Frameworks/hermesvm.framework/_CodeSignature/CodeResources
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Frameworks/hermesvm.framework/hermesvm ... 
+2026-03-03 01:40:01 +0000  5995984 bytes for ./Payload/ChecklistApp.app/Frameworks/hermesvm.framework/hermesvm
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Frameworks/hermesvm.framework/Info.plist ... 
+859 bytes for ./Payload/ChecklistApp.app/Frameworks/hermesvm.framework/Info.plist
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Frameworks/React.framework/_CodeSignature/CodeResources ... 
+2026-03-03 01:40:01 +0000  1798 bytes for ./Payload/ChecklistApp.app/Frameworks/React.framework/_CodeSignature/CodeResources
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Frameworks/React.framework/React ... 
+2026-03-03 01:40:01 +0000  10743824 bytes for ./Payload/ChecklistApp.app/Frameworks/React.framework/React
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Frameworks/React.framework/Info.plist ... 
+744 bytes for ./Payload/ChecklistApp.app/Frameworks/React.framework/Info.plist
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/_CodeSignature/CodeResources ... 
+2026-03-03 01:40:01 +0000  3548 bytes for ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/_CodeSignature/CodeResources
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_folly.bundle/PrivacyInfo.xcprivacy ... 
+2026-03-03 01:40:01 +0000  552 bytes for ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_folly.bundle/PrivacyInfo.xcprivacy
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_folly.bundle/Info.plist ... 
+2026-03-03 01:40:01 +0000  689 bytes for ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_folly.bundle/Info.plist
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies ... 
+2026-03-03 01:40:01 +0000  1285120 bytes for ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_glog.bundle/PrivacyInfo.xcprivacy ... 
+2026-03-03 01:40:01 +0000  552 bytes for ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_glog.bundle/PrivacyInfo.xcprivacy
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_glog.bundle/Info.plist ... 
+2026-03-03 01:40:01 +0000  687 bytes for ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_glog.bundle/Info.plist
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_boost.bundle/PrivacyInfo.xcprivacy ... 
+2026-03-03 01:40:01 +0000  776 bytes for ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_boost.bundle/PrivacyInfo.xcprivacy
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_boost.bundle/Info.plist ... 
+2026-03-03 01:40:01 +0000  689 bytes for ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies_boost.bundle/Info.plist
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/Info.plist ... 
+2026-03-03 01:40:01 +0000  781 bytes for ./Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework/Info.plist
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/SimpleLineIcons.ttf ... 
+2026-03-03 01:40:01 +0000  54056 bytes for ./Payload/ChecklistApp.app/SimpleLineIcons.ttf
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/FontAwesome6_Brands.ttf ... 
+2026-03-03 01:40:01 +0000  209376 bytes for ./Payload/ChecklistApp.app/FontAwesome6_Brands.ttf
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/embedded.mobileprovision ... 
+2026-03-03 01:40:01 +0000  16459 bytes for ./Payload/ChecklistApp.app/embedded.mobileprovision
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/ReactNativeBlobUtilPrivacyInfo.bundle/PrivacyInfo.xcprivacy ... 
+2026-03-03 01:40:01 +0000  781 bytes for ./Payload/ChecklistApp.app/ReactNativeBlobUtilPrivacyInfo.bundle/PrivacyInfo.xcprivacy
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/ReactNativeBlobUtilPrivacyInfo.bundle/Info.plist ... 
+2026-03-03 01:40:01 +0000  805 bytes for ./Payload/ChecklistApp.app/ReactNativeBlobUtilPrivacyInfo.bundle/Info.plist
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon@3x.png ... 
+2026-03-03 01:40:01 +0000  761 bytes for ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon@3x.png
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon@2x.png ... 
+2026-03-03 01:40:01 +0000  405 bytes for ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon@2x.png
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/search-icon@2x.png ... 
+2026-03-03 01:40:01 +0000  589 bytes for ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/search-icon@2x.png
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/clear-icon@3x.png ... 
+2026-03-03 01:40:01 +0000  502 bytes for ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/clear-icon@3x.png
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon.png ... 
+2026-03-03 01:40:01 +0000  290 bytes for ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon.png
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/clear-icon@2x.png ... 
+2026-03-03 01:40:01 +0000  334 bytes for ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/clear-icon@2x.png
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/search-icon@3x.png ... 
+2026-03-03 01:40:01 +0000  839 bytes for ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/search-icon@3x.png
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/close-icon.png ... 
+2026-03-03 01:40:01 +0000  141 bytes for ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/close-icon.png
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon-mask.png ... 
+2026-03-03 01:40:01 +0000  653 bytes for ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon-mask.png
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/close-icon@2x.png ... 
+2026-03-03 01:40:01 +0000  201 bytes for ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/close-icon@2x.png
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/close-icon@3x.png ... 
+2026-03-03 01:40:01 +0000  266 bytes for ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/close-icon@3x.png
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/clear-icon.png ... 
+2026-03-03 01:40:01 +0000  220 bytes for ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/clear-icon.png
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/search-icon.png ... 
+2026-03-03 01:40:01 +0000  317 bytes for ./Payload/ChecklistApp.app/assets/node_modules/@react-navigation/elements/lib/module/assets/search-icon.png
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/Info.plist ... 
+2026-03-03 01:40:01 +0000  1977 bytes for ./Payload/ChecklistApp.app/Info.plist
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/PkgInfo ... 
+8 bytes for ./Payload/ChecklistApp.app/PkgInfo
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/MaterialIcons.ttf ... 
+2026-03-03 01:40:01 +0000  356840 bytes for ./Payload/ChecklistApp.app/MaterialIcons.ttf
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/React-Core_privacy.bundle/PrivacyInfo.xcprivacy ... 
+2026-03-03 01:40:01 +0000  768 bytes for ./Payload/ChecklistApp.app/React-Core_privacy.bundle/PrivacyInfo.xcprivacy
+2026-03-03 01:40:01 +0000  copying file ./Payload/ChecklistApp.app/React-Core_privacy.bundle/Info.plist ... 
+781 bytes for ./Payload/ChecklistApp.app/React-Core_privacy.bundle/Info.plist
+2026-03-03 01:40:01 +0000  /usr/bin/ditto exited with 0
+2026-03-03 01:40:01 +0000  Processing step: IDEDistributionAppStoreInformationStep
+2026-03-03 01:40:01 +0000  Skipping step: IDEDistributionAppStoreInformationStep because it said so
+2026-03-03 01:40:01 +0000  Processing step: IDEDistributionGenerateProcessedDistributionItems
+2026-03-03 01:40:01 +0000  IDEDistributionItem init <DVTFilePath:0x6000106cd5c0:'/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app/Frameworks/React.framework'>
+2026-03-03 01:40:01 +0000  IDEDistributionItem init <DVTFilePath:0x600004e9ad80:'/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app/Frameworks/ReactNativeDependencies.framework'>
+2026-03-03 01:40:01 +0000  IDEDistributionItem init <DVTFilePath:0x60000c99ff70:'/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app/Frameworks/hermesvm.framework'>
+2026-03-03 01:40:01 +0000  IDEDistributionItem init <DVTFilePath:0x600088bbad80:'/var/folders/vv/yl8xlvkx1g19cy_d84mf0dxc0000gn/T/XcodeDistPipeline.~~~5c0VeX/Root/Payload/ChecklistApp.app'>
+2026-03-03 01:40:01 +0000  Processing step: IDEDistributionCreateManifestStep

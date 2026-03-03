@@ -1,7 +1,8 @@
 /**
- * 기록 데이터를 Excel에서 열 수 있는 CSV 문자열로 변환
+ * 기록 데이터를 .xlsx(Excel) 바이너리로 변환 후 base64 문자열 반환
  */
 
+import * as XLSX from 'xlsx';
 import { formatDate } from './date';
 import type { ChecklistRecord, ChecklistGroup, RecordItem, ChecklistItemTemplate } from '../types';
 
@@ -14,15 +15,15 @@ type ItemWithMeta = {
 
 type TFunction = (key: string, params?: Record<string, string | number>) => string;
 
-function escapeCsvCell(value: string | number): string {
-  const s = String(value);
-  if (s.includes('"') || s.includes(',') || s.includes('\n') || s.includes('\r')) {
-    return `"${s.replace(/"/g, '""')}"`;
+function u8ToBase64(u8: Uint8Array): string {
+  let binary = '';
+  for (let i = 0; i < u8.length; i++) {
+    binary += String.fromCharCode(u8[i]);
   }
-  return s;
+  return btoa(binary);
 }
 
-export function recordToCsv(
+export function recordToXlsxBase64(
   record: ChecklistRecord,
   group: ChecklistGroup | null,
   items: ItemWithMeta[],
@@ -33,16 +34,16 @@ export function recordToCsv(
   const groupName = record.groupId ? (group?.name ?? t('noGroup')) : t('custom');
   const note = record.overallNote ?? '';
 
-  const headerDate = t('date');
-  const headerSubject = t('targetName');
-  const headerGroup = t('group');
-  const headerNote = t('overallNote');
-  const headerNo = 'No';
-  const headerItem = t('checkItems');
-  const headerStatus = t('csvStatus');
-  const headerSelected = t('csvSelectedOption');
-
-  const headerRow = [headerDate, headerSubject, headerGroup, headerNote, headerNo, headerItem, headerStatus, headerSelected].map(escapeCsvCell).join(',');
+  const headerRow = [
+    t('date'),
+    t('targetName'),
+    t('group'),
+    t('overallNote'),
+    'No',
+    t('checkItems'),
+    t('csvStatus'),
+    t('csvSelectedOption'),
+  ];
 
   const dataRows = items.map(({ index, title, recordItem, template }) => {
     const isSelection = template?.itemType === 'selection' && template.options && template.options.length >= 2;
@@ -53,9 +54,14 @@ export function recordToCsv(
     if (isSelection && template?.options && selectedIdx != null && template.options[selectedIdx] != null) {
       selectedValue = template.options[selectedIdx];
     }
-    return [date, subject, groupName, note, index, title || '', statusText, selectedValue].map(escapeCsvCell).join(',');
+    return [date, subject, groupName, note, index, title || '', statusText, selectedValue];
   });
 
-  const BOM = '\uFEFF';
-  return BOM + [headerRow, ...dataRows].join('\r\n');
+  const aoa = [headerRow, ...dataRows];
+  const ws = XLSX.utils.aoa_to_sheet(aoa);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Record');
+
+  const u8 = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+  return u8ToBase64(u8);
 }

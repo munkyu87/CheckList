@@ -13,7 +13,6 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useFocusEffect } from '@react-navigation/native';
 import { generatePDF } from 'react-native-html-to-pdf';
 import Share from 'react-native-share';
-import ReactNativeBlobUtil from 'react-native-blob-util';
 import type { HomeStackParamList } from '../navigation/types';
 import { Checkbox } from '../components';
 import { useLanguage } from '../i18n';
@@ -22,6 +21,7 @@ import { loadAll, saveAll } from '../storage';
 import { formatDate } from '../utils/date';
 import { recordToPdfHtml } from '../utils/recordToPdfHtml';
 import { recordToCsv } from '../utils/recordToCsv';
+import { utf8ToBase64 } from '../utils/base64';
 import type { ChecklistRecord, ChecklistGroup, RecordItem, ChecklistItemTemplate } from '../types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'RecordDetail'>;
@@ -122,12 +122,9 @@ export function RecordDetailScreen({ route, navigation }: Props) {
       const csv = recordToCsv(record, group, items, t);
       const baseName = `ThinkLess_${record.subjectName.replace(/[^a-zA-Z0-9가-힣]/g, '_')}_${record.date}`;
       const csvFileName = `${baseName.slice(0, 80)}.csv`;
-      const dir = ReactNativeBlobUtil.fs.dirs.CacheDir;
-      const path = `${dir}/${csvFileName}`;
-      await ReactNativeBlobUtil.fs.writeFile(path, csv, 'utf8');
-      const fileUrl = path.startsWith('file://') ? path : `file://${path}`;
+      const base64 = utf8ToBase64(csv);
       await Share.open({
-        url: fileUrl,
+        url: `data:text/csv;base64,${base64}`,
         type: 'text/csv',
         title: t('shareRecord'),
         filename: csvFileName,
@@ -136,6 +133,7 @@ export function RecordDetailScreen({ route, navigation }: Props) {
       if ((err as { message?: string })?.message?.includes('User did not share')) {
         // 사용자가 공유 취소
       } else {
+        if (__DEV__ && err instanceof Error) console.warn('Share Excel error:', err.message, err);
         Alert.alert(t('backupFailed'), t('backupError'));
       }
     } finally {
