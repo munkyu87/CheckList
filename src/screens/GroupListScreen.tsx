@@ -17,8 +17,11 @@ import type { GroupsStackParamList } from '../navigation/types';
 import { DEFAULT_SUBJECT_LABEL } from '../constants';
 import { useTheme } from '../theme';
 import { loadAll, saveAll } from '../storage';
+import { formatDate } from '../utils/date';
 import { generateId } from '../utils/id';
 import type { ChecklistGroup } from '../types';
+
+export type GroupSortOrder = 'name' | 'createdAt' | 'recordCount';
 
 type Nav = NativeStackNavigationProp<GroupsStackParamList, 'GroupList'>;
 
@@ -28,6 +31,8 @@ export function GroupListScreen() {
   const [groups, setGroups] = useState<ChecklistGroup[]>([]);
   const [itemCounts, setItemCounts] = useState<Record<string, number>>({});
   const [firstItemTitles, setFirstItemTitles] = useState<Record<string, string>>({});
+  const [recordCountByGroup, setRecordCountByGroup] = useState<Record<string, number>>({});
+  const [sortOrder, setSortOrder] = useState<GroupSortOrder>('createdAt');
   const [modalVisible, setModalVisible] = useState(false);
   const [newName, setNewName] = useState('');
 
@@ -35,6 +40,11 @@ export function GroupListScreen() {
     () =>
       StyleSheet.create({
         container: { flex: 1, backgroundColor: theme.background },
+        sortRow: { flexDirection: 'row', paddingHorizontal: 12, paddingTop: 8, paddingBottom: 4, gap: 8 },
+        sortChip: { paddingHorizontal: 12, paddingVertical: 8, borderRadius: 20, backgroundColor: theme.surface, borderWidth: 1, borderColor: theme.borderLight },
+        sortChipActive: { backgroundColor: theme.primary, borderColor: theme.primary },
+        sortChipText: { fontSize: 14, color: theme.textSecondary },
+        sortChipTextActive: { color: '#fff', fontWeight: '600' },
         list: { padding: 12, paddingBottom: 120, flexGrow: 1 },
         empty: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24 },
         emptyText: { fontSize: 16, color: theme.text, marginBottom: 8 },
@@ -50,9 +60,11 @@ export function GroupListScreen() {
           borderColor: theme.borderLight,
         },
         itemPressed: { opacity: 0.8 },
-        itemContent: { flex: 1, minWidth: 0 },
+        itemContent: { flex: 1, minWidth: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' },
+        itemLeft: { flex: 1, minWidth: 0 },
         itemName: { fontSize: 17, fontWeight: '600', color: theme.text },
         itemSubtext: { fontSize: 13, color: theme.textSecondary, marginTop: 4 },
+        itemDateRight: { fontSize: 13, color: theme.textSecondary, marginLeft: 8 },
         swipeDeleteAction: {
           backgroundColor: theme.danger,
           justifyContent: 'center',
@@ -106,15 +118,32 @@ export function GroupListScreen() {
     setGroups(data.groups);
     const counts: Record<string, number> = {};
     const firstTitles: Record<string, string> = {};
+    const recordCounts: Record<string, number> = {};
     data.templates
       .sort((a, b) => a.order - b.order)
       .forEach(t => {
         counts[t.groupId] = (counts[t.groupId] ?? 0) + 1;
         if (!firstTitles[t.groupId]) firstTitles[t.groupId] = t.title;
       });
+    data.records.forEach(r => {
+      if (r.groupId) recordCounts[r.groupId] = (recordCounts[r.groupId] ?? 0) + 1;
+    });
     setItemCounts(counts);
     setFirstItemTitles(firstTitles);
+    setRecordCountByGroup(recordCounts);
   }, []);
+
+  const sortedGroups = useMemo(() => {
+    const list = [...groups];
+    if (sortOrder === 'name') {
+      list.sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+    } else if (sortOrder === 'createdAt') {
+      list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    } else {
+      list.sort((a, b) => (recordCountByGroup[b.id] ?? 0) - (recordCountByGroup[a.id] ?? 0));
+    }
+    return list;
+  }, [groups, sortOrder, recordCountByGroup]);
 
   useFocusEffect(
     useCallback(() => {
@@ -167,7 +196,8 @@ export function GroupListScreen() {
   const renderItem = ({ item }: { item: ChecklistGroup }) => {
     const count = itemCounts[item.id] ?? 0;
     const firstTitle = firstItemTitles[item.id];
-    const subtext =
+    const createdStr = item.createdAt ? formatDate(item.createdAt.slice(0, 10)) : '';
+    const countStr =
       count === 0
         ? '0개 항목'
         : count === 1
@@ -197,8 +227,11 @@ export function GroupListScreen() {
             style={({ pressed }) => [styles.itemContent, pressed && styles.itemPressed]}
             onPress={() => navigation.navigate('GroupDetail', { groupId: item.id })}
           >
-            <Text style={styles.itemName}>{item.name}</Text>
-            <Text style={styles.itemSubtext}>{subtext}</Text>
+            <View style={styles.itemLeft}>
+              <Text style={styles.itemName}>{item.name}</Text>
+              <Text style={styles.itemSubtext}>{countStr}</Text>
+            </View>
+            {createdStr ? <Text style={styles.itemDateRight}>{createdStr}</Text> : null}
           </Pressable>
         </View>
       </Swipeable>
@@ -213,12 +246,34 @@ export function GroupListScreen() {
           <Text style={styles.emptyHint}>아래 버튼으로 그룹을 추가해 보세요.</Text>
         </View>
       ) : (
-        <FlatList
-          data={groups}
-          keyExtractor={g => g.id}
-          renderItem={renderItem}
-          contentContainerStyle={styles.list}
-        />
+        <>
+          <View style={styles.sortRow}>
+            <Pressable
+              style={[styles.sortChip, sortOrder === 'name' && styles.sortChipActive]}
+              onPress={() => setSortOrder('name')}
+            >
+              <Text style={[styles.sortChipText, sortOrder === 'name' && styles.sortChipTextActive]}>이름순</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.sortChip, sortOrder === 'createdAt' && styles.sortChipActive]}
+              onPress={() => setSortOrder('createdAt')}
+            >
+              <Text style={[styles.sortChipText, sortOrder === 'createdAt' && styles.sortChipTextActive]}>생성일순</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.sortChip, sortOrder === 'recordCount' && styles.sortChipActive]}
+              onPress={() => setSortOrder('recordCount')}
+            >
+              <Text style={[styles.sortChipText, sortOrder === 'recordCount' && styles.sortChipTextActive]}>조회순</Text>
+            </Pressable>
+          </View>
+          <FlatList
+            data={sortedGroups}
+            keyExtractor={g => g.id}
+            renderItem={renderItem}
+            contentContainerStyle={styles.list}
+          />
+        </>
       )}
 
       <Pressable style={({ pressed }) => [styles.fab, pressed && styles.fabPressed]} onPress={openAdd}>

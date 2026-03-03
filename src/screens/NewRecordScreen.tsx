@@ -434,6 +434,7 @@ export function NewRecordScreen() {
                     display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     onChange={onDateChange}
                     themeVariant={isDark ? 'dark' : 'light'}
+                    locale="ko-KR"
                   />
                 </View>
               </Pressable>

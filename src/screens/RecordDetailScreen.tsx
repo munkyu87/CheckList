@@ -1,12 +1,24 @@
 import React, { useCallback, useLayoutEffect, useMemo, useState } from 'react';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useFocusEffect } from '@react-navigation/native';
+import { generatePDF } from 'react-native-html-to-pdf';
+import Share from 'react-native-share';
 import type { HomeStackParamList } from '../navigation/types';
-import { useTheme } from '../theme';
 import { Checkbox } from '../components';
+import { useTheme } from '../theme';
 import { loadAll, saveAll } from '../storage';
 import { formatDate } from '../utils/date';
+import { recordToPdfHtml } from '../utils/recordToPdfHtml';
 import type { ChecklistRecord, ChecklistGroup, RecordItem, ChecklistItemTemplate } from '../types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'RecordDetail'>;
@@ -17,6 +29,7 @@ export function RecordDetailScreen({ route, navigation }: Props) {
   const [record, setRecord] = useState<ChecklistRecord | null>(null);
   const [group, setGroup] = useState<ChecklistGroup | null>(null);
   const [items, setItems] = useState<Array<{ index: number; title: string; recordItem: RecordItem; template?: ChecklistItemTemplate | null }>>([]);
+  const [sharing, setSharing] = useState(false);
 
   const refresh = useCallback(() => {
     const data = loadAll();
@@ -68,11 +81,48 @@ export function RecordDetailScreen({ route, navigation }: Props) {
     ]);
   }, [recordId, navigation]);
 
+  const shareAsPdf = useCallback(async () => {
+    if (!record) return;
+    setSharing(true);
+    try {
+      const html = recordToPdfHtml(record, group, items);
+      const fileName = `ThinkLess_${record.subjectName.replace(/[^a-zA-Z0-9가-힣]/g, '_')}_${record.date}`;
+      const file = await generatePDF({
+        html,
+        fileName: fileName.slice(0, 80),
+        directory: Platform.OS === 'android' ? 'Documents' : undefined,
+      });
+      if (file.filePath) {
+        const fileUrl = file.filePath.startsWith('file://') ? file.filePath : `file://${file.filePath}`;
+        await Share.open({
+          url: fileUrl,
+          type: 'application/pdf',
+          title: '기록 공유',
+        });
+      }
+    } catch (err) {
+      if ((err as { message?: string })?.message?.includes('User did not share')) {
+        // 사용자가 공유 취소
+      } else {
+        Alert.alert('공유 실패', 'PDF 생성 또는 공유 중 오류가 발생했습니다.');
+      }
+    } finally {
+      setSharing(false);
+    }
+  }, [record, items]);
+
   useLayoutEffect(() => {
     if (record == null) return;
     navigation.setOptions({
       headerRight: () => (
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+          <Pressable onPress={shareAsPdf} disabled={sharing} hitSlop={8}>
+            {sharing ? (
+              <ActivityIndicator size="small" color={theme.primary} />
+            ) : (
+              <Text style={{ color: theme.primary, fontSize: 16 }}>공유</Text>
+            )}
+          </Pressable>
           <Pressable onPress={() => navigation.navigate('EditRecord', { recordId })} hitSlop={8}>
             <Text style={{ color: theme.primary, fontSize: 16 }}>수정</Text>
           </Pressable>
@@ -82,43 +132,39 @@ export function RecordDetailScreen({ route, navigation }: Props) {
         </View>
       ),
     });
-  }, [navigation, recordId, record, theme.primary, theme.danger, deleteRecord]);
+  }, [navigation, recordId, record, theme.primary, theme.danger, deleteRecord, shareAsPdf, sharing]);
 
   const styles = useMemo(
     () =>
       StyleSheet.create({
         container: { flex: 1, backgroundColor: theme.background },
         scroll: { flex: 1 },
-        content: { padding: 12, paddingBottom: 24, flexGrow: 1 },
-        header: {
+        content: { padding: 16, paddingBottom: 32, flexGrow: 1 },
+        reportHeader: {
           backgroundColor: theme.surface,
-          padding: 18,
-          borderRadius: 14,
-          marginBottom: 14,
+          padding: 20,
+          borderRadius: 12,
+          marginBottom: 20,
           borderWidth: 1,
           borderColor: theme.borderLight,
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 1 },
-          shadowOpacity: 0.06,
-          shadowRadius: 4,
-          elevation: 2,
+          borderLeftWidth: 4,
+          borderLeftColor: theme.primary,
         },
-        date: { fontSize: 13, color: theme.textSecondary, marginBottom: 4 },
-        subject: { fontSize: 18, fontWeight: '600', color: theme.text },
-        groupName: { fontSize: 13, color: theme.textTertiary, marginTop: 2 },
-        overallNote: {
+        reportDate: { fontSize: 13, color: theme.textSecondary, marginBottom: 6 },
+        reportTitle: { fontSize: 20, fontWeight: '700', color: theme.text, marginBottom: 4 },
+        reportCategory: { fontSize: 14, color: theme.textTertiary, marginBottom: 12 },
+        reportNote: {
           fontSize: 14,
           color: theme.textSecondary,
-          marginTop: 12,
+          lineHeight: 22,
           paddingTop: 12,
           borderTopWidth: 1,
           borderTopColor: theme.borderLight,
         },
-        sectionTitle: { fontSize: 15, fontWeight: '600', color: theme.text, marginBottom: 8, marginLeft: 4 },
-        rowIndex: { fontSize: 14, color: theme.textTertiary, width: 28, marginRight: 4 },
+        sectionTitle: { fontSize: 16, fontWeight: '600', color: theme.text, marginBottom: 12, marginLeft: 4 },
         row: {
           flexDirection: 'row',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           backgroundColor: theme.surface,
           padding: 14,
           borderRadius: 12,
@@ -126,15 +172,12 @@ export function RecordDetailScreen({ route, navigation }: Props) {
           borderWidth: 1,
           borderColor: theme.borderLight,
         },
-        rowCheck: { marginRight: 12 },
-        rowContent: { flex: 1 },
-        rowTitle: { fontSize: 16, color: theme.text },
+        colNum: { width: 28, marginRight: 8, fontSize: 15, color: theme.textTertiary },
+        colStatusIcon: { marginRight: 12, justifyContent: 'center' },
+        colContent: { flex: 1 },
+        rowTitle: { fontSize: 16, color: theme.text, marginBottom: 2 },
         selectionOptionsList: { marginTop: 10 },
-        selectionOptionRow: {
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginBottom: 6,
-        },
+        selectionOptionRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 6 },
         selectionOptionNum: { fontSize: 14, color: theme.textTertiary, width: 24 },
         selectionOptionRadio: {
           width: 20,
@@ -168,26 +211,26 @@ export function RecordDetailScreen({ route, navigation }: Props) {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
-        <View style={styles.header}>
-          <Text style={styles.date}>{formatDate(record.date)}</Text>
-          <Text style={styles.subject}>{record.subjectName}</Text>
-          <Text style={styles.groupName}>{record.groupId ? (group?.name ?? '(그룹 없음)') : '커스텀'}</Text>
-          {record.overallNote ? (
-            <Text style={styles.overallNote}>{record.overallNote}</Text>
-          ) : null}
+        <View style={styles.reportHeader}>
+          <Text style={styles.reportDate}>{formatDate(record.date)}</Text>
+          <Text style={styles.reportTitle}>{record.subjectName}</Text>
+          <Text style={styles.reportCategory}>{record.groupId ? (group?.name ?? '(그룹 없음)') : '커스텀'}</Text>
+          {record.overallNote ? <Text style={styles.reportNote}>{record.overallNote}</Text> : null}
         </View>
 
         <Text style={styles.sectionTitle}>체크 항목</Text>
         {items.map(({ index, title, recordItem, template }) => {
           const isSelection = template?.itemType === 'selection' && template.options && template.options.length >= 2;
           const selectedIdx = recordItem.selectedOptionIndex;
+          const checked = isSelection ? selectedIdx !== undefined : recordItem.checked;
+
           return (
             <View key={recordItem.id} style={styles.row}>
-              <Text style={styles.rowIndex}>{index}.</Text>
-              <View style={styles.rowCheck}>
-                <Checkbox checked={recordItem.checked} disabled />
+              <Text style={styles.colNum}>{index}.</Text>
+              <View style={styles.colStatusIcon}>
+                <Checkbox checked={!!checked} size={22} />
               </View>
-              <View style={styles.rowContent}>
+              <View style={styles.colContent}>
                 <Text style={styles.rowTitle}>{title || '(제목 없음)'}</Text>
                 {isSelection && template!.options!.length > 0 ? (
                   <View style={styles.selectionOptionsList}>

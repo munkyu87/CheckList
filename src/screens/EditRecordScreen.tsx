@@ -348,6 +348,7 @@ export function EditRecordScreen({ route, navigation }: Props) {
                   display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                   onChange={onDateChange}
                   themeVariant={isDark ? 'dark' : 'light'}
+                  locale="ko-KR"
                 />
               </View>
             </Pressable>

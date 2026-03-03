@@ -579,12 +579,13 @@ export function HomeScreen() {
             </View>
             <View style={styles.dateModalDivider} />
             <View style={styles.datePickerWrap}>
-              <DateTimePicker
-                value={filterDate ? new Date(filterDate + 'T12:00:00') : new Date()}
-                mode="date"
-                display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                onChange={onDateChange}
-                themeVariant={isDark ? 'dark' : 'light'}
+<DateTimePicker
+              value={filterDate ? new Date(filterDate + 'T12:00:00') : new Date()}
+              mode="date"
+              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+              onChange={onDateChange}
+              themeVariant={isDark ? 'dark' : 'light'}
+              locale="ko-KR"
               />
             </View>
           </Pressable>
