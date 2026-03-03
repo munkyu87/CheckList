@@ -1,13 +1,13 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NewRecordScreen } from '../screens/NewRecordScreen';
+import { SettingsScreen } from '../screens/SettingsScreen';
 import { useLanguage } from '../i18n';
 import { useTheme } from '../theme';
-import type { NewRecordStackParamList } from './types';
+import type { SettingsStackParamList } from './types';
 
-const Stack = createNativeStackNavigator<NewRecordStackParamList>();
+const Stack = createNativeStackNavigator<SettingsStackParamList>();
 
-export function NewRecordStack() {
+export function SettingsStack() {
   const { theme } = useTheme();
   const { t } = useLanguage();
   return (
@@ -20,7 +20,7 @@ export function NewRecordStack() {
         contentStyle: { backgroundColor: theme.background },
       }}
     >
-      <Stack.Screen name="NewRecord" component={NewRecordScreen} options={{ title: t('newRecord') }} />
+      <Stack.Screen name="Settings" component={SettingsScreen} options={{ title: t('settings') }} />
     </Stack.Navigator>
   );
 }

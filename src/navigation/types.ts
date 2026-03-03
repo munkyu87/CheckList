@@ -17,8 +17,13 @@ export type NewRecordStackParamList = {
   NewRecord: undefined;
 };
 
+export type SettingsStackParamList = {
+  Settings: undefined;
+};
+
 export type RootTabParamList = {
   HomeTab: undefined;
   NewRecord: undefined;
   GroupsTab: undefined;
+  SettingsTab: undefined;
 };

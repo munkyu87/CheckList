@@ -15,6 +15,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { GroupsStackParamList } from '../navigation/types';
 import { DEFAULT_SUBJECT_LABEL } from '../constants';
+import { useLanguage } from '../i18n';
 import { useTheme } from '../theme';
 import { loadAll, saveAll } from '../storage';
 import { formatDate } from '../utils/date';
@@ -27,6 +28,7 @@ type Nav = NativeStackNavigationProp<GroupsStackParamList, 'GroupList'>;
 
 export function GroupListScreen() {
   const { theme } = useTheme();
+  const { t } = useLanguage();
   const navigation = useNavigation<Nav>();
   const [groups, setGroups] = useState<ChecklistGroup[]>([]);
   const [itemCounts, setItemCounts] = useState<Record<string, number>>({});
@@ -66,13 +68,17 @@ export function GroupListScreen() {
         itemSubtext: { fontSize: 13, color: theme.textSecondary, marginTop: 4 },
         itemDateRight: { fontSize: 13, color: theme.textSecondary, marginLeft: 8 },
         swipeDeleteAction: {
+          alignSelf: 'stretch',
           backgroundColor: theme.danger,
           justifyContent: 'center',
           alignItems: 'center',
           paddingHorizontal: 16,
-          minWidth: 80,
+          minWidth: 56,
+          borderWidth: 0,
+          borderTopRightRadius: 12,
+          borderBottomRightRadius: 12,
+          overflow: 'hidden',
         },
-        swipeDeleteText: { color: '#fff', fontSize: 16, fontWeight: '600' },
         fab: {
           position: 'absolute',
           right: 20,
@@ -174,12 +180,12 @@ export function GroupListScreen() {
 
   const deleteGroup = (group: ChecklistGroup) => {
     Alert.alert(
-      '그룹 삭제',
-      `"${group.name}"을(를) 삭제할까요? 이 그룹의 체크 항목도 모두 삭제됩니다.`,
+      t('deleteGroupTitle'),
+      t('deleteGroupConfirmMessage', { name: group.name }),
       [
-        { text: '취소', style: 'cancel' },
+        { text: t('cancel'), style: 'cancel' },
         {
-          text: '삭제',
+          text: t('delete'),
           style: 'destructive',
           onPress: () => {
             const data = loadAll();
@@ -199,12 +205,12 @@ export function GroupListScreen() {
     const createdStr = item.createdAt ? formatDate(item.createdAt.slice(0, 10)) : '';
     const countStr =
       count === 0
-        ? '0개 항목'
+        ? t('itemsCountZero')
         : count === 1
-          ? '1개 항목'
+          ? t('itemsCountOne')
           : firstTitle
-            ? `${firstTitle} 외 ${count - 1}개 항목`
-            : `${count}개 항목`;
+            ? t('itemsCountMany', { first: firstTitle, rest: count - 1 })
+            : t('itemsCountOnly', { count });
 
     return (
       <Swipeable
@@ -216,7 +222,7 @@ export function GroupListScreen() {
               deleteGroup(item);
             }}
           >
-            <Text style={styles.swipeDeleteText}>삭제</Text>
+            <Feather name="trash-2" size={22} color="#fff" />
           </RectButton>
         )}
         friction={2}
@@ -242,8 +248,8 @@ export function GroupListScreen() {
     <View style={styles.container}>
       {groups.length === 0 ? (
         <View style={styles.empty}>
-          <Text style={styles.emptyText}>등록된 그룹이 없어요.</Text>
-          <Text style={styles.emptyHint}>아래 버튼으로 그룹을 추가해 보세요.</Text>
+          <Text style={styles.emptyText}>{t('emptyGroups')}</Text>
+          <Text style={styles.emptyHint}>{t('emptyGroupsHint')}</Text>
         </View>
       ) : (
         <>
@@ -252,19 +258,19 @@ export function GroupListScreen() {
               style={[styles.sortChip, sortOrder === 'name' && styles.sortChipActive]}
               onPress={() => setSortOrder('name')}
             >
-              <Text style={[styles.sortChipText, sortOrder === 'name' && styles.sortChipTextActive]}>이름순</Text>
+              <Text style={[styles.sortChipText, sortOrder === 'name' && styles.sortChipTextActive]}>{t('sortByName')}</Text>
             </Pressable>
             <Pressable
               style={[styles.sortChip, sortOrder === 'createdAt' && styles.sortChipActive]}
               onPress={() => setSortOrder('createdAt')}
             >
-              <Text style={[styles.sortChipText, sortOrder === 'createdAt' && styles.sortChipTextActive]}>생성일순</Text>
+              <Text style={[styles.sortChipText, sortOrder === 'createdAt' && styles.sortChipTextActive]}>{t('sortByDate')}</Text>
             </Pressable>
             <Pressable
               style={[styles.sortChip, sortOrder === 'recordCount' && styles.sortChipActive]}
               onPress={() => setSortOrder('recordCount')}
             >
-              <Text style={[styles.sortChipText, sortOrder === 'recordCount' && styles.sortChipTextActive]}>조회순</Text>
+              <Text style={[styles.sortChipText, sortOrder === 'recordCount' && styles.sortChipTextActive]}>{t('sortByCount')}</Text>
             </Pressable>
           </View>
           <FlatList
@@ -288,10 +294,10 @@ export function GroupListScreen() {
       >
         <Pressable style={styles.modalOverlay} onPress={() => setModalVisible(false)}>
           <Pressable style={styles.modalBox} onPress={e => e.stopPropagation()}>
-            <Text style={styles.modalTitle}>새 그룹</Text>
+            <Text style={styles.modalTitle}>{t('newGroup')}</Text>
             <TextInput
               style={styles.input}
-              placeholder="그룹 이름"
+              placeholder={t('groupNamePlaceholder')}
               placeholderTextColor={theme.placeholder}
               value={newName}
               onChangeText={setNewName}
@@ -299,14 +305,14 @@ export function GroupListScreen() {
             />
             <View style={styles.modalButtons}>
               <Pressable style={[styles.modalBtn, styles.modalBtnCancel]} onPress={() => setModalVisible(false)}>
-                <Text style={styles.modalBtnCancelText}>취소</Text>
+                <Text style={styles.modalBtnCancelText}>{t('cancel')}</Text>
               </Pressable>
               <Pressable
                 style={[styles.modalBtn, styles.modalBtnOk, !newName.trim() && { opacity: 0.5 }]}
                 onPress={saveGroupModal}
                 disabled={!newName.trim()}
               >
-                <Text style={styles.modalBtnOkText}>추가</Text>
+                <Text style={styles.modalBtnOkText}>{t('add')}</Text>
               </Pressable>
             </View>
           </Pressable>

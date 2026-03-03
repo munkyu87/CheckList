@@ -20,14 +20,29 @@ function escapeHtml(s: string): string {
     .replace(/"/g, '&quot;');
 }
 
+type TFunction = (key: string, params?: Record<string, string | number>) => string;
+
+const defaultT: TFunction = (key: string, params?: Record<string, string | number>) => {
+  if (key === 'optionLabel' && params?.num != null) return `보기 ${params.num}`;
+  const fallback: Record<string, string> = {
+    checkItems: '체크 항목',
+    noGroup: '(그룹 없음)',
+    custom: '커스텀',
+    pdfDone: '완료',
+    pdfPending: '미완료',
+  };
+  return fallback[key] ?? key;
+};
+
 export function recordToPdfHtml(
   record: ChecklistRecord,
   group: ChecklistGroup | null,
-  items: ItemWithMeta[]
+  items: ItemWithMeta[],
+  t: TFunction = defaultT
 ): string {
   const date = formatDate(record.date);
   const subject = escapeHtml(record.subjectName);
-  const groupName = record.groupId ? escapeHtml(group?.name ?? '(그룹 없음)') : '커스텀';
+  const groupName = record.groupId ? escapeHtml(group?.name ?? t('noGroup')) : t('custom');
   const note = record.overallNote ? escapeHtml(record.overallNote) : '';
 
   const rows = items
@@ -35,7 +50,7 @@ export function recordToPdfHtml(
       const isSelection = template?.itemType === 'selection' && template.options && template.options.length >= 2;
       const selectedIdx = recordItem.selectedOptionIndex;
       const checked = isSelection ? selectedIdx !== undefined : recordItem.checked;
-      const statusText = checked ? '✓ 완료' : '○ 미완료';
+      const statusText = checked ? `✓ ${t('pdfDone')}` : `○ ${t('pdfPending')}`;
       const statusClass = checked ? 'status-done' : 'status-pending';
 
       let optionsHtml = '';
@@ -45,7 +60,7 @@ export function recordToPdfHtml(
             (opt, oi) =>
               `<div class="option-row"><span class="option-num">${oi + 1}.</span>
   <span class="option-radio ${selectedIdx === oi ? 'selected' : ''}">${selectedIdx === oi ? '●' : '○'}</span>
-  <span class="option-label">${escapeHtml(opt || `보기 ${oi + 1}`)}</span></div>`
+  <span class="option-label">${escapeHtml(opt || t('optionLabel', { num: oi + 1 }))}</span></div>`
           )
           .join('');
         optionsHtml = `<div class="selection-options">${optionsHtml}</div>`;
@@ -102,7 +117,7 @@ export function recordToPdfHtml(
     <div class="report-category">${groupName}</div>
     ${note ? `<div class="report-note">${note}</div>` : ''}
   </div>
-  <div class="section-title">체크 항목</div>
+  <div class="section-title">${t('checkItems')}</div>
   <table>
     ${rows}
   </table>

@@ -8,4 +8,5 @@ export const STORAGE_KEYS = {
   CHECKLIST_RECORDS: 'checklist_records',
   RECORD_ITEMS: 'record_items',
   APP_THEME: 'app_theme',
+  APP_LANGUAGE: 'app_language',
 } as const;

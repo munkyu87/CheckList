@@ -13,12 +13,15 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useFocusEffect } from '@react-navigation/native';
 import { generatePDF } from 'react-native-html-to-pdf';
 import Share from 'react-native-share';
+import ReactNativeBlobUtil from 'react-native-blob-util';
 import type { HomeStackParamList } from '../navigation/types';
 import { Checkbox } from '../components';
+import { useLanguage } from '../i18n';
 import { useTheme } from '../theme';
 import { loadAll, saveAll } from '../storage';
 import { formatDate } from '../utils/date';
 import { recordToPdfHtml } from '../utils/recordToPdfHtml';
+import { recordToCsv } from '../utils/recordToCsv';
 import type { ChecklistRecord, ChecklistGroup, RecordItem, ChecklistItemTemplate } from '../types';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'RecordDetail'>;
@@ -26,6 +29,7 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'RecordDetail'>;
 export function RecordDetailScreen({ route, navigation }: Props) {
   const { recordId } = route.params;
   const { theme } = useTheme();
+  const { t } = useLanguage();
   const [record, setRecord] = useState<ChecklistRecord | null>(null);
   const [group, setGroup] = useState<ChecklistGroup | null>(null);
   const [items, setItems] = useState<Array<{ index: number; title: string; recordItem: RecordItem; template?: ChecklistItemTemplate | null }>>([]);
@@ -65,10 +69,10 @@ export function RecordDetailScreen({ route, navigation }: Props) {
   );
 
   const deleteRecord = useCallback(() => {
-    Alert.alert('기록 삭제', '이 기록을 삭제할까요?', [
-      { text: '취소', style: 'cancel' },
+    Alert.alert(t('deleteRecordTitle'), t('deleteRecordMessage'), [
+      { text: t('cancel'), style: 'cancel' },
       {
-        text: '삭제',
+        text: t('delete'),
         style: 'destructive',
         onPress: () => {
           const data = loadAll();
@@ -79,13 +83,13 @@ export function RecordDetailScreen({ route, navigation }: Props) {
         },
       },
     ]);
-  }, [recordId, navigation]);
+  }, [recordId, navigation, t]);
 
   const shareAsPdf = useCallback(async () => {
     if (!record) return;
     setSharing(true);
     try {
-      const html = recordToPdfHtml(record, group, items);
+      const html = recordToPdfHtml(record, group, items, t);
       const fileName = `ThinkLess_${record.subjectName.replace(/[^a-zA-Z0-9가-힣]/g, '_')}_${record.date}`;
       const file = await generatePDF({
         html,
@@ -97,42 +101,78 @@ export function RecordDetailScreen({ route, navigation }: Props) {
         await Share.open({
           url: fileUrl,
           type: 'application/pdf',
-          title: '기록 공유',
+          title: t('shareRecord'),
         });
       }
     } catch (err) {
       if ((err as { message?: string })?.message?.includes('User did not share')) {
         // 사용자가 공유 취소
       } else {
-        Alert.alert('공유 실패', 'PDF 생성 또는 공유 중 오류가 발생했습니다.');
+        Alert.alert(t('backupFailed'), t('backupError'));
       }
     } finally {
       setSharing(false);
     }
-  }, [record, items]);
+  }, [record, group, items, t]);
+
+  const shareAsExcel = useCallback(async () => {
+    if (!record) return;
+    setSharing(true);
+    try {
+      const csv = recordToCsv(record, group, items, t);
+      const baseName = `ThinkLess_${record.subjectName.replace(/[^a-zA-Z0-9가-힣]/g, '_')}_${record.date}`;
+      const csvFileName = `${baseName.slice(0, 80)}.csv`;
+      const dir = ReactNativeBlobUtil.fs.dirs.CacheDir;
+      const path = `${dir}/${csvFileName}`;
+      await ReactNativeBlobUtil.fs.writeFile(path, csv, 'utf8');
+      const fileUrl = path.startsWith('file://') ? path : `file://${path}`;
+      await Share.open({
+        url: fileUrl,
+        type: 'text/csv',
+        title: t('shareRecord'),
+        filename: csvFileName,
+      });
+    } catch (err) {
+      if ((err as { message?: string })?.message?.includes('User did not share')) {
+        // 사용자가 공유 취소
+      } else {
+        Alert.alert(t('backupFailed'), t('backupError'));
+      }
+    } finally {
+      setSharing(false);
+    }
+  }, [record, group, items, t]);
+
+  const onSharePress = useCallback(() => {
+    Alert.alert(t('shareFormatTitle'), '', [
+      { text: t('cancel'), style: 'cancel' },
+      { text: t('shareAsPdf'), onPress: shareAsPdf },
+      { text: t('shareAsExcel'), onPress: shareAsExcel },
+    ]);
+  }, [t, shareAsPdf, shareAsExcel]);
 
   useLayoutEffect(() => {
     if (record == null) return;
     navigation.setOptions({
       headerRight: () => (
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
-          <Pressable onPress={shareAsPdf} disabled={sharing} hitSlop={8}>
+          <Pressable onPress={onSharePress} disabled={sharing} hitSlop={8}>
             {sharing ? (
               <ActivityIndicator size="small" color={theme.primary} />
             ) : (
-              <Text style={{ color: theme.primary, fontSize: 16 }}>공유</Text>
+              <Text style={{ color: theme.primary, fontSize: 16 }}>{t('share')}</Text>
             )}
           </Pressable>
           <Pressable onPress={() => navigation.navigate('EditRecord', { recordId })} hitSlop={8}>
-            <Text style={{ color: theme.primary, fontSize: 16 }}>수정</Text>
+            <Text style={{ color: theme.primary, fontSize: 16 }}>{t('edit')}</Text>
           </Pressable>
           <Pressable onPress={deleteRecord} hitSlop={8}>
-            <Text style={{ color: theme.danger, fontSize: 16 }}>삭제</Text>
+            <Text style={{ color: theme.danger, fontSize: 16 }}>{t('delete')}</Text>
           </Pressable>
         </View>
       ),
     });
-  }, [navigation, recordId, record, theme.primary, theme.danger, deleteRecord, shareAsPdf, sharing]);
+  }, [navigation, recordId, record, theme.primary, theme.danger, deleteRecord, onSharePress, sharing, t]);
 
   const styles = useMemo(
     () =>
@@ -202,7 +242,7 @@ export function RecordDetailScreen({ route, navigation }: Props) {
     return (
       <View style={styles.container}>
         <View style={styles.notFound}>
-          <Text style={styles.notFoundText}>기록을 찾을 수 없어요.</Text>
+          <Text style={styles.notFoundText}>{t('recordNotFound')}</Text>
         </View>
       </View>
     );
@@ -214,11 +254,11 @@ export function RecordDetailScreen({ route, navigation }: Props) {
         <View style={styles.reportHeader}>
           <Text style={styles.reportDate}>{formatDate(record.date)}</Text>
           <Text style={styles.reportTitle}>{record.subjectName}</Text>
-          <Text style={styles.reportCategory}>{record.groupId ? (group?.name ?? '(그룹 없음)') : '커스텀'}</Text>
+          <Text style={styles.reportCategory}>{record.groupId ? (group?.name ?? t('noGroup')) : t('custom')}</Text>
           {record.overallNote ? <Text style={styles.reportNote}>{record.overallNote}</Text> : null}
         </View>
 
-        <Text style={styles.sectionTitle}>체크 항목</Text>
+        <Text style={styles.sectionTitle}>{t('checkItems')}</Text>
         {items.map(({ index, title, recordItem, template }) => {
           const isSelection = template?.itemType === 'selection' && template.options && template.options.length >= 2;
           const selectedIdx = recordItem.selectedOptionIndex;

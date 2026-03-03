@@ -16,6 +16,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { HomeStackParamList } from '../navigation/types';
 import { Checkbox } from '../components';
+import { useLanguage } from '../i18n';
 import { useTheme } from '../theme';
 import { loadAll } from '../storage';
 import {
@@ -36,6 +37,7 @@ const TAB_BAR_HEIGHT = 56;
 
 export function HomeScreen() {
   const { theme, isDark } = useTheme();
+  const { t, locale } = useLanguage();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<Nav>();
   const listPaddingBottom = insets.bottom + TAB_BAR_HEIGHT + 24;
@@ -113,16 +115,16 @@ export function HomeScreen() {
 
   const dateFilterLabel =
     dateFilterKind === 'all'
-      ? '전체'
+      ? t('all')
       : dateFilterKind === 'today'
-        ? '오늘'
+        ? t('today')
         : dateFilterKind === 'thisWeek'
-          ? '이번 주'
+          ? t('thisWeek')
           : dateFilterKind === 'thisMonth'
-            ? '이번 달'
+            ? t('thisMonth')
             : filterDate
               ? formatDate(filterDate)
-              : '직접 선택';
+              : t('selectDirect');
 
   const styles = useMemo(
     () =>
@@ -309,8 +311,8 @@ export function HomeScreen() {
   );
 
   const groupOptions = useMemo(
-    () => [{ id: null as string | null, name: '전체' }, ...groups.map(g => ({ id: g.id, name: g.name }))],
-    [groups]
+    () => [{ id: null as string | null, name: t('all') }, ...groups.map(g => ({ id: g.id, name: g.name }))],
+    [groups, t]
   );
 
   const renderGroupOption = useCallback(
@@ -348,13 +350,13 @@ export function HomeScreen() {
   type DateOption = { id: DateFilterKind | 'custom'; label: string };
   const dateOptions: DateOption[] = useMemo(
     () => [
-      { id: 'all', label: '전체' },
-      { id: 'today', label: '오늘' },
-      { id: 'thisWeek', label: '이번 주' },
-      { id: 'thisMonth', label: '이번 달' },
-      { id: 'custom', label: '직접 선택' },
+      { id: 'all', label: t('all') },
+      { id: 'today', label: t('today') },
+      { id: 'thisWeek', label: t('thisWeek') },
+      { id: 'thisMonth', label: t('thisMonth') },
+      { id: 'custom', label: t('selectDirect') },
     ],
-    []
+    [t]
   );
 
   const renderDateOption = useCallback(
@@ -398,7 +400,7 @@ export function HomeScreen() {
         </View>
         <View style={styles.itemRow2}>
           <Text style={styles.itemGroup} numberOfLines={1}>
-            {item.record.groupId ? (groupNames[item.record.groupId] ?? '(그룹 없음)') : '커스텀'}
+            {item.record.groupId ? (groupNames[item.record.groupId] ?? t('noGroup')) : t('custom')}
           </Text>
           {item.isCompleted ? <Text style={styles.itemCheck}>✓</Text> : null}
         </View>
@@ -407,9 +409,9 @@ export function HomeScreen() {
   );
 
   const filterSummaryText =
-    (filterGroupId ? (groups.find(g => g.id === filterGroupId)?.name ?? '') : '전체') +
+    (filterGroupId ? (groups.find(g => g.id === filterGroupId)?.name ?? '') : t('all')) +
     (dateFilterKind !== 'all' ? ` · ${dateFilterLabel}` : '') +
-    (hideCompleted ? ' · 완료 숨김' : '');
+    (hideCompleted ? ` · ${t('hideCompletedShort')}` : '');
 
   const listHeader = (
     <View style={styles.filterSection}>
@@ -419,13 +421,13 @@ export function HomeScreen() {
         onPress={() => setFilterExpanded(prev => !prev)}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={styles.filterTitle}>필터</Text>
+          <Text style={styles.filterTitle}>{t('filter')}</Text>
           <Text style={styles.filterSummary} numberOfLines={1}>
-            {filterExpanded ? '' : ` · ${filterSummaryText || '필터 없음'}`}
+            {filterExpanded ? '' : ` · ${filterSummaryText || t('filterNone')}`}
           </Text>
         </View>
         <Text style={{ fontSize: 12, color: theme.textSecondary }}>
-          {filterExpanded ? '▲ 접기' : '▼ 펼치기'}
+          {filterExpanded ? `▲ ${t('collapse')}` : `▼ ${t('expand')}`}
         </Text>
       </Pressable>
       {filterExpanded ? (
@@ -434,7 +436,7 @@ export function HomeScreen() {
         <Text style={styles.searchIcon}>🔍</Text>
         <TextInput
           style={styles.searchInput}
-          placeholder="대상 이름 검색"
+          placeholder={t('searchTargetName')}
           placeholderTextColor={theme.placeholder}
           value={searchQuery}
           onChangeText={setSearchQuery}
@@ -446,7 +448,7 @@ export function HomeScreen() {
           onPress={() => groupSheetRef.current?.expand()}
         >
           <Text style={styles.filterComboTriggerText}>
-            그룹유형 · {filterGroupId ? (groups.find(g => g.id === filterGroupId)?.name ?? '전체') : '전체'}
+            {t('groupType')} · {filterGroupId ? (groups.find(g => g.id === filterGroupId)?.name ?? t('all')) : t('all')}
           </Text>
           <Text style={styles.filterComboChevron}>{'>'}</Text>
         </Pressable>
@@ -456,7 +458,7 @@ export function HomeScreen() {
           style={styles.filterDateTrigger}
           onPress={() => dateSheetRef.current?.expand()}
         >
-          <Text style={styles.filterComboTriggerText}>날짜 · {dateFilterLabel}</Text>
+          <Text style={styles.filterComboTriggerText}>{t('date')} · {dateFilterLabel}</Text>
           <Text style={styles.filterComboChevron}>{'>'}</Text>
         </Pressable>
         <Pressable
@@ -464,7 +466,7 @@ export function HomeScreen() {
           onPress={() => setHideCompleted(prev => !prev)}
         >
           <Checkbox checked={hideCompleted} onPress={() => setHideCompleted(prev => !prev)} />
-          <Text style={styles.checkboxText}>완료 숨기기</Text>
+          <Text style={styles.checkboxText}>{t('hideCompleted')}</Text>
         </Pressable>
       </View>
         </View>
@@ -476,8 +478,8 @@ export function HomeScreen() {
     return (
       <View style={styles.container}>
         <View style={styles.empty}>
-          <Text style={styles.emptyText}>아직 기록이 없어요.</Text>
-          <Text style={styles.emptyHint}>새 기록 탭에서 기록을 만들어 보세요.</Text>
+          <Text style={styles.emptyText}>{t('emptyNoRecords')}</Text>
+          <Text style={styles.emptyHint}>{t('emptyNoRecordsHint')}</Text>
         </View>
       </View>
     );
@@ -494,7 +496,7 @@ export function HomeScreen() {
           contentContainerStyle={[styles.list, { paddingBottom: listPaddingBottom }]}
           ListEmptyComponent={
             <View style={styles.empty}>
-              <Text style={styles.emptyText}>조건에 맞는 기록이 없어요.</Text>
+              <Text style={styles.emptyText}>{t('emptyNoMatch')}</Text>
             </View>
           }
         />
@@ -561,19 +563,19 @@ export function HomeScreen() {
         >
           <Pressable style={styles.dateModalContent} onPress={e => e.stopPropagation()}>
             <View style={styles.dateModalHeader}>
-              <Text style={styles.dateModalTitle}>날짜 선택</Text>
+              <Text style={styles.dateModalTitle}>{t('selectDate')}</Text>
               <View style={styles.dateModalActions}>
                 <Pressable
                   onPress={() => setShowDateModal(false)}
                   style={styles.dateModalCancelBtn}
                 >
-                  <Text style={styles.dateModalCancelText}>취소</Text>
+                  <Text style={styles.dateModalCancelText}>{t('cancel')}</Text>
                 </Pressable>
                 <Pressable
                   onPress={() => setShowDateModal(false)}
                   style={styles.dateModalConfirmBtn}
                 >
-                  <Text style={styles.dateModalConfirmText}>확인</Text>
+                  <Text style={styles.dateModalConfirmText}>{t('confirm')}</Text>
                 </Pressable>
               </View>
             </View>
@@ -585,7 +587,7 @@ export function HomeScreen() {
               display={Platform.OS === 'ios' ? 'spinner' : 'default'}
               onChange={onDateChange}
               themeVariant={isDark ? 'dark' : 'light'}
-              locale="ko-KR"
+              locale={locale === 'ko' ? 'ko-KR' : 'en-US'}
               />
             </View>
           </Pressable>

@@ -1,9 +1,9 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { ThemeToggleButton } from '../components/ThemeToggleButton';
 import { HomeScreen } from '../screens/HomeScreen';
 import { RecordDetailScreen } from '../screens/RecordDetailScreen';
 import { EditRecordScreen } from '../screens/EditRecordScreen';
+import { useLanguage } from '../i18n';
 import { useTheme } from '../theme';
 import type { HomeStackParamList } from './types';
 
@@ -11,6 +11,7 @@ const Stack = createNativeStackNavigator<HomeStackParamList>();
 
 export function HomeStack() {
   const { theme } = useTheme();
+  const { t } = useLanguage();
   return (
     <Stack.Navigator
       screenOptions={{
@@ -22,16 +23,9 @@ export function HomeStack() {
         contentStyle: { backgroundColor: theme.background },
       }}
     >
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          title: '기록',
-          headerRight: () => <ThemeToggleButton />,
-        }}
-      />
-      <Stack.Screen name="RecordDetail" component={RecordDetailScreen} options={{ title: '기록 상세' }} />
-      <Stack.Screen name="EditRecord" component={EditRecordScreen} options={{ title: '기록 수정' }} />
+      <Stack.Screen name="Home" component={HomeScreen} options={{ title: t('home') }} />
+      <Stack.Screen name="RecordDetail" component={RecordDetailScreen} options={{ title: t('recordDetail') }} />
+      <Stack.Screen name="EditRecord" component={EditRecordScreen} options={{ title: t('editRecord') }} />
     </Stack.Navigator>
   );
 }

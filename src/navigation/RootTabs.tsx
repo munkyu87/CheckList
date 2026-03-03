@@ -2,10 +2,12 @@ import React from 'react';
 import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Feather from 'react-native-vector-icons/Feather';
+import { useLanguage } from '../i18n';
 import { useTheme } from '../theme';
 import { HomeStack } from './HomeStack';
 import { GroupsStack } from './GroupsStack';
 import { NewRecordStack } from './NewRecordStack';
+import { SettingsStack } from './SettingsStack';
 import type { RootTabParamList } from './types';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -14,6 +16,7 @@ const ICON_SIZE = 22;
 
 export function RootTabs() {
   const { theme } = useTheme();
+  const { t } = useLanguage();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -32,8 +35,8 @@ export function RootTabs() {
         name="HomeTab"
         component={HomeStack}
         options={{
-          title: '기록',
-          tabBarLabel: '기록',
+          title: t('tabRecords'),
+          tabBarLabel: t('tabRecords'),
           tabBarIcon: ({ focused, color }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Feather name="clipboard" size={ICON_SIZE} color={color} />
@@ -45,8 +48,8 @@ export function RootTabs() {
         name="NewRecord"
         component={NewRecordStack}
         options={{
-          title: '새 기록',
-          tabBarLabel: '새 기록',
+          title: t('newRecord'),
+          tabBarLabel: t('tabNewRecord'),
           tabBarIcon: ({ focused, color }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Feather name="plus-circle" size={ICON_SIZE} color={color} />
@@ -58,11 +61,24 @@ export function RootTabs() {
         name="GroupsTab"
         component={GroupsStack}
         options={{
-          title: '그룹 관리',
-          tabBarLabel: '그룹',
+          title: t('groupManagement'),
+          tabBarLabel: t('tabGroups'),
           tabBarIcon: ({ focused, color }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Feather name="folder" size={ICON_SIZE} color={color} />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="SettingsTab"
+        component={SettingsStack}
+        options={{
+          title: t('tabSettings'),
+          tabBarLabel: t('tabSettings'),
+          tabBarIcon: ({ focused, color }) => (
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Feather name="settings" size={ICON_SIZE} color={color} />
             </View>
           ),
         }}

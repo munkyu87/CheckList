@@ -18,6 +18,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { GroupsStackParamList } from '../navigation/types';
+import { useLanguage } from '../i18n';
 import { useTheme } from '../theme';
 import { loadAll, saveAll } from '../storage';
 import { generateId } from '../utils/id';
@@ -27,6 +28,7 @@ type Props = NativeStackScreenProps<GroupsStackParamList, 'GroupDetail'>;
 
 export function GroupDetailScreen({ route }: Props) {
   const { theme } = useTheme();
+  const { t } = useLanguage();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const { groupId } = route.params;
@@ -256,13 +258,17 @@ export function GroupDetailScreen({ route }: Props) {
         itemTitle: { fontSize: 16, color: theme.text },
         itemSubtitle: { fontSize: 12, color: theme.textSecondary, marginTop: 2 },
         swipeDeleteAction: {
+          alignSelf: 'stretch',
           backgroundColor: theme.danger,
           justifyContent: 'center',
           alignItems: 'center',
-          paddingHorizontal: 14,
-          minWidth: 80,
+          paddingHorizontal: 16,
+          minWidth: 56,
+          borderWidth: 0,
+          borderTopRightRadius: 12,
+          borderBottomRightRadius: 12,
+          overflow: 'hidden',
         },
-        swipeDeleteText: { color: '#fff', fontSize: 16, fontWeight: '600' },
         modalOverlay: {
           flex: 1,
           backgroundColor: 'rgba(0,0,0,0.5)',
@@ -357,7 +363,7 @@ export function GroupDetailScreen({ route }: Props) {
           };
           return (
             <RectButton style={styles.swipeDeleteAction} onPress={() => handleDelete(item)}>
-              <Text style={styles.swipeDeleteText}>삭제</Text>
+              <Feather name="trash-2" size={22} color="#fff" />
             </RectButton>
           );
         }}
@@ -372,7 +378,7 @@ export function GroupDetailScreen({ route }: Props) {
             <View style={styles.itemBody}>
               <Text style={styles.itemTitle}>{item.title}</Text>
               {item.itemType === 'selection' && item.options?.length ? (
-                <Text style={styles.itemSubtitle}>선택형 ({item.options.length}개 보기)</Text>
+                <Text style={styles.itemSubtitle}>{t('selectionTypeOptions', { count: item.options.length })}</Text>
               ) : null}
             </View>
           </Pressable>
@@ -384,7 +390,7 @@ export function GroupDetailScreen({ route }: Props) {
   if (group == null) {
     return (
       <View style={styles.container}>
-        <Text style={styles.notFound}>그룹을 찾을 수 없어요.</Text>
+        <Text style={styles.notFound}>{t('checklistNotFound')}</Text>
       </View>
     );
   }
@@ -399,7 +405,7 @@ export function GroupDetailScreen({ route }: Props) {
               style={styles.groupNameInput}
               value={groupNameInput}
               onChangeText={setGroupNameInput}
-              placeholder="그룹 이름"
+              placeholder={t('groupNamePlaceholder')}
               placeholderTextColor={theme.placeholder}
               onSubmitEditing={saveGroupName}
               returnKeyType="done"
@@ -422,7 +428,7 @@ export function GroupDetailScreen({ route }: Props) {
         )}
       </View>
 
-      <Text style={styles.sectionTitle}>체크 항목</Text>
+      <Text style={styles.sectionTitle}>{t('checkItems')}</Text>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -477,7 +483,7 @@ export function GroupDetailScreen({ route }: Props) {
                     style={({ pressed }) => [styles.addRow, pressed && styles.addRowPressed]}
                     onPress={() => setInlineAdding(true)}
                   >
-                    <Text style={styles.addRowText}>+ 항목 추가</Text>
+                    <Text style={styles.addRowText}>{t('addItem')}</Text>
                   </Pressable>
                 )}
               </>
@@ -527,7 +533,7 @@ export function GroupDetailScreen({ route }: Props) {
                   onPress={() => setEditType('selection')}
                 >
                   <Text style={[styles.modalTypeBtnText, editType === 'selection' ? { color: theme.primary, fontWeight: '600' } : { color: theme.textSecondary }]}>
-                    선택형 (2~5개)
+                    {t('selectionTypeRange')}
                   </Text>
                 </Pressable>
               </View>
@@ -546,7 +552,7 @@ export function GroupDetailScreen({ route }: Props) {
                       />
                       {editOptions.length > MIN_OPTIONS ? (
                         <Pressable style={styles.modalOptionRemove} onPress={() => removeEditOption(i)}>
-                          <Text style={styles.modalOptionRemoveText}>삭제</Text>
+                          <Text style={styles.modalOptionRemoveText}>{t('delete')}</Text>
                         </Pressable>
                       ) : null}
                     </View>

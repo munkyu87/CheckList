@@ -19,6 +19,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NewRecordStackParamList, RootTabParamList } from '../navigation/types';
 import { Checkbox } from '../components';
 import { DEFAULT_SUBJECT_LABEL } from '../constants';
+import { useLanguage } from '../i18n';
 import { useTheme } from '../theme';
 import { loadAll, saveAll } from '../storage';
 import { generateId } from '../utils/id';
@@ -46,6 +47,7 @@ function todayYmd(): string {
 
 export function NewRecordScreen() {
   const { theme, isDark } = useTheme();
+  const { t, locale } = useLanguage();
   const navigation = useNavigation<Nav>();
   const [step, setStep] = useState<Step>('form');
   const [date, setDate] = useState<string>(todayYmd());
@@ -81,7 +83,7 @@ export function NewRecordScreen() {
       navigation.setOptions({
         headerLeft: () => (
           <Pressable onPress={() => setStep('form')} style={{ paddingVertical: 8, paddingRight: 16 }}>
-            <Text style={{ fontSize: 16, color: theme.primary }}>이전</Text>
+            <Text style={{ fontSize: 16, color: theme.primary }}>{t('back')}</Text>
           </Pressable>
         ),
       });
@@ -185,8 +187,8 @@ export function NewRecordScreen() {
   }, []);
 
   const groupOptions = useMemo(
-    () => [{ id: null as string | null, name: '직접 작성' }, ...groups.map(g => ({ id: g.id, name: g.name }))],
-    [groups]
+    () => [{ id: null as string | null, name: t('customWrite') }, ...groups.map(g => ({ id: g.id, name: g.name }))],
+    [groups, t]
   );
 
   const styles = useMemo(
@@ -390,7 +392,7 @@ export function NewRecordScreen() {
         keyboardVerticalOffset={80}
       >
         <ScrollView style={styles.scroll} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-          <Text style={styles.sectionTitle}>날짜</Text>
+          <Text style={styles.sectionTitle}>{t('date')}</Text>
           <Pressable
             style={({ pressed }) => [styles.row, styles.rowWithArrow, pressed && styles.rowPressed]}
             onPress={() => setShowDateModal(true)}
@@ -410,19 +412,19 @@ export function NewRecordScreen() {
             >
               <Pressable style={styles.dateModalContent} onPress={e => e.stopPropagation()}>
                 <View style={styles.dateModalHeader}>
-                  <Text style={styles.dateModalTitle}>날짜 선택</Text>
+                  <Text style={styles.dateModalTitle}>{t('selectDate')}</Text>
                   <View style={styles.dateModalActions}>
                     <Pressable
                       onPress={() => setShowDateModal(false)}
                       style={styles.dateModalCancelBtn}
                     >
-                      <Text style={styles.dateModalCancelText}>취소</Text>
+                      <Text style={styles.dateModalCancelText}>{t('cancel')}</Text>
                     </Pressable>
                     <Pressable
                       onPress={() => setShowDateModal(false)}
                       style={styles.dateModalConfirmBtn}
                     >
-                      <Text style={styles.dateModalConfirmText}>확인</Text>
+                      <Text style={styles.dateModalConfirmText}>{t('confirm')}</Text>
                     </Pressable>
                   </View>
                 </View>
@@ -434,30 +436,30 @@ export function NewRecordScreen() {
                     display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                     onChange={onDateChange}
                     themeVariant={isDark ? 'dark' : 'light'}
-                    locale="ko-KR"
+                    locale={locale === 'ko' ? 'ko-KR' : 'en-US'}
                   />
                 </View>
               </Pressable>
             </Pressable>
           </Modal>
 
-          <Text style={styles.sectionTitle}>대상 이름</Text>
+          <Text style={styles.sectionTitle}>{subjectLabel === DEFAULT_SUBJECT_LABEL ? t('targetName') : subjectLabel}</Text>
           <TextInput
             style={[styles.input, { marginBottom: 8 }]}
-            placeholder={`${subjectLabel} 입력`}
+            placeholder={`${subjectLabel === DEFAULT_SUBJECT_LABEL ? t('targetName') : subjectLabel} ${t('subjectInputPlaceholder')}`}
             placeholderTextColor={theme.placeholder}
             value={subjectName}
             onChangeText={setSubjectName}
           />
 
-          <Text style={styles.sectionTitle}>체크리스트 유형</Text>
+          <Text style={styles.sectionTitle}>{t('checklistType')}</Text>
           <View style={{ marginBottom: 8 }}>
             <Pressable
               style={styles.comboTrigger}
               onPress={() => groupSheetRef.current?.expand()}
             >
               <Text style={styles.comboTriggerText}>
-                {groupId === null ? '직접 작성' : (selectedGroup?.name ?? '선택')}
+                {groupId === null ? t('customWrite') : (selectedGroup?.name ?? t('select'))}
               </Text>
               <Text style={styles.comboArrow}>{'>'}</Text>
             </Pressable>
@@ -468,7 +470,7 @@ export function NewRecordScreen() {
             onPress={goToChecklist}
             disabled={!canGoNext}
           >
-            <Text style={styles.btnPrimaryText}>기록 시작</Text>
+            <Text style={styles.btnPrimaryText}>{t('startRecord')}</Text>
           </Pressable>
         </ScrollView>
         <BottomSheet
@@ -503,44 +505,44 @@ export function NewRecordScreen() {
     >
       <ScrollView style={styles.scroll} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
         <View style={styles.row}>
-          <Text style={styles.rowLabel}>{subjectLabel}</Text>
+          <Text style={styles.rowLabel}>{subjectLabel === DEFAULT_SUBJECT_LABEL ? t('targetName') : subjectLabel}</Text>
           <Text style={styles.rowValue}>{subjectName}</Text>
-          <Text style={[styles.rowLabel, { marginTop: 4 }]}>{formatDate(date)} · {selectedGroup?.name ?? '직접 작성'}</Text>
+          <Text style={[styles.rowLabel, { marginTop: 4 }]}>{formatDate(date)} · {selectedGroup?.name ?? t('customWrite')}</Text>
         </View>
 
-        <Text style={styles.sectionTitle}>전체 비고</Text>
+        <Text style={styles.sectionTitle}>{t('overallNote')}</Text>
         <TextInput
           style={[styles.input, { marginBottom: 8, minHeight: 60 }]}
-          placeholder="전체 비고 (선택)"
+          placeholder={t('overallNoteOptional')}
           placeholderTextColor={theme.placeholder}
           value={overallNote}
           onChangeText={setOverallNote}
           multiline
         />
 
-        <Text style={styles.sectionTitle}>체크 항목</Text>
-        {templates.map((t, idx) => {
-          const isSelection = t.itemType === 'selection' && t.options && t.options.length >= 2;
+        <Text style={styles.sectionTitle}>{t('checkItems')}</Text>
+        {templates.map((template, idx) => {
+          const isSelection = template.itemType === 'selection' && template.options && template.options.length >= 2;
           return (
-            <View key={t.id} style={styles.checklistItem}>
+            <View key={template.id} style={styles.checklistItem}>
               <Text style={styles.itemIndex}>{idx + 1}.</Text>
               {isSelection ? (
                 <View style={styles.checklistBody}>
-                  <Text style={styles.checklistTitle}>{t.title}</Text>
+                  <Text style={styles.checklistTitle}>{template.title}</Text>
                   <View style={styles.selectionOptionsList}>
-                    {t.options!.map((opt, oi) => {
-                      const selected = itemSelections[t.id] === oi;
+                    {template.options!.map((opt, oi) => {
+                      const selected = itemSelections[template.id] === oi;
                       return (
                         <Pressable
                           key={oi}
                           style={styles.selectionOptionRow}
-                          onPress={() => setSelection(t.id, oi)}
+                          onPress={() => setSelection(template.id, oi)}
                         >
                           <Text style={styles.selectionOptionNum}>{oi + 1}.</Text>
                           <View style={[styles.selectionOptionRadio, selected && styles.selectionOptionRadioSelected]}>
                             {selected ? <View style={styles.selectionOptionRadioInner} /> : null}
                           </View>
-                          <Text style={styles.selectionOptionLabel}>{opt || `보기 ${oi + 1}`}</Text>
+                          <Text style={styles.selectionOptionLabel}>{opt || t('optionLabel', { num: oi + 1 })}</Text>
                         </Pressable>
                       );
                     })}
@@ -550,13 +552,13 @@ export function NewRecordScreen() {
                 <>
                   <View style={styles.checklistCheck}>
                     <Checkbox
-                      checked={!!itemChecks[t.id]}
-                      onPress={() => toggleCheck(t.id)}
+                      checked={!!itemChecks[template.id]}
+                      onPress={() => toggleCheck(template.id)}
                       size={26}
                     />
                   </View>
                   <View style={styles.checklistBody}>
-                    <Text style={styles.checklistTitle}>{t.title}</Text>
+                    <Text style={styles.checklistTitle}>{template.title}</Text>
                   </View>
                 </>
               )}
@@ -576,23 +578,23 @@ export function NewRecordScreen() {
             <View style={styles.checklistBody}>
               <TextInput
                 style={styles.checklistTitle}
-                placeholder="항목 제목"
+                placeholder={t('itemTitlePlaceholder')}
                 placeholderTextColor={theme.placeholder}
                 value={c.title}
                 onChangeText={v => updateCustomItem(c.tempId, { title: v })}
               />
             </View>
             <Pressable style={styles.customItemDelete} onPress={() => removeCustomItem(c.tempId)}>
-              <Text style={styles.customItemDeleteText}>삭제</Text>
+              <Text style={styles.customItemDeleteText}>{t('delete')}</Text>
             </Pressable>
           </View>
         ))}
         <Pressable style={styles.addItemBtn} onPress={addCustomItem}>
-          <Text style={styles.addItemBtnText}>+ 항목 추가</Text>
+          <Text style={styles.addItemBtnText}>{t('addItem')}</Text>
         </Pressable>
 
         <Pressable style={[styles.btn, styles.btnPrimary]} onPress={saveRecord}>
-          <Text style={styles.btnPrimaryText}>저장하기</Text>
+          <Text style={styles.btnPrimaryText}>{t('save')}</Text>
         </Pressable>
       </ScrollView>
     </KeyboardAvoidingView>

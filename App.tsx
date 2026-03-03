@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { AppNavigator } from './src/navigation';
 import { SplashScreen } from './src/components';
 import { ThemeProvider, useTheme } from './src/theme';
+import { LanguageProvider } from './src/i18n';
 import { StatusBar, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -43,7 +44,9 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <ThemeProvider>
-          <AppContent />
+          <LanguageProvider>
+            <AppContent />
+          </LanguageProvider>
         </ThemeProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
