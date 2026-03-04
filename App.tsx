@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { AppNavigator } from './src/navigation';
-import { SplashScreen } from './src/components';
+import { SplashScreen, SakuraLayer } from './src/components';
 import { ThemeProvider, useTheme } from './src/theme';
 import { LanguageProvider } from './src/i18n';
 import { StatusBar, View } from 'react-native';
@@ -29,13 +29,14 @@ function AppContent() {
   }
 
   return (
-    <>
+    <View style={{ flex: 1, backgroundColor: theme.background }}>
       <StatusBar
         barStyle={isDark ? 'light-content' : 'dark-content'}
         backgroundColor={theme.background}
       />
       <AppNavigator />
-    </>
+      <SakuraLayer />
+    </View>
   );
 }
 
