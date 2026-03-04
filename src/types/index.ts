@@ -32,6 +32,8 @@ export interface ChecklistRecord {
   groupId?: string;
   createdAt: string; // ISO string
   overallNote?: string;
+  /** 즐겨찾기 여부 */
+  isFavorite?: boolean;
 }
 
 export interface RecordItem {

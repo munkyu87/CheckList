@@ -6,7 +6,6 @@ import { useLanguage } from '../i18n';
 import { useTheme } from '../theme';
 import { HomeStack } from './HomeStack';
 import { GroupsStack } from './GroupsStack';
-import { NewRecordStack } from './NewRecordStack';
 import { SettingsStack } from './SettingsStack';
 import type { RootTabParamList } from './types';
 
@@ -40,19 +39,6 @@ export function RootTabs() {
           tabBarIcon: ({ focused, color }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Feather name="clipboard" size={ICON_SIZE} color={color} />
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="NewRecord"
-        component={NewRecordStack}
-        options={{
-          title: t('newRecord'),
-          tabBarLabel: t('tabNewRecord'),
-          tabBarIcon: ({ focused, color }) => (
-            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <Feather name="plus-circle" size={ICON_SIZE} color={color} />
             </View>
           ),
         }}

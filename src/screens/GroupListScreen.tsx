@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useMemo, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -47,7 +47,7 @@ export function GroupListScreen() {
         sortChipActive: { backgroundColor: theme.primary, borderColor: theme.primary },
         sortChipText: { fontSize: 14, color: theme.textSecondary },
         sortChipTextActive: { color: '#fff', fontWeight: '600' },
-        list: { padding: 12, paddingBottom: 120, flexGrow: 1 },
+        list: { padding: 12, paddingBottom: 24, flexGrow: 1 },
         empty: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24 },
         emptyText: { fontSize: 16, color: theme.text, marginBottom: 8 },
         emptyHint: { fontSize: 14, color: theme.textSecondary },
@@ -79,18 +79,6 @@ export function GroupListScreen() {
           borderBottomRightRadius: 12,
           overflow: 'hidden',
         },
-        fab: {
-          position: 'absolute',
-          right: 20,
-          bottom: 20,
-          width: 56,
-          height: 56,
-          borderRadius: 28,
-          backgroundColor: theme.primary,
-          alignItems: 'center',
-          justifyContent: 'center',
-        },
-        fabPressed: { opacity: 0.9 },
         modalOverlay: {
           flex: 1,
           backgroundColor: 'rgba(0,0,0,0.5)',
@@ -157,10 +145,20 @@ export function GroupListScreen() {
     }, [refresh])
   );
 
-  const openAdd = () => {
+  const openAdd = useCallback(() => {
     setNewName('');
     setModalVisible(true);
-  };
+  }, []);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Pressable onPress={openAdd} hitSlop={8} style={{ padding: 8 }}>
+          <Feather name="plus" size={22} color={theme.primary} />
+        </Pressable>
+      ),
+    });
+  }, [navigation, openAdd, theme.primary]);
 
   const saveGroupModal = () => {
     const name = newName.trim();
@@ -281,10 +279,6 @@ export function GroupListScreen() {
           />
         </>
       )}
-
-      <Pressable style={({ pressed }) => [styles.fab, pressed && styles.fabPressed]} onPress={openAdd}>
-        <Feather name="plus" size={28} color="#fff" />
-      </Pressable>
 
       <Modal
         visible={modalVisible}

@@ -59,6 +59,7 @@ export function NewRecordScreen() {
   const [itemChecks, setItemChecks] = useState<Record<string, boolean>>({});
   const [itemSelections, setItemSelections] = useState<Record<string, number>>({});
   const [customItems, setCustomItems] = useState<CustomItem[]>([]);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const data = loadAll();
   const groups = data.groups;
@@ -137,6 +138,7 @@ export function NewRecordScreen() {
       ...(groupId ? { groupId } : {}),
       createdAt: now,
       overallNote: overallNote.trim() || undefined,
+      isFavorite,
     };
     const recordItems: RecordItem[] = [];
     let order = 0;
@@ -175,6 +177,7 @@ export function NewRecordScreen() {
     setItemSelections({});
     setCustomItems([]);
     setDate(todayYmd());
+    setIsFavorite(false);
     const parent = navigation.getParent();
     if (parent) {
       (parent as { navigate: (name: string) => void }).navigate('HomeTab');
@@ -463,6 +466,11 @@ export function NewRecordScreen() {
               </Text>
               <Text style={styles.comboArrow}>{'>'}</Text>
             </Pressable>
+          </View>
+
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4, marginBottom: 12 }}>
+            <Checkbox checked={isFavorite} onPress={() => setIsFavorite(prev => !prev)} size={22} />
+            <Text style={{ marginLeft: 10, fontSize: 15, color: theme.text }}>{t('favorite')}</Text>
           </View>
 
           <Pressable

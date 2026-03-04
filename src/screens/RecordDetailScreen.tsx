@@ -23,6 +23,8 @@ import { recordToPdfHtml } from '../utils/recordToPdfHtml';
 import { recordToCsv } from '../utils/recordToCsv';
 import { utf8ToBase64 } from '../utils/base64';
 import type { ChecklistRecord, ChecklistGroup, RecordItem, ChecklistItemTemplate } from '../types';
+import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'RecordDetail'>;
 
@@ -34,6 +36,7 @@ export function RecordDetailScreen({ route, navigation }: Props) {
   const [group, setGroup] = useState<ChecklistGroup | null>(null);
   const [items, setItems] = useState<Array<{ index: number; title: string; recordItem: RecordItem; template?: ChecklistItemTemplate | null }>>([]);
   const [sharing, setSharing] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const refresh = useCallback(() => {
     const data = loadAll();
@@ -60,6 +63,7 @@ export function RecordDetailScreen({ route, navigation }: Props) {
     withTitle.sort((a, b) => a.order - b.order);
     const combined = withTitle.map((x, idx) => ({ index: idx + 1, title: x.title, recordItem: x.recordItem, template: x.template }));
     setItems(combined);
+    setIsFavorite(!!r.isFavorite);
   }, [recordId]);
 
   useFocusEffect(
@@ -84,6 +88,17 @@ export function RecordDetailScreen({ route, navigation }: Props) {
       },
     ]);
   }, [recordId, navigation, t]);
+
+  const toggleFavorite = useCallback(() => {
+    const data = loadAll();
+    const idx = data.records.findIndex(r => r.id === recordId);
+    if (idx >= 0) {
+      const current = !!data.records[idx].isFavorite;
+      data.records[idx] = { ...data.records[idx], isFavorite: !current };
+      saveAll(data);
+      setIsFavorite(!current);
+    }
+  }, [recordId]);
 
   const shareAsPdf = useCallback(async () => {
     if (!record) return;
@@ -154,23 +169,27 @@ export function RecordDetailScreen({ route, navigation }: Props) {
     navigation.setOptions({
       headerRight: () => (
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+          <Pressable onPress={toggleFavorite} hitSlop={8}>
+            <FontAwesome
+              name={isFavorite ? 'star' : 'star-o'}
+              size={20}
+              color={isFavorite ? theme.primary : theme.textTertiary}
+            />
+          </Pressable>
           <Pressable onPress={onSharePress} disabled={sharing} hitSlop={8}>
             {sharing ? (
               <ActivityIndicator size="small" color={theme.primary} />
             ) : (
-              <Text style={{ color: theme.primary, fontSize: 16 }}>{t('share')}</Text>
+              <Feather name="share-2" size={20} color={theme.primary} />
             )}
           </Pressable>
-          <Pressable onPress={() => navigation.navigate('EditRecord', { recordId })} hitSlop={8}>
-            <Text style={{ color: theme.primary, fontSize: 16 }}>{t('edit')}</Text>
-          </Pressable>
           <Pressable onPress={deleteRecord} hitSlop={8}>
-            <Text style={{ color: theme.danger, fontSize: 16 }}>{t('delete')}</Text>
+            <Feather name="trash-2" size={20} color={theme.danger} />
           </Pressable>
         </View>
       ),
     });
-  }, [navigation, recordId, record, theme.primary, theme.danger, deleteRecord, onSharePress, sharing, t]);
+  }, [navigation, record, toggleFavorite, isFavorite, theme.primary, theme.textTertiary, onSharePress, sharing, deleteRecord, theme.danger]);
 
   const styles = useMemo(
     () =>

@@ -6,15 +6,12 @@ export type HomeStackParamList = {
   Home: undefined;
   RecordDetail: { recordId: string };
   EditRecord: { recordId: string };
+  NewRecord: undefined;
 };
 
 export type GroupsStackParamList = {
   GroupList: undefined;
   GroupDetail: { groupId: string };
-};
-
-export type NewRecordStackParamList = {
-  NewRecord: undefined;
 };
 
 export type SettingsStackParamList = {
@@ -23,7 +20,6 @@ export type SettingsStackParamList = {
 
 export type RootTabParamList = {
   HomeTab: undefined;
-  NewRecord: undefined;
   GroupsTab: undefined;
   SettingsTab: undefined;
 };

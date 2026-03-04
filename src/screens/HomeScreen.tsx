@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   FlatList,
   Modal,
@@ -14,6 +14,8 @@ import BottomSheet, { BottomSheetBackdrop, BottomSheetFlatList } from '@gorhom/b
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import type { HomeStackParamList } from '../navigation/types';
 import { Checkbox } from '../components';
 import { useLanguage } from '../i18n';
@@ -29,7 +31,7 @@ import type { ChecklistGroup, ChecklistRecord } from '../types';
 
 type Nav = NativeStackNavigationProp<HomeStackParamList, 'Home'>;
 
-type RecordWithCompleted = { record: ChecklistRecord; isCompleted: boolean };
+type RecordWithCompleted = { record: ChecklistRecord; isCompleted: boolean; isFavorite: boolean };
 
 type DateFilterKind = 'all' | 'today' | 'thisWeek' | 'thisMonth' | 'custom';
 
@@ -67,12 +69,13 @@ export function HomeScreen() {
       const recordItems = data.recordItems.filter(ri => ri.recordId === record.id);
       const isCompleted =
         recordItems.length > 0 && recordItems.every(ri => ri.checked === true);
-      return { record, isCompleted };
+      return { record, isCompleted, isFavorite: !!record.isFavorite };
     });
 
-    withStatus.sort(
-      (a, b) => new Date(b.record.date).getTime() - new Date(a.record.date).getTime()
-    );
+    withStatus.sort((a, b) => {
+      if (a.isFavorite !== b.isFavorite) return a.isFavorite ? -1 : 1;
+      return new Date(b.record.date).getTime() - new Date(a.record.date).getTime();
+    });
     setRecordsWithStatus(withStatus);
   }, []);
 
@@ -81,6 +84,16 @@ export function HomeScreen() {
       refresh();
     }, [refresh])
   );
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Pressable onPress={() => navigation.navigate('NewRecord')} hitSlop={8} style={{ padding: 8 }}>
+          <Feather name="plus" size={22} color={theme.primary} />
+        </Pressable>
+      ),
+    });
+  }, [navigation, theme.primary]);
 
   const filteredRecords = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -301,11 +314,13 @@ export function HomeScreen() {
         },
         itemBody: { flex: 1, padding: 14, paddingLeft: 12 },
         itemRow1: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 },
+        itemRow1Right: { flexDirection: 'row', alignItems: 'center' },
         itemSubject: { fontSize: 17, fontWeight: '600', color: theme.text, flex: 1, marginRight: 8 },
         itemDate: { fontSize: 13, color: theme.textSecondary },
         itemRow2: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
         itemGroup: { fontSize: 13, color: theme.textTertiary, flex: 1 },
         itemCheck: { fontSize: 18, color: theme.primary, fontWeight: '600' },
+        starIcon: { marginLeft: 4, marginRight: 4 },
       }),
     [theme, isDark]
   );
@@ -396,7 +411,17 @@ export function HomeScreen() {
       <View style={styles.itemBody}>
         <View style={styles.itemRow1}>
           <Text style={styles.itemSubject} numberOfLines={1}>{item.record.subjectName}</Text>
-          <Text style={styles.itemDate}>{formatDate(item.record.date)}</Text>
+          <View style={styles.itemRow1Right}>
+            {item.isFavorite ? (
+              <FontAwesome
+                name="star"
+                size={16}
+                color={theme.primary}
+                style={styles.starIcon}
+              />
+            ) : null}
+            <Text style={styles.itemDate}>{formatDate(item.record.date)}</Text>
+          </View>
         </View>
         <View style={styles.itemRow2}>
           <Text style={styles.itemGroup} numberOfLines={1}>
