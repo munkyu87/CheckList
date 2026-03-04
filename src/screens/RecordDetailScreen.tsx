@@ -2,13 +2,16 @@ import React, { useCallback, useLayoutEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
+  Modal,
   Platform,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useFocusEffect } from '@react-navigation/native';
 import { generatePDF } from 'react-native-html-to-pdf';
@@ -22,6 +25,7 @@ import { formatDate } from '../utils/date';
 import { recordToPdfHtml } from '../utils/recordToPdfHtml';
 import { recordToCsv } from '../utils/recordToCsv';
 import { utf8ToBase64 } from '../utils/base64';
+import { generateId } from '../utils/id';
 import type { ChecklistRecord, ChecklistGroup, RecordItem, ChecklistItemTemplate } from '../types';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -30,13 +34,19 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'RecordDetail'>;
 
 export function RecordDetailScreen({ route, navigation }: Props) {
   const { recordId } = route.params;
-  const { theme } = useTheme();
-  const { t } = useLanguage();
+  const { theme, isDark } = useTheme();
+  const { t, locale } = useLanguage();
   const [record, setRecord] = useState<ChecklistRecord | null>(null);
   const [group, setGroup] = useState<ChecklistGroup | null>(null);
   const [items, setItems] = useState<Array<{ index: number; title: string; recordItem: RecordItem; template?: ChecklistItemTemplate | null }>>([]);
   const [sharing, setSharing] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [addItemModalVisible, setAddItemModalVisible] = useState(false);
+  const [addItemTitle, setAddItemTitle] = useState('');
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [editDate, setEditDate] = useState<string | null>(null);
+  const [editSubjectName, setEditSubjectName] = useState('');
+  const [editOverallNote, setEditOverallNote] = useState('');
 
   const refresh = useCallback(() => {
     const data = loadAll();
@@ -70,6 +80,37 @@ export function RecordDetailScreen({ route, navigation }: Props) {
     useCallback(() => {
       refresh();
     }, [refresh])
+  );
+
+  const toggleItemCheck = useCallback(
+    (recordItem: RecordItem) => {
+      const data = loadAll();
+      const idx = data.recordItems.findIndex(ri => ri.id === recordItem.id);
+      if (idx >= 0) {
+        const current = !!data.recordItems[idx].checked;
+        data.recordItems[idx] = { ...data.recordItems[idx], checked: !current };
+        saveAll(data);
+        refresh();
+      }
+    },
+    [refresh]
+  );
+
+  const setItemSelection = useCallback(
+    (recordItem: RecordItem, optionIndex: number) => {
+      const data = loadAll();
+      const idx = data.recordItems.findIndex(ri => ri.id === recordItem.id);
+      if (idx >= 0) {
+        data.recordItems[idx] = {
+          ...data.recordItems[idx],
+          selectedOptionIndex: optionIndex,
+          checked: true,
+        };
+        saveAll(data);
+        refresh();
+      }
+    },
+    [refresh]
   );
 
   const deleteRecord = useCallback(() => {
@@ -164,6 +205,78 @@ export function RecordDetailScreen({ route, navigation }: Props) {
     ]);
   }, [t, shareAsPdf, shareAsExcel]);
 
+  const addCustomItem = useCallback(() => {
+    const title = addItemTitle.trim();
+    if (!title) return;
+    const data = loadAll();
+    const recordItems = data.recordItems.filter(ri => ri.recordId === recordId);
+    const maxOrder =
+      recordItems.length > 0 ? Math.max(...recordItems.map(ri => ri.order ?? 0)) : -1;
+    const newItem: RecordItem = {
+      id: generateId(),
+      recordId,
+      customTitle: title,
+      order: maxOrder + 1,
+      checked: false,
+    };
+    data.recordItems.push(newItem);
+    saveAll(data);
+    setAddItemTitle('');
+    setAddItemModalVisible(false);
+    refresh();
+  }, [addItemTitle, recordId, refresh]);
+
+  const openEditModal = useCallback(() => {
+    if (!record) return;
+    setEditDate(record.date);
+    setEditSubjectName(record.subjectName);
+    setEditOverallNote(record.overallNote ?? '');
+    setEditModalVisible(true);
+  }, [record]);
+
+  const onEditDateChange = useCallback((_: unknown, d?: Date) => {
+    if (d) {
+      setEditDate(d.toISOString().slice(0, 10));
+    }
+  }, []);
+
+  const saveHeaderEdit = useCallback(() => {
+    if (!record || !editDate) return;
+    const data = loadAll();
+    const idx = data.records.findIndex(r => r.id === recordId);
+    if (idx >= 0) {
+      data.records[idx] = {
+        ...data.records[idx],
+        date: editDate,
+        subjectName: editSubjectName.trim(),
+        overallNote: editOverallNote.trim() || undefined,
+      };
+      saveAll(data);
+      refresh();
+    }
+    setEditModalVisible(false);
+  }, [record, editDate, editSubjectName, editOverallNote, recordId, refresh]);
+
+  const resetChecklist = useCallback(() => {
+    Alert.alert(t('resetChecklistTitle'), t('resetChecklistMessage'), [
+      { text: t('cancel'), style: 'cancel' },
+      {
+        text: t('confirm'),
+        style: 'destructive',
+        onPress: () => {
+          const data = loadAll();
+          data.recordItems = data.recordItems.map(ri =>
+            ri.recordId === recordId
+              ? { ...ri, checked: false, selectedOptionIndex: undefined }
+              : ri
+          );
+          saveAll(data);
+          refresh();
+        },
+      },
+    ]);
+  }, [recordId, refresh, t]);
+
   useLayoutEffect(() => {
     if (record == null) return;
     navigation.setOptions({
@@ -198,6 +311,8 @@ export function RecordDetailScreen({ route, navigation }: Props) {
         scroll: { flex: 1 },
         content: { padding: 16, paddingBottom: 32, flexGrow: 1 },
         reportHeader: {
+          flexDirection: 'row',
+          alignItems: 'flex-start',
           backgroundColor: theme.surface,
           padding: 20,
           borderRadius: 12,
@@ -207,6 +322,8 @@ export function RecordDetailScreen({ route, navigation }: Props) {
           borderLeftWidth: 4,
           borderLeftColor: theme.primary,
         },
+        reportHeaderContent: { flex: 1, minWidth: 0 },
+        reportHeaderEdit: { padding: 4, marginLeft: 8 },
         reportDate: { fontSize: 13, color: theme.textSecondary, marginBottom: 6 },
         reportTitle: { fontSize: 20, fontWeight: '700', color: theme.text, marginBottom: 4 },
         reportCategory: { fontSize: 14, color: theme.textTertiary, marginBottom: 12 },
@@ -229,6 +346,7 @@ export function RecordDetailScreen({ route, navigation }: Props) {
           borderWidth: 1,
           borderColor: theme.borderLight,
         },
+        rowPressed: { opacity: 0.9 },
         colNum: { width: 28, marginRight: 8, fontSize: 15, color: theme.textTertiary },
         colStatusIcon: { marginRight: 12, justifyContent: 'center' },
         colContent: { flex: 1 },
@@ -251,6 +369,63 @@ export function RecordDetailScreen({ route, navigation }: Props) {
         selectionOptionLabel: { fontSize: 14, color: theme.text, flex: 1 },
         notFound: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24 },
         notFoundText: { fontSize: 16, color: theme.textSecondary },
+        addItemRow: {
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: 16,
+          marginTop: 8,
+          borderRadius: 12,
+          borderWidth: 2,
+          borderStyle: 'dashed',
+          borderColor: theme.borderLight,
+        },
+        addItemRowPressed: { opacity: 0.8 },
+        addItemRowText: { fontSize: 15, color: theme.primary, fontWeight: '500' },
+        modalOverlay: {
+          flex: 1,
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          justifyContent: 'center',
+          padding: 24,
+        },
+        modalBox: {
+          backgroundColor: theme.surface,
+          borderRadius: 16,
+          padding: 20,
+        },
+        modalTitle: { fontSize: 18, fontWeight: '600', color: theme.text, marginBottom: 16 },
+        modalInput: {
+          borderWidth: 1,
+          borderColor: theme.inputBorder,
+          backgroundColor: theme.inputBackground,
+          borderRadius: 10,
+          padding: 12,
+          fontSize: 16,
+          color: theme.text,
+          marginBottom: 16,
+        },
+        modalButtons: { flexDirection: 'row', gap: 12, marginTop: 8 },
+        modalBtn: { flex: 1, paddingVertical: 12, borderRadius: 10, alignItems: 'center' },
+        modalBtnCancel: { backgroundColor: theme.buttonSecondary },
+        modalBtnCancelText: { color: theme.buttonSecondaryText, fontSize: 16 },
+        modalBtnOk: { backgroundColor: theme.primary },
+        modalBtnOkText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+        resetFab: {
+          position: 'absolute',
+          right: 20,
+          bottom: 20,
+          width: 40,
+          height: 40,
+          borderRadius: 20,
+          backgroundColor: theme.primary,
+          alignItems: 'center',
+          justifyContent: 'center',
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.2,
+          shadowRadius: 4,
+          elevation: 4,
+        },
       }),
     [theme]
   );
@@ -269,10 +444,23 @@ export function RecordDetailScreen({ route, navigation }: Props) {
     <View style={styles.container}>
       <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
         <View style={styles.reportHeader}>
-          <Text style={styles.reportDate}>{formatDate(record.date)}</Text>
-          <Text style={styles.reportTitle}>{record.subjectName}</Text>
-          <Text style={styles.reportCategory}>{record.groupId ? (group?.name ?? t('noGroup')) : t('custom')}</Text>
-          {record.overallNote ? <Text style={styles.reportNote}>{record.overallNote}</Text> : null}
+          <View style={styles.reportHeaderContent}>
+            <Text style={styles.reportDate}>{formatDate(record.date)}</Text>
+            <Text style={styles.reportTitle}>{record.subjectName}</Text>
+            <Text style={styles.reportCategory}>
+              {record.groupId ? (group?.name ?? t('noGroup')) : t('custom')}
+            </Text>
+            {record.overallNote ? (
+              <Text style={styles.reportNote}>{record.overallNote}</Text>
+            ) : null}
+          </View>
+          <Pressable
+            style={styles.reportHeaderEdit}
+            hitSlop={8}
+            onPress={openEditModal}
+          >
+            <Feather name="edit-2" size={18} color={theme.primary} />
+          </Pressable>
         </View>
 
         <Text style={styles.sectionTitle}>{t('checkItems')}</Text>
@@ -282,7 +470,11 @@ export function RecordDetailScreen({ route, navigation }: Props) {
           const checked = isSelection ? selectedIdx !== undefined : recordItem.checked;
 
           return (
-            <View key={recordItem.id} style={styles.row}>
+            <Pressable
+              key={recordItem.id}
+              style={({ pressed }) => [styles.row, !isSelection && pressed && styles.rowPressed]}
+              onPress={!isSelection ? () => toggleItemCheck(recordItem) : undefined}
+            >
               <Text style={styles.colNum}>{index}.</Text>
               <View style={styles.colStatusIcon}>
                 <Checkbox checked={!!checked} size={22} />
@@ -294,22 +486,142 @@ export function RecordDetailScreen({ route, navigation }: Props) {
                     {template!.options!.map((opt, oi) => {
                       const selected = selectedIdx === oi;
                       return (
-                        <View key={oi} style={styles.selectionOptionRow}>
+                        <Pressable
+                          key={oi}
+                          style={styles.selectionOptionRow}
+                          onPress={() => setItemSelection(recordItem, oi)}
+                        >
                           <Text style={styles.selectionOptionNum}>{oi + 1}.</Text>
                           <View style={[styles.selectionOptionRadio, selected && styles.selectionOptionRadioSelected]}>
                             {selected ? <View style={styles.selectionOptionRadioInner} /> : null}
                           </View>
                           <Text style={styles.selectionOptionLabel}>{opt || `보기 ${oi + 1}`}</Text>
-                        </View>
+                        </Pressable>
                       );
                     })}
                   </View>
                 ) : null}
               </View>
-            </View>
+            </Pressable>
           );
         })}
+        <Pressable
+          style={({ pressed }) => [styles.addItemRow, pressed && styles.addItemRowPressed]}
+          onPress={() => setAddItemModalVisible(true)}
+        >
+          <Feather name="plus" size={18} color={theme.primary} style={{ marginRight: 6 }} />
+          <Text style={styles.addItemRowText}>{t('addItem')}</Text>
+        </Pressable>
       </ScrollView>
+      <Pressable style={styles.resetFab} onPress={resetChecklist} hitSlop={8}>
+        <Feather name="rotate-ccw" size={18} color="#fff" />
+      </Pressable>
+
+      <Modal
+        visible={addItemModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setAddItemModalVisible(false)}
+      >
+        <Pressable style={styles.modalOverlay} onPress={() => setAddItemModalVisible(false)}>
+          <Pressable style={styles.modalBox} onPress={e => e.stopPropagation()}>
+            <Text style={styles.modalTitle}>{t('addItem')}</Text>
+            <TextInput
+              style={styles.modalInput}
+              placeholder={t('itemTitlePlaceholder')}
+              placeholderTextColor={theme.textTertiary}
+              value={addItemTitle}
+              onChangeText={setAddItemTitle}
+            />
+            <View style={styles.modalButtons}>
+              <Pressable
+                style={[styles.modalBtn, styles.modalBtnCancel]}
+                onPress={() => {
+                  setAddItemModalVisible(false);
+                  setAddItemTitle('');
+                }}
+              >
+                <Text style={styles.modalBtnCancelText}>{t('cancel')}</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.modalBtn, styles.modalBtnOk, !addItemTitle.trim() && { opacity: 0.5 }]}
+                disabled={!addItemTitle.trim()}
+                onPress={addCustomItem}
+              >
+                <Text style={styles.modalBtnOkText}>{t('add')}</Text>
+              </Pressable>
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
+
+      <Modal
+        visible={editModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setEditModalVisible(false)}
+      >
+        <Pressable style={styles.modalOverlay} onPress={() => setEditModalVisible(false)}>
+          <Pressable style={styles.modalBox} onPress={e => e.stopPropagation()}>
+            <Text style={styles.modalTitle}>{t('editRecord')}</Text>
+            <Text style={{ fontSize: 14, color: theme.textSecondary, marginBottom: 8 }}>
+              {t('date')}
+            </Text>
+            <View style={{ alignItems: 'center', marginBottom: 16 }}>
+              {editDate && (
+                <DateTimePicker
+                  value={new Date(editDate + 'T12:00:00')}
+                  mode="date"
+                  display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                  onChange={onEditDateChange}
+                  themeVariant={isDark ? 'dark' : 'light'}
+                  locale={locale === 'ko' ? 'ko-KR' : 'en-US'}
+                />
+              )}
+            </View>
+            <Text style={{ fontSize: 14, color: theme.textSecondary, marginBottom: 6 }}>
+              {t('targetName')}
+            </Text>
+            <TextInput
+              style={styles.modalInput}
+              placeholder={t('targetName')}
+              placeholderTextColor={theme.textTertiary}
+              value={editSubjectName}
+              onChangeText={setEditSubjectName}
+            />
+            <Text style={{ fontSize: 14, color: theme.textSecondary, marginBottom: 6 }}>
+              {t('overallNote')}
+            </Text>
+            <TextInput
+              style={[styles.modalInput, { height: 80 }]}
+              placeholder={t('overallNoteOptional')}
+              placeholderTextColor={theme.textTertiary}
+              value={editOverallNote}
+              onChangeText={setEditOverallNote}
+              multiline
+            />
+            <View style={styles.modalButtons}>
+              <Pressable
+                style={[styles.modalBtn, styles.modalBtnCancel]}
+                onPress={() => setEditModalVisible(false)}
+              >
+                <Text style={styles.modalBtnCancelText}>{t('cancel')}</Text>
+              </Pressable>
+              <Pressable
+                style={[
+                  styles.modalBtn,
+                  styles.modalBtnOk,
+                  (!editSubjectName.trim() || !editDate) && { opacity: 0.5 },
+                ]}
+                disabled={!editSubjectName.trim() || !editDate}
+                onPress={saveHeaderEdit}
+              >
+                <Text style={styles.modalBtnOkText}>{t('save')}</Text>
+              </Pressable>
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
     </View>
   );
 }

@@ -166,10 +166,10 @@ export function GroupDetailScreen({ route }: Props) {
   };
 
   const deleteItem = (item: ChecklistItemTemplate) => {
-    Alert.alert('항목 삭제', `"${item.title}"을(를) 삭제할까요?`, [
-      { text: '취소', style: 'cancel' },
+    Alert.alert(t('deleteItemTitle'), t('deleteItemConfirmMessage', { title: item.title }), [
+      { text: t('cancel'), style: 'cancel' },
       {
-        text: '삭제',
+        text: t('delete'),
         style: 'destructive',
         onPress: () => {
           const data = loadAll();
@@ -500,17 +500,17 @@ export function GroupDetailScreen({ route }: Props) {
       >
         <Pressable style={styles.modalOverlay} onPress={() => setEditItem(null)}>
           <Pressable style={styles.modalBox} onPress={e => e.stopPropagation()}>
-            <Text style={styles.modalTitle}>항목 수정</Text>
+            <Text style={styles.modalTitle}>{t('editItemTitle')}</Text>
             <ScrollView style={{ maxHeight: 360 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
               <TextInput
                 style={styles.input}
-                placeholder="항목 제목"
+                placeholder={t('itemTitlePlaceholder')}
                 placeholderTextColor={theme.placeholder}
                 value={editTitle}
                 onChangeText={setEditTitle}
                 autoFocus
               />
-              <Text style={styles.modalLabel}>항목 유형</Text>
+              <Text style={styles.modalLabel}>{t('itemTypeLabel')}</Text>
               <View style={styles.modalTypeRow}>
                 <Pressable
                   style={[
@@ -520,8 +520,15 @@ export function GroupDetailScreen({ route }: Props) {
                   ]}
                   onPress={() => setEditType('check')}
                 >
-                  <Text style={[styles.modalTypeBtnText, editType === 'check' ? { color: theme.primary, fontWeight: '600' } : { color: theme.textSecondary }]}>
-                    일반 체크
+                  <Text
+                    style={[
+                      styles.modalTypeBtnText,
+                      editType === 'check'
+                        ? { color: theme.primary, fontWeight: '600' }
+                        : { color: theme.textSecondary },
+                    ]}
+                  >
+                    {t('selectionType')}
                   </Text>
                 </Pressable>
                 <Pressable
@@ -539,27 +546,27 @@ export function GroupDetailScreen({ route }: Props) {
               </View>
               {editType === 'selection' ? (
                 <>
-                  <Text style={styles.modalLabel}>보기 (2~5개)</Text>
+                  <Text style={styles.modalLabel}>{t('selectionTypeRange')}</Text>
                   {editOptions.map((opt, i) => (
                     <View key={i} style={styles.modalOptionRow}>
                       <Text style={{ fontSize: 14, color: theme.textTertiary, width: 20 }}>{i + 1}.</Text>
                       <TextInput
                         style={styles.modalOptionInput}
-                        placeholder={`보기 ${i + 1}`}
+                        placeholder={t('optionLabel', { num: i + 1 })}
                         placeholderTextColor={theme.placeholder}
                         value={opt}
                         onChangeText={v => setEditOptionAt(i, v)}
                       />
                       {editOptions.length > MIN_OPTIONS ? (
                         <Pressable style={styles.modalOptionRemove} onPress={() => removeEditOption(i)}>
-                          <Text style={styles.modalOptionRemoveText}>{t('delete')}</Text>
+                          <Feather name="trash-2" size={16} color={theme.danger} />
                         </Pressable>
                       ) : null}
                     </View>
                   ))}
                   {editOptions.length < MAX_OPTIONS ? (
                     <Pressable style={styles.modalAddOption} onPress={addEditOption}>
-                      <Text style={styles.modalAddOptionText}>+ 보기 추가</Text>
+                      <Text style={styles.modalAddOptionText}>{t('addOption')}</Text>
                     </Pressable>
                   ) : null}
                 </>
@@ -570,14 +577,14 @@ export function GroupDetailScreen({ route }: Props) {
                 style={[styles.modalBtn, styles.modalBtnCancel]}
                 onPress={() => setEditItem(null)}
               >
-                <Text style={styles.modalBtnCancelText}>취소</Text>
+                <Text style={styles.modalBtnCancelText}>{t('cancel')}</Text>
               </Pressable>
               <Pressable
                 style={[styles.modalBtn, styles.modalBtnOk, (!editTitle.trim() || (editType === 'selection' && editOptions.filter(o => o.trim()).length < MIN_OPTIONS)) && { opacity: 0.5 }]}
                 onPress={saveEditItem}
                 disabled={!editTitle.trim() || (editType === 'selection' && editOptions.filter(o => o.trim()).length < MIN_OPTIONS)}
               >
-                <Text style={styles.modalBtnOkText}>저장</Text>
+                <Text style={styles.modalBtnOkText}>{t('save')}</Text>
               </Pressable>
             </View>
           </Pressable>

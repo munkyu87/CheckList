@@ -141,6 +141,7 @@ export function EditRecordScreen({ route, navigation }: Props) {
         id: generateId(),
         recordId,
         templateItemId: t.id,
+        customTitle: t.title,
         order: order++,
         checked: isSelection ? selectedIdx !== undefined : (itemChecks[t.id] ?? false),
         ...(isSelection && selectedIdx !== undefined ? { selectedOptionIndex: selectedIdx } : {}),

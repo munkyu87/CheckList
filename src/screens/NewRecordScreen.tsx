@@ -12,11 +12,9 @@ import {
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import BottomSheet, { BottomSheetBackdrop, BottomSheetFlatList } from '@gorhom/bottom-sheet';
-import type { CompositeNavigationProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
-import type { NewRecordStackParamList, RootTabParamList } from '../navigation/types';
+import type { HomeStackParamList } from '../navigation/types';
 import { Checkbox } from '../components';
 import { DEFAULT_SUBJECT_LABEL } from '../constants';
 import { useLanguage } from '../i18n';
@@ -31,10 +29,7 @@ import type {
   RecordItem,
 } from '../types';
 
-type Nav = CompositeNavigationProp<
-  NativeStackNavigationProp<NewRecordStackParamList, 'NewRecord'>,
-  BottomTabNavigationProp<RootTabParamList, 'NewRecord'>
->;
+type Nav = NativeStackNavigationProp<HomeStackParamList, 'NewRecord'>;
 
 type Step = 'form' | 'checklist';
 
@@ -149,6 +144,7 @@ export function NewRecordScreen() {
         id: generateId(),
         recordId,
         templateItemId: t.id,
+        customTitle: t.title,
         order: order++,
         checked: isSelection ? selectedIdx !== undefined : (itemChecks[t.id] ?? false),
         ...(isSelection && selectedIdx !== undefined ? { selectedOptionIndex: selectedIdx } : {}),
