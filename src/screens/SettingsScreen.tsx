@@ -28,7 +28,7 @@ import type { ChecklistGroup } from '../types';
 const BACKUP_FILENAME = 'ThinkLess-GroupBackup.json';
 
 export function SettingsScreen() {
-  const { theme, isDark, setThemeMode } = useTheme();
+  const { theme, isDark, mode, setThemeMode } = useTheme();
   const { locale, setLocale, t } = useLanguage();
   const [backingUp, setBackingUp] = useState(false);
   const [restoring, setRestoring] = useState(false);
@@ -242,16 +242,30 @@ export function SettingsScreen() {
         <Text style={styles.sectionTitle}>{t('theme')}</Text>
         <Pressable
           style={({ pressed }) => [styles.menuRow, pressed && styles.menuRowPressed]}
-          onPress={() => setThemeMode(isDark ? 'light' : 'dark')}
+          onPress={() =>
+            setThemeMode(mode === 'light' ? 'dark' : mode === 'dark' ? 'sakura' : 'light')
+          }
         >
           <View style={styles.menuIcon}>
-            <Feather name={isDark ? 'moon' : 'sun'} size={22} color={theme.primary} />
+            <Feather
+              name={mode === 'dark' ? 'moon' : mode === 'sakura' ? 'sun' : 'sun'}
+              size={22}
+              color={theme.primary}
+            />
           </View>
           <View style={{ flex: 1 }}>
             <Text style={styles.menuText}>{t('theme')}</Text>
-            <Text style={styles.menuSubtext}>{isDark ? t('themeDark') : t('themeLight')}</Text>
+            <Text style={styles.menuSubtext}>
+              {mode === 'light'
+                ? t('themeLight')
+                : mode === 'dark'
+                ? t('themeDark')
+                : t('themeSakura')}
+            </Text>
           </View>
-          <Text style={styles.menuValue}>{isDark ? t('dark') : t('light')}</Text>
+          <Text style={styles.menuValue}>
+            {mode === 'light' ? t('light') : mode === 'dark' ? t('dark') : 'Sakura'}
+          </Text>
           <Feather name="chevron-right" size={20} color={theme.textTertiary} />
         </Pressable>
 

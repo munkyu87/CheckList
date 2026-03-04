@@ -3,7 +3,7 @@
  * 깔끔한 요즘 스타일 UI
  */
 
-export type ThemeMode = 'light' | 'dark';
+export type ThemeMode = 'light' | 'dark' | 'sakura';
 
 export interface ThemeColors {
   // 배경
@@ -100,4 +100,33 @@ export const darkTheme: ThemeColors = {
   orderButtonDisabled: '#1e293b',
   orderButtonText: '#cbd5e1',
   orderButtonTextDisabled: '#64748b',
+};
+
+export const sakuraTheme: ThemeColors = {
+  background: '#fff7fb',
+  backgroundSecondary: '#ffeef7',
+  surface: '#ffffff',
+  surfaceVariant: '#ffe4f1',
+  text: '#311b1f',
+  textSecondary: '#6b4b57',
+  textTertiary: '#9d6b7c',
+  primary: '#ec4899',
+  primaryPressed: '#db2777',
+  border: '#fed7e2',
+  borderLight: '#ffe4f1',
+  danger: '#f97373',
+  dangerPressed: '#fb4f4f',
+  tabBar: '#ffffff',
+  tabBarBorder: '#fed7e2',
+  tabBarActive: '#ec4899',
+  tabBarInactive: '#9d6b7c',
+  inputBackground: '#fffafa',
+  inputBorder: '#fed7e2',
+  placeholder: '#c08497',
+  buttonSecondary: '#ffe4f1',
+  buttonSecondaryText: '#6b4b57',
+  orderButton: '#ffe4f1',
+  orderButtonDisabled: '#fff7fb',
+  orderButtonText: '#6b4b57',
+  orderButtonTextDisabled: '#c08497',
 };
