@@ -27,7 +27,7 @@ export type GroupSortOrder = 'name' | 'createdAt' | 'recordCount';
 type Nav = NativeStackNavigationProp<GroupsStackParamList, 'GroupList'>;
 
 export function GroupListScreen() {
-  const { theme } = useTheme();
+  const { theme, cardShadow } = useTheme();
   const { t } = useLanguage();
   const navigation = useNavigation<Nav>();
   const [groups, setGroups] = useState<ChecklistGroup[]>([]);
@@ -60,6 +60,7 @@ export function GroupListScreen() {
           marginBottom: 8,
           borderWidth: 1,
           borderColor: theme.borderLight,
+          ...cardShadow,
         },
         itemPressed: { opacity: 0.8 },
         itemContent: { flex: 1, minWidth: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' },
@@ -104,7 +105,7 @@ export function GroupListScreen() {
         modalBtnOk: { backgroundColor: theme.primary },
         modalBtnOkText: { color: '#fff', fontSize: 16, fontWeight: '600' },
       }),
-    [theme]
+    [theme, cardShadow]
   );
 
   const refresh = useCallback(() => {

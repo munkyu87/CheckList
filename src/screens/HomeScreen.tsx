@@ -38,7 +38,7 @@ type DateFilterKind = 'all' | 'today' | 'thisWeek' | 'thisMonth' | 'custom';
 const TAB_BAR_HEIGHT = 56;
 
 export function HomeScreen() {
-  const { theme, isDark } = useTheme();
+  const { theme, isDark, cardShadow } = useTheme();
   const { t, locale } = useLanguage();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<Nav>();
@@ -300,11 +300,7 @@ export function HomeScreen() {
           marginBottom: 5,
           borderWidth: 0,
           overflow: 'hidden',
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 1 },
-          shadowOpacity: isDark ? 0.08 : 0.04,
-          shadowRadius: isDark ? 6 : 3,
-          elevation: isDark ? 3 : 2,
+          ...cardShadow,
         },
         itemPressed: { opacity: 0.85 },
         itemBar: {
@@ -322,7 +318,7 @@ export function HomeScreen() {
         itemCheck: { fontSize: 18, color: theme.primary, fontWeight: '600' },
         starIcon: { marginLeft: 4, marginRight: 4 },
       }),
-    [theme, isDark]
+    [theme, cardShadow]
   );
 
   const groupOptions = useMemo(

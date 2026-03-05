@@ -34,7 +34,7 @@ type CustomItemEdit = { id: string; title: string; checked: boolean };
 
 export function EditRecordScreen({ route, navigation }: Props) {
   const { recordId } = route.params;
-  const { theme, isDark } = useTheme();
+  const { theme, isDark, cardShadow } = useTheme();
   const { t, locale } = useLanguage();
   const [record, setRecord] = useState<ChecklistRecord | null>(null);
   const [group, setGroup] = useState<ChecklistGroup | null>(null);
@@ -209,6 +209,7 @@ export function EditRecordScreen({ route, navigation }: Props) {
           marginBottom: 8,
           borderWidth: 1,
           borderColor: theme.borderLight,
+          ...cardShadow,
         },
         rowPressed: { opacity: 0.9 },
         rowLabel: { fontSize: 13, color: theme.textSecondary, marginBottom: 4 },
@@ -242,6 +243,7 @@ export function EditRecordScreen({ route, navigation }: Props) {
           marginBottom: 8,
           borderWidth: 1,
           borderColor: theme.borderLight,
+          ...cardShadow,
         },
         checklistCheck: { marginRight: 12 },
         checklistBody: { flex: 1 },
@@ -315,7 +317,7 @@ export function EditRecordScreen({ route, navigation }: Props) {
         },
         datePickerWrap: { paddingVertical: 8, alignItems: 'center' },
       }),
-    [theme]
+    [theme, cardShadow]
   );
 
   if (!loaded) {

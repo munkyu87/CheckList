@@ -27,7 +27,7 @@ import type { ChecklistGroup, ChecklistItemTemplate, ChecklistItemType, Selectio
 type Props = NativeStackScreenProps<GroupsStackParamList, 'GroupDetail'>;
 
 export function GroupDetailScreen({ route }: Props) {
-  const { theme } = useTheme();
+  const { theme, cardShadow } = useTheme();
   const { t } = useLanguage();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
@@ -211,6 +211,7 @@ export function GroupDetailScreen({ route }: Props) {
           marginBottom: 8,
           borderWidth: 1,
           borderColor: theme.borderLight,
+          ...cardShadow,
         },
         groupName: { fontSize: 18, fontWeight: '600', color: theme.text },
         groupNameRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
@@ -239,6 +240,7 @@ export function GroupDetailScreen({ route }: Props) {
           borderColor: theme.borderLight,
           backgroundColor: theme.surface,
           overflow: 'hidden',
+          ...cardShadow,
         },
         itemDivider: {
           height: 1,
@@ -355,7 +357,7 @@ export function GroupDetailScreen({ route }: Props) {
         addRowBtnText: { color: '#fff', fontSize: 15, fontWeight: '600' },
         addRowBtnCancelText: { color: theme.buttonSecondaryText, fontSize: 15 },
       }),
-    [theme]
+    [theme, cardShadow]
   );
 
   const renderItem = ({ item, drag, isActive }: { item: ChecklistItemTemplate; drag: () => void; isActive: boolean }) => (

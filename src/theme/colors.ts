@@ -3,7 +3,7 @@
  * 깔끔한 요즘 스타일 UI
  */
 
-export type ThemeMode = 'light' | 'dark' | 'sakura';
+export type ThemeMode = 'light' | 'dark' | 'sakura' | 'ocean' | 'midnight';
 
 export interface ThemeColors {
   // 배경
@@ -129,4 +129,63 @@ export const sakuraTheme: ThemeColors = {
   orderButtonDisabled: '#fff7fb',
   orderButtonText: '#6b4b57',
   orderButtonTextDisabled: '#c08497',
+};
+
+export const oceanTheme: ThemeColors = {
+  background: '#f0f9ff',
+  backgroundSecondary: '#e0f2fe',
+  surface: '#ffffff',
+  surfaceVariant: '#e0f2fe',
+  text: '#0c4a6e',
+  textSecondary: '#0369a1',
+  textTertiary: '#0284c7',
+  primary: '#0ea5e9',
+  primaryPressed: '#0284c7',
+  border: '#bae6fd',
+  borderLight: '#e0f2fe',
+  danger: '#ef4444',
+  dangerPressed: '#dc2626',
+  tabBar: '#ffffff',
+  tabBarBorder: '#bae6fd',
+  tabBarActive: '#0ea5e9',
+  tabBarInactive: '#0284c7',
+  inputBackground: '#f8fcff',
+  inputBorder: '#bae6fd',
+  placeholder: '#38bdf8',
+  buttonSecondary: '#e0f2fe',
+  buttonSecondaryText: '#0369a1',
+  orderButton: '#e0f2fe',
+  orderButtonDisabled: '#f0f9ff',
+  orderButtonText: '#0369a1',
+  orderButtonTextDisabled: '#7dd3fc',
+};
+
+/** 미드나잇: 진한 인디고/보라 밤하늘 (다크와 구분) */
+export const midnightTheme: ThemeColors = {
+  background: '#0f0a1a',
+  backgroundSecondary: '#1a1225',
+  surface: '#1e1a2e',
+  surfaceVariant: '#2a2438',
+  text: '#f5f3ff',
+  textSecondary: '#c4b5fd',
+  textTertiary: '#a78bfa',
+  primary: '#a78bfa',
+  primaryPressed: '#8b5cf6',
+  border: '#3730a3',
+  borderLight: '#4c1d95',
+  danger: '#f87171',
+  dangerPressed: '#fb7185',
+  tabBar: '#1e1a2e',
+  tabBarBorder: '#3730a3',
+  tabBarActive: '#a78bfa',
+  tabBarInactive: '#a78bfa',
+  inputBackground: '#2a2438',
+  inputBorder: '#4c1d95',
+  placeholder: '#7c3aed',
+  buttonSecondary: '#2a2438',
+  buttonSecondaryText: '#c4b5fd',
+  orderButton: '#2a2438',
+  orderButtonDisabled: '#1e1a2e',
+  orderButtonText: '#c4b5fd',
+  orderButtonTextDisabled: '#6d28d9',
 };

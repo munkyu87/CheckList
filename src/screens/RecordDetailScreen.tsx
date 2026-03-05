@@ -34,7 +34,7 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'RecordDetail'>;
 
 export function RecordDetailScreen({ route, navigation }: Props) {
   const { recordId } = route.params;
-  const { theme, isDark } = useTheme();
+  const { theme, isDark, cardShadow } = useTheme();
   const { t, locale } = useLanguage();
   const [record, setRecord] = useState<ChecklistRecord | null>(null);
   const [group, setGroup] = useState<ChecklistGroup | null>(null);
@@ -341,6 +341,7 @@ export function RecordDetailScreen({ route, navigation }: Props) {
           borderColor: theme.borderLight,
           borderLeftWidth: 4,
           borderLeftColor: theme.primary,
+          ...cardShadow,
         },
         reportHeaderContent: { flex: 1, minWidth: 0 },
         reportHeaderEdit: { padding: 4, marginLeft: 8 },
@@ -365,6 +366,7 @@ export function RecordDetailScreen({ route, navigation }: Props) {
           marginBottom: 8,
           borderWidth: 1,
           borderColor: theme.borderLight,
+          ...cardShadow,
         },
         rowPressed: { opacity: 0.9 },
         colNum: { width: 28, marginRight: 8, fontSize: 15, color: theme.textTertiary },
@@ -449,7 +451,7 @@ export function RecordDetailScreen({ route, navigation }: Props) {
           elevation: 4,
         },
       }),
-    [theme]
+    [theme, cardShadow]
   );
 
   if (record == null) {

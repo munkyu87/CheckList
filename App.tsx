@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { AppNavigator } from './src/navigation';
-import { SplashScreen, SakuraLayer } from './src/components';
+import { SplashScreen, SakuraLayer, BubbleLayer, MidnightLayer } from './src/components';
 import { ThemeProvider, useTheme } from './src/theme';
 import { LanguageProvider } from './src/i18n';
 import { StatusBar, View } from 'react-native';
@@ -15,14 +15,12 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 function AppContent() {
   const { isDark, theme } = useTheme();
   const [showSplash, setShowSplash] = useState(true);
+  const barStyle = isDark ? 'light-content' : 'dark-content';
 
   if (showSplash) {
     return (
       <View style={{ flex: 1, backgroundColor: theme.background }}>
-        <StatusBar
-          barStyle={isDark ? 'light-content' : 'dark-content'}
-          backgroundColor={theme.background}
-        />
+        <StatusBar barStyle={barStyle} backgroundColor={theme.background} />
         <SplashScreen onFinish={() => setShowSplash(false)} />
       </View>
     );
@@ -30,12 +28,11 @@ function AppContent() {
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
-      <StatusBar
-        barStyle={isDark ? 'light-content' : 'dark-content'}
-        backgroundColor={theme.background}
-      />
+      <StatusBar barStyle={barStyle} backgroundColor={theme.background} />
       <AppNavigator />
       <SakuraLayer />
+      <BubbleLayer />
+      <MidnightLayer />
     </View>
   );
 }

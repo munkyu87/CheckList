@@ -41,7 +41,7 @@ function todayYmd(): string {
 }
 
 export function NewRecordScreen() {
-  const { theme, isDark } = useTheme();
+  const { theme, isDark, cardShadow } = useTheme();
   const { t, locale } = useLanguage();
   const navigation = useNavigation<Nav>();
   const [step, setStep] = useState<Step>('form');
@@ -227,6 +227,7 @@ export function NewRecordScreen() {
           marginBottom: 8,
           borderWidth: 1,
           borderColor: theme.borderLight,
+          ...cardShadow,
         },
         rowWithArrow: { flexDirection: 'row', alignItems: 'center' },
         rowPressed: { opacity: 0.9 },
@@ -291,6 +292,7 @@ export function NewRecordScreen() {
           marginBottom: 8,
           borderWidth: 1,
           borderColor: theme.borderLight,
+          ...cardShadow,
         },
         checklistCheck: { marginRight: 12 },
         checklistBody: { flex: 1 },
@@ -366,7 +368,7 @@ export function NewRecordScreen() {
         },
         datePickerWrap: { paddingVertical: 8, alignItems: 'center' },
       }),
-    [theme]
+    [theme, cardShadow]
   );
 
   const renderBackdrop = useCallback(
