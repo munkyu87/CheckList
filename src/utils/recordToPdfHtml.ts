@@ -48,8 +48,14 @@ export function recordToPdfHtml(
   const rows = items
     .map(({ index, title, recordItem, template }) => {
       const isSelection = template?.itemType === 'selection' && template.options && template.options.length >= 2;
+      const isMultiSelection = template?.itemType === 'selection' && template?.selectionMode === 'multi' && template.options && template.options.length >= 2;
       const selectedIdx = recordItem.selectedOptionIndex;
-      const checked = isSelection ? selectedIdx !== undefined : recordItem.checked;
+      const multiIndices = recordItem.selectedOptionIndices ?? [];
+      const checked = isSelection
+        ? selectedIdx !== undefined
+        : isMultiSelection
+          ? multiIndices.length > 0
+          : recordItem.checked;
       const statusText = checked ? `✓ ${t('pdfDone')}` : `○ ${t('pdfPending')}`;
       const statusClass = checked ? 'status-done' : 'status-pending';
 
@@ -61,6 +67,18 @@ export function recordToPdfHtml(
               `<div class="option-row"><span class="option-num">${oi + 1}.</span>
   <span class="option-radio ${selectedIdx === oi ? 'selected' : ''}">${selectedIdx === oi ? '●' : '○'}</span>
   <span class="option-label">${escapeHtml(opt || t('optionLabel', { num: oi + 1 }))}</span></div>`
+          )
+          .join('');
+        optionsHtml = `<div class="selection-options">${optionsHtml}</div>`;
+      } else if (isMultiSelection && template!.options!.length > 0) {
+        optionsHtml = template!.options!
+          .map(
+            (opt, oi) => {
+              const sel = multiIndices.includes(oi);
+              return `<div class="option-row"><span class="option-num">${oi + 1}.</span>
+  <span class="option-radio ${sel ? 'selected' : ''}">${sel ? '✓' : '○'}</span>
+  <span class="option-label">${escapeHtml(opt || t('optionLabel', { num: oi + 1 }))}</span></div>`;
+            }
           )
           .join('');
         optionsHtml = `<div class="selection-options">${optionsHtml}</div>`;

@@ -113,6 +113,26 @@ export function RecordDetailScreen({ route, navigation }: Props) {
     [refresh]
   );
 
+  const toggleItemMultiSelection = useCallback(
+    (recordItem: RecordItem, optionIndex: number) => {
+      const data = loadAll();
+      const idx = data.recordItems.findIndex(ri => ri.id === recordItem.id);
+      if (idx >= 0) {
+        const current = data.recordItems[idx].selectedOptionIndices ?? [];
+        const has = current.includes(optionIndex);
+        const next = has ? current.filter(i => i !== optionIndex) : [...current, optionIndex].sort((a, b) => a - b);
+        data.recordItems[idx] = {
+          ...data.recordItems[idx],
+          selectedOptionIndices: next,
+          checked: next.length > 0,
+        };
+        saveAll(data);
+        refresh();
+      }
+    },
+    [refresh]
+  );
+
   const deleteRecord = useCallback(() => {
     Alert.alert(t('deleteRecordTitle'), t('deleteRecordMessage'), [
       { text: t('cancel'), style: 'cancel' },
@@ -267,7 +287,7 @@ export function RecordDetailScreen({ route, navigation }: Props) {
           const data = loadAll();
           data.recordItems = data.recordItems.map(ri =>
             ri.recordId === recordId
-              ? { ...ri, checked: false, selectedOptionIndex: undefined }
+              ? { ...ri, checked: false, selectedOptionIndex: undefined, selectedOptionIndices: undefined }
               : ri
           );
           saveAll(data);
@@ -353,6 +373,8 @@ export function RecordDetailScreen({ route, navigation }: Props) {
         rowTitle: { fontSize: 16, color: theme.text, marginBottom: 2 },
         selectionOptionsList: { marginTop: 10 },
         selectionOptionRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 6 },
+        checklistCheck: { marginRight: 10 },
+        optionCheckboxWrap: { marginRight: 8 },
         selectionOptionNum: { fontSize: 14, color: theme.textTertiary, width: 24 },
         selectionOptionRadio: {
           width: 20,
@@ -466,14 +488,21 @@ export function RecordDetailScreen({ route, navigation }: Props) {
         <Text style={styles.sectionTitle}>{t('checkItems')}</Text>
         {items.map(({ index, title, recordItem, template }) => {
           const isSelection = template?.itemType === 'selection' && template.options && template.options.length >= 2;
+          const isMultiSelection = template?.itemType === 'selection' && template?.selectionMode === 'multi' && template.options && template.options.length >= 2;
           const selectedIdx = recordItem.selectedOptionIndex;
-          const checked = isSelection ? selectedIdx !== undefined : recordItem.checked;
+          const multiIndices = recordItem.selectedOptionIndices ?? [];
+          const checked = isMultiSelection
+            ? multiIndices.length > 0
+            : isSelection
+              ? selectedIdx !== undefined
+              : recordItem.checked;
+          const rowPressable = !isSelection && !isMultiSelection;
 
           return (
             <Pressable
               key={recordItem.id}
-              style={({ pressed }) => [styles.row, !isSelection && pressed && styles.rowPressed]}
-              onPress={!isSelection ? () => toggleItemCheck(recordItem) : undefined}
+              style={({ pressed }) => [styles.row, rowPressable && pressed && styles.rowPressed]}
+              onPress={rowPressable ? () => toggleItemCheck(recordItem) : undefined}
             >
               <Text style={styles.colNum}>{index}.</Text>
               <View style={styles.colStatusIcon}>
@@ -481,7 +510,26 @@ export function RecordDetailScreen({ route, navigation }: Props) {
               </View>
               <View style={styles.colContent}>
                 <Text style={styles.rowTitle}>{title || '(제목 없음)'}</Text>
-                {isSelection && template!.options!.length > 0 ? (
+                {isMultiSelection && template!.options!.length > 0 ? (
+                  <View style={styles.selectionOptionsList}>
+                    {template!.options!.map((opt, oi) => {
+                      const selected = multiIndices.includes(oi);
+                      return (
+                        <Pressable
+                          key={oi}
+                          style={styles.selectionOptionRow}
+                          onPress={() => toggleItemMultiSelection(recordItem, oi)}
+                        >
+                          <Text style={styles.selectionOptionNum}>{oi + 1}.</Text>
+                          <View style={styles.optionCheckboxWrap}>
+                            <Checkbox checked={selected} onPress={() => toggleItemMultiSelection(recordItem, oi)} size={18} />
+                          </View>
+                          <Text style={styles.selectionOptionLabel}>{opt || `보기 ${oi + 1}`}</Text>
+                        </Pressable>
+                      );
+                    })}
+                  </View>
+                ) : isSelection && template!.options!.length > 0 ? (
                   <View style={styles.selectionOptionsList}>
                     {template!.options!.map((opt, oi) => {
                       const selected = selectedIdx === oi;

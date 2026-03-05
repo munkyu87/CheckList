@@ -11,6 +11,14 @@ import type {
   RecordItem,
 } from '../types';
 
+/** 이전 멀티선택 항목 유형을 선택형 + selectionMode로 통합 */
+function migrateTemplate(t: ChecklistItemTemplate & { itemType?: string }): ChecklistItemTemplate {
+  if (t.itemType === 'multiSelection') {
+    return { ...t, itemType: 'selection', selectionMode: 'multi' };
+  }
+  return t;
+}
+
 export type StorageData = {
   groups: ChecklistGroup[];
   templates: ChecklistItemTemplate[];
@@ -58,9 +66,11 @@ export function loadAll(): StorageData {
   if (inst == null) {
     return JSON.parse(JSON.stringify(memoryFallback));
   }
+  const rawTemplates = parseJson(STORAGE_KEYS.CHECKLIST_TEMPLATES, [], inst);
+  const templates = rawTemplates.map((t: ChecklistItemTemplate & { itemType?: string }) => migrateTemplate(t));
   return {
     groups: parseJson(STORAGE_KEYS.CHECKLIST_GROUPS, [], inst),
-    templates: parseJson(STORAGE_KEYS.CHECKLIST_TEMPLATES, [], inst),
+    templates,
     records: parseJson(STORAGE_KEYS.CHECKLIST_RECORDS, [], inst),
     recordItems: parseJson(STORAGE_KEYS.RECORD_ITEMS, [], inst),
   };

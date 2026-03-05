@@ -53,6 +53,7 @@ export function NewRecordScreen() {
   const [overallNote, setOverallNote] = useState('');
   const [itemChecks, setItemChecks] = useState<Record<string, boolean>>({});
   const [itemSelections, setItemSelections] = useState<Record<string, number>>({});
+  const [itemMultiSelections, setItemMultiSelections] = useState<Record<string, number[]>>({});
   const [customItems, setCustomItems] = useState<CustomItem[]>([]);
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -96,6 +97,7 @@ export function NewRecordScreen() {
     });
     setItemChecks(initial);
     setItemSelections({});
+    setItemMultiSelections({});
     setCustomItems([]);
     setStep('checklist');
   }, [canGoNext, templates]);
@@ -106,6 +108,15 @@ export function NewRecordScreen() {
 
   const setSelection = useCallback((templateId: string, optionIndex: number) => {
     setItemSelections(prev => ({ ...prev, [templateId]: optionIndex }));
+  }, []);
+
+  const toggleMultiSelection = useCallback((templateId: string, optionIndex: number) => {
+    setItemMultiSelections(prev => {
+      const arr = prev[templateId] ?? [];
+      const has = arr.includes(optionIndex);
+      const next = has ? arr.filter(i => i !== optionIndex) : [...arr, optionIndex].sort((a, b) => a - b);
+      return { ...prev, [templateId]: next };
+    });
   }, []);
 
   const addCustomItem = useCallback(() => {
@@ -139,15 +150,23 @@ export function NewRecordScreen() {
     let order = 0;
     templates.forEach(t => {
       const isSelection = t.itemType === 'selection' && t.options && t.options.length >= 2;
+      const isMultiSelection = t.itemType === 'selection' && t.selectionMode === 'multi' && t.options && t.options.length >= 2;
       const selectedIdx = itemSelections[t.id];
+      const multiIndices = itemMultiSelections[t.id] ?? [];
+      const checked = isSelection
+        ? selectedIdx !== undefined
+        : isMultiSelection
+          ? multiIndices.length > 0
+          : (itemChecks[t.id] ?? false);
       recordItems.push({
         id: generateId(),
         recordId,
         templateItemId: t.id,
         customTitle: t.title,
         order: order++,
-        checked: isSelection ? selectedIdx !== undefined : (itemChecks[t.id] ?? false),
+        checked,
         ...(isSelection && selectedIdx !== undefined ? { selectedOptionIndex: selectedIdx } : {}),
+        ...(isMultiSelection && multiIndices.length > 0 ? { selectedOptionIndices: multiIndices } : {}),
       });
     });
     customItems.forEach(c => {
@@ -171,14 +190,12 @@ export function NewRecordScreen() {
     setOverallNote('');
     setItemChecks({});
     setItemSelections({});
+    setItemMultiSelections({});
     setCustomItems([]);
     setDate(todayYmd());
     setIsFavorite(false);
-    const parent = navigation.getParent();
-    if (parent) {
-      (parent as { navigate: (name: string) => void }).navigate('HomeTab');
-    }
-  }, [groupId, date, subjectName, overallNote, templates, itemChecks, itemSelections, customItems, navigation]);
+    navigation.navigate('Home');
+  }, [groupId, date, subjectName, overallNote, templates, itemChecks, itemSelections, itemMultiSelections, customItems, navigation]);
 
   const onDateChange = useCallback((_: unknown, d?: Date) => {
     if (d) setDate(d.toISOString().slice(0, 10));
@@ -280,6 +297,7 @@ export function NewRecordScreen() {
         checklistTitle: { fontSize: 16, color: theme.text },
         selectionOptionsList: { marginTop: 10 },
         selectionOptionRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
+        optionCheckboxWrap: { marginRight: 10 },
         selectionOptionNum: { fontSize: 14, color: theme.textTertiary, width: 24 },
         selectionOptionRadio: {
           width: 20,
@@ -527,10 +545,33 @@ export function NewRecordScreen() {
         <Text style={styles.sectionTitle}>{t('checkItems')}</Text>
         {templates.map((template, idx) => {
           const isSelection = template.itemType === 'selection' && template.options && template.options.length >= 2;
+          const isMultiSelection = template.itemType === 'selection' && template.selectionMode === 'multi' && template.options && template.options.length >= 2;
           return (
             <View key={template.id} style={styles.checklistItem}>
               <Text style={styles.itemIndex}>{idx + 1}.</Text>
-              {isSelection ? (
+              {isMultiSelection ? (
+                <View style={styles.checklistBody}>
+                  <Text style={styles.checklistTitle}>{template.title}</Text>
+                  <View style={styles.selectionOptionsList}>
+                    {template.options!.map((opt, oi) => {
+                      const selected = (itemMultiSelections[template.id] ?? []).includes(oi);
+                      return (
+                        <Pressable
+                          key={oi}
+                          style={styles.selectionOptionRow}
+                          onPress={() => toggleMultiSelection(template.id, oi)}
+                        >
+                          <Text style={styles.selectionOptionNum}>{oi + 1}.</Text>
+                          <View style={styles.optionCheckboxWrap}>
+                            <Checkbox checked={selected} onPress={() => toggleMultiSelection(template.id, oi)} size={18} />
+                          </View>
+                          <Text style={styles.selectionOptionLabel}>{opt || t('optionLabel', { num: oi + 1 })}</Text>
+                        </Pressable>
+                      );
+                    })}
+                  </View>
+                </View>
+              ) : isSelection ? (
                 <View style={styles.checklistBody}>
                   <Text style={styles.checklistTitle}>{template.title}</Text>
                   <View style={styles.selectionOptionsList}>

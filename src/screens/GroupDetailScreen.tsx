@@ -22,7 +22,7 @@ import { useLanguage } from '../i18n';
 import { useTheme } from '../theme';
 import { loadAll, saveAll } from '../storage';
 import { generateId } from '../utils/id';
-import type { ChecklistGroup, ChecklistItemTemplate, ChecklistItemType } from '../types';
+import type { ChecklistGroup, ChecklistItemTemplate, ChecklistItemType, SelectionMode } from '../types';
 
 type Props = NativeStackScreenProps<GroupsStackParamList, 'GroupDetail'>;
 
@@ -42,6 +42,7 @@ export function GroupDetailScreen({ route }: Props) {
   const [editItem, setEditItem] = useState<ChecklistItemTemplate | null>(null);
   const [editTitle, setEditTitle] = useState('');
   const [editType, setEditType] = useState<ChecklistItemType>('check');
+  const [editSelectionMode, setEditSelectionMode] = useState<SelectionMode>('single');
   const [editOptions, setEditOptions] = useState<string[]>(['', '']);
   const addInputRef = useRef<TextInput>(null);
   const groupNameInputRef = useRef<TextInput>(null);
@@ -123,6 +124,7 @@ export function GroupDetailScreen({ route }: Props) {
     setEditItem(item);
     setEditTitle(item.title);
     setEditType(item.itemType ?? 'check');
+    setEditSelectionMode(item.selectionMode ?? 'single');
     const opts = item.options?.length ? [...item.options] : ['', ''];
     setEditOptions(opts.length >= MIN_OPTIONS && opts.length <= MAX_OPTIONS ? opts : ['', '']);
   };
@@ -138,15 +140,18 @@ export function GroupDetailScreen({ route }: Props) {
       const trimmed = editOptions.map(s => s.trim()).filter(Boolean);
       if (trimmed.length < MIN_OPTIONS || trimmed.length > MAX_OPTIONS) return;
       t.itemType = 'selection';
+      t.selectionMode = editSelectionMode;
       t.options = trimmed;
     } else {
       t.itemType = 'check';
       t.options = undefined;
+      delete (t as { selectionMode?: SelectionMode }).selectionMode;
     }
     saveAll(data);
     setEditItem(null);
     setEditTitle('');
     setEditType('check');
+    setEditSelectionMode('single');
     setEditOptions(['', '']);
     refresh();
   };
@@ -546,6 +551,33 @@ export function GroupDetailScreen({ route }: Props) {
               </View>
               {editType === 'selection' ? (
                 <>
+                  <Text style={styles.modalLabel}>{t('selectionModeLabel')}</Text>
+                  <View style={styles.modalTypeRow}>
+                    <Pressable
+                      style={[
+                        styles.modalTypeBtn,
+                        editSelectionMode === 'single' && { borderColor: theme.primary, backgroundColor: theme.surfaceVariant },
+                        editSelectionMode !== 'single' && { borderColor: theme.borderLight },
+                      ]}
+                      onPress={() => setEditSelectionMode('single')}
+                    >
+                      <Text style={[styles.modalTypeBtnText, editSelectionMode === 'single' ? { color: theme.primary, fontWeight: '600' } : { color: theme.textSecondary }]}>
+                        {t('selectionModeSingle')}
+                      </Text>
+                    </Pressable>
+                    <Pressable
+                      style={[
+                        styles.modalTypeBtn,
+                        editSelectionMode === 'multi' && { borderColor: theme.primary, backgroundColor: theme.surfaceVariant },
+                        editSelectionMode !== 'multi' && { borderColor: theme.borderLight },
+                      ]}
+                      onPress={() => setEditSelectionMode('multi')}
+                    >
+                      <Text style={[styles.modalTypeBtnText, editSelectionMode === 'multi' ? { color: theme.primary, fontWeight: '600' } : { color: theme.textSecondary }]}>
+                        {t('selectionModeMulti')}
+                      </Text>
+                    </Pressable>
+                  </View>
                   <Text style={styles.modalLabel}>{t('selectionTypeRange')}</Text>
                   {editOptions.map((opt, i) => (
                     <View key={i} style={styles.modalOptionRow}>

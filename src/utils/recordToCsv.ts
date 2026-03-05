@@ -46,12 +46,23 @@ export function recordToCsv(
 
   const dataRows = items.map(({ index, title, recordItem, template }) => {
     const isSelection = template?.itemType === 'selection' && template.options && template.options.length >= 2;
+    const isMultiSelection = template?.itemType === 'selection' && template?.selectionMode === 'multi' && template.options && template.options.length >= 2;
     const selectedIdx = recordItem.selectedOptionIndex;
-    const checked = isSelection ? selectedIdx !== undefined : recordItem.checked;
+    const multiIndices = recordItem.selectedOptionIndices ?? [];
+    const checked = isSelection
+      ? selectedIdx !== undefined
+      : isMultiSelection
+        ? multiIndices.length > 0
+        : recordItem.checked;
     const statusText = checked ? t('pdfDone') : t('pdfPending');
     let selectedValue = '';
     if (isSelection && template?.options && selectedIdx != null && template.options[selectedIdx] != null) {
       selectedValue = template.options[selectedIdx];
+    } else if (isMultiSelection && template?.options && multiIndices.length > 0) {
+      selectedValue = multiIndices
+        .map(i => (template!.options![i] != null ? template!.options![i] : ''))
+        .filter(Boolean)
+        .join('; ');
     }
     return [date, subject, groupName, note, index, title || '', statusText, selectedValue].map(escapeCsvCell).join(',');
   });

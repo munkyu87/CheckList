@@ -10,18 +10,23 @@ export interface ChecklistGroup {
   createdAt: string; // ISO string
 }
 
-/** 항목 유형: 일반 체크(✓) 또는 선택형(보기 2~5개 중 하나) */
+/** 항목 유형: 일반 체크(✓) 또는 선택형(보기 2~5개) */
 export type ChecklistItemType = 'check' | 'selection';
+
+/** 선택형일 때 한 개만 선택(라디오) vs 여러 개 선택(체크) */
+export type SelectionMode = 'single' | 'multi';
 
 export interface ChecklistItemTemplate {
   id: string;
   groupId: string;
   title: string;
   order: number;
-  /** 기본 'check'. 'selection'이면 options 사용 (2~5개) */
+  /** 기본 'check'. 'selection'이면 options + selectionMode 사용 (2~5개) */
   itemType?: ChecklistItemType;
   /** 선택형일 때 보기 문자열 배열. 2~5개 */
   options?: string[];
+  /** 선택형일 때만: 'single' 한 개만 선택(라디오), 'multi' 여러 개 선택(체크). 기본 'single' */
+  selectionMode?: SelectionMode;
 }
 
 export interface ChecklistRecord {
@@ -46,6 +51,8 @@ export interface RecordItem {
   /** 표시 순서 (템플릿 순서 + 커스텀 순서) */
   order?: number;
   checked: boolean;
-  /** 선택형 항목일 때 선택한 보기 인덱스 (0부터). 있으면 checked는 true로 간주 */
+  /** 선택형(selectionMode single)일 때 선택한 보기 인덱스 (0부터). 있으면 checked는 true로 간주 */
   selectedOptionIndex?: number;
+  /** 선택형(selectionMode multi)일 때 선택한 보기 인덱스 배열. 길이 > 0이면 checked true */
+  selectedOptionIndices?: number[];
 }
