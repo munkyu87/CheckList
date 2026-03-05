@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '../theme';
+import { triggerLightHaptic } from '../utils/haptics';
 
 type Props = {
   checked: boolean;
@@ -48,7 +49,10 @@ export function Checkbox({ checked, onPress, disabled = false, size = DEFAULT_SI
 
   return (
     <Pressable
-      onPress={onPress}
+      onPress={() => {
+        triggerLightHaptic();
+        onPress();
+      }}
       style={({ pressed }) => [pressed && { opacity: 0.8 }]}
       hitSlop={8}
     >

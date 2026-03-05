@@ -257,21 +257,34 @@ export function SettingsScreen() {
           }
         >
           <View style={styles.menuIcon}>
-            <Feather
-              name={
-                mode === 'sakura'
-                  ? 'sun'
-                  : mode === 'ocean'
+            {mode === 'sakura' ? (
+              <View
+                style={{
+                  width: 28,
+                  height: 28,
+                  borderRadius: 14,
+                  backgroundColor: theme.surfaceVariant,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Text style={{ fontSize: 18, color: theme.primary }}>🌸</Text>
+              </View>
+            ) : (
+              <Feather
+                name={
+                  mode === 'ocean'
                     ? 'droplet'
                     : mode === 'midnight'
                       ? 'star'
                       : mode === 'forest'
                         ? 'feather'
                         : 'sun'
-              }
-              size={22}
-              color={theme.primary}
-            />
+                }
+                size={22}
+                color={theme.primary}
+              />
+            )}
           </View>
           <View style={{ flex: 1 }}>
             <Text style={styles.menuText}>{t('theme')}</Text>

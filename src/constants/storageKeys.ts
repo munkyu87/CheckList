@@ -9,4 +9,5 @@ export const STORAGE_KEYS = {
   RECORD_ITEMS: 'record_items',
   APP_THEME: 'app_theme',
   APP_LANGUAGE: 'app_language',
+  APP_ONBOARDING_SEEN: 'app_onboarding_seen',
 } as const;

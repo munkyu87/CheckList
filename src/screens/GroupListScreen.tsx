@@ -47,27 +47,56 @@ export function GroupListScreen() {
         sortChipActive: { backgroundColor: theme.primary, borderColor: theme.primary },
         sortChipText: { fontSize: 14, color: theme.textSecondary },
         sortChipTextActive: { color: '#fff', fontWeight: '600' },
-        list: { padding: 12, paddingBottom: 24, flexGrow: 1 },
+        list: { paddingHorizontal: 16, paddingTop: 8, paddingBottom: 24, flexGrow: 1 },
         empty: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24 },
         emptyText: { fontSize: 16, color: theme.text, marginBottom: 8 },
         emptyHint: { fontSize: 14, color: theme.textSecondary },
         item: {
           flexDirection: 'row',
-          alignItems: 'center',
+          alignItems: 'stretch',
           backgroundColor: theme.surface,
-          padding: 16,
           borderRadius: 12,
           marginBottom: 8,
           borderWidth: 1,
           borderColor: theme.borderLight,
           ...cardShadow,
         },
+        itemIconWrap: {
+          width: 44,
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
+        itemIconCircle: {
+          width: 30,
+          height: 30,
+          borderRadius: 15,
+          backgroundColor: theme.surfaceVariant,
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
+        itemIcon: { color: theme.primary },
+        itemContent: {
+          flex: 1,
+          minWidth: 0,
+          paddingVertical: 14,
+          paddingRight: 14,
+          flexDirection: 'row',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+        },
         itemPressed: { opacity: 0.8 },
-        itemContent: { flex: 1, minWidth: 0, flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' },
         itemLeft: { flex: 1, minWidth: 0 },
         itemName: { fontSize: 17, fontWeight: '600', color: theme.text },
         itemSubtext: { fontSize: 13, color: theme.textSecondary, marginTop: 4 },
-        itemDateRight: { fontSize: 13, color: theme.textSecondary, marginLeft: 8 },
+        itemRight: { alignItems: 'flex-end', justifyContent: 'center', marginLeft: 8 },
+        itemDateRight: { fontSize: 13, color: theme.textSecondary, marginBottom: 4 },
+        itemRecordBadge: {
+          paddingHorizontal: 10,
+          paddingVertical: 4,
+          borderRadius: 999,
+          backgroundColor: theme.surfaceVariant,
+        },
+        itemRecordBadgeText: { fontSize: 11, color: theme.textTertiary, fontWeight: '500' },
         swipeDeleteAction: {
           alignSelf: 'stretch',
           backgroundColor: theme.danger,
@@ -202,6 +231,7 @@ export function GroupListScreen() {
     const count = itemCounts[item.id] ?? 0;
     const firstTitle = firstItemTitles[item.id];
     const createdStr = item.createdAt ? formatDate(item.createdAt.slice(0, 10)) : '';
+    const recordCount = recordCountByGroup[item.id] ?? 0;
     const countStr =
       count === 0
         ? t('itemsCountZero')
@@ -228,6 +258,11 @@ export function GroupListScreen() {
         rightThreshold={40}
       >
         <View style={styles.item}>
+          <View style={styles.itemIconWrap}>
+            <View style={styles.itemIconCircle}>
+              <Feather name="check-square" size={18} style={styles.itemIcon} />
+            </View>
+          </View>
           <Pressable
             style={({ pressed }) => [styles.itemContent, pressed && styles.itemPressed]}
             onPress={() => navigation.navigate('GroupDetail', { groupId: item.id })}
@@ -236,7 +271,14 @@ export function GroupListScreen() {
               <Text style={styles.itemName}>{item.name}</Text>
               <Text style={styles.itemSubtext}>{countStr}</Text>
             </View>
-            {createdStr ? <Text style={styles.itemDateRight}>{createdStr}</Text> : null}
+            <View style={styles.itemRight}>
+              {createdStr ? <Text style={styles.itemDateRight}>{createdStr}</Text> : null}
+              {recordCount > 0 ? (
+                <View style={styles.itemRecordBadge}>
+                  <Text style={styles.itemRecordBadgeText}>{`${recordCount} ${t('recordsShort')}`}</Text>
+                </View>
+              ) : null}
+            </View>
           </Pressable>
         </View>
       </Swipeable>
