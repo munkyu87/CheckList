@@ -1,3 +1,3 @@
 export { ThemeProvider, useTheme } from './ThemeContext';
-export { lightTheme, darkTheme } from './colors';
+export { lightTheme, sakuraTheme, oceanTheme, midnightTheme, forestTheme } from './colors';
 export type { ThemeColors, ThemeMode } from './colors';

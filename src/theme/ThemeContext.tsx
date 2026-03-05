@@ -2,19 +2,10 @@ import React, { createContext, useCallback, useContext, useMemo, useState } from
 import type { ViewStyle } from 'react-native';
 import { STORAGE_KEYS } from '../constants';
 import type { ThemeColors, ThemeMode } from './colors';
-import { darkTheme, lightTheme, sakuraTheme, oceanTheme, midnightTheme } from './colors';
+import { lightTheme, sakuraTheme, oceanTheme, midnightTheme, forestTheme } from './colors';
 
-/** 테마별 카드 그림자 (라이트: 약함, 다크/오션/벚꽃/미드나잇: 테마톤) */
+/** 테마별 카드 그림자 */
 function getCardShadow(mode: ThemeMode): ViewStyle {
-  if (mode === 'dark') {
-    return {
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 3 },
-      shadowOpacity: 0.22,
-      shadowRadius: 6,
-      elevation: 5,
-    };
-  }
   if (mode === 'midnight') {
     return {
       shadowColor: '#5b21b6',
@@ -36,6 +27,15 @@ function getCardShadow(mode: ThemeMode): ViewStyle {
   if (mode === 'ocean') {
     return {
       shadowColor: '#0284c7',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.12,
+      shadowRadius: 8,
+      elevation: 4,
+    };
+  }
+  if (mode === 'forest') {
+    return {
+      shadowColor: '#166534',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.12,
       shadowRadius: 8,
@@ -68,7 +68,8 @@ function getStoredTheme(): ThemeMode {
     const { createMMKV } = require('react-native-mmkv');
     const storage = createMMKV({ id: 'checklist-app' });
     const value = storage.getString(STORAGE_KEYS.APP_THEME);
-    if (value === 'light' || value === 'dark' || value === 'sakura' || value === 'ocean' || value === 'midnight') return value as ThemeMode;
+    if (value === 'dark') return 'midnight';
+    if (value === 'light' || value === 'sakura' || value === 'ocean' || value === 'midnight' || value === 'forest') return value as ThemeMode;
   } catch {
     // MMKV 없으면 기본값
   }
@@ -97,13 +98,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setMode(prev => {
       const next =
         prev === 'light'
-          ? 'dark'
-          : prev === 'dark'
-            ? 'sakura'
-            : prev === 'sakura'
-              ? 'ocean'
-              : prev === 'ocean'
-                ? 'midnight'
+          ? 'sakura'
+          : prev === 'sakura'
+            ? 'ocean'
+            : prev === 'ocean'
+              ? 'midnight'
+              : prev === 'midnight'
+                ? 'forest'
                 : 'light';
       setStoredTheme(next);
       return next;
@@ -114,16 +115,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     () => ({
       mode,
       theme:
-        mode === 'dark'
-          ? darkTheme
-          : mode === 'midnight'
-            ? midnightTheme
-            : mode === 'sakura'
-              ? sakuraTheme
-              : mode === 'ocean'
-                ? oceanTheme
+        mode === 'midnight'
+          ? midnightTheme
+          : mode === 'sakura'
+            ? sakuraTheme
+            : mode === 'ocean'
+              ? oceanTheme
+              : mode === 'forest'
+                ? forestTheme
                 : lightTheme,
-      isDark: mode === 'dark' || mode === 'midnight',
+      isDark: mode === 'midnight',
       cardShadow: getCardShadow(mode),
       setThemeMode,
       toggleTheme,

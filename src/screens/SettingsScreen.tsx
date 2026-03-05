@@ -245,13 +245,13 @@ export function SettingsScreen() {
           onPress={() =>
             setThemeMode(
               mode === 'light'
-                ? 'dark'
-                : mode === 'dark'
-                  ? 'sakura'
-                  : mode === 'sakura'
-                    ? 'ocean'
-                    : mode === 'ocean'
-                      ? 'midnight'
+                ? 'sakura'
+                : mode === 'sakura'
+                  ? 'ocean'
+                  : mode === 'ocean'
+                    ? 'midnight'
+                    : mode === 'midnight'
+                      ? 'forest'
                       : 'light'
             )
           }
@@ -259,14 +259,14 @@ export function SettingsScreen() {
           <View style={styles.menuIcon}>
             <Feather
               name={
-                mode === 'dark'
-                  ? 'moon'
-                  : mode === 'sakura'
-                    ? 'sun'
-                    : mode === 'ocean'
-                      ? 'droplet'
-                      : mode === 'midnight'
-                        ? 'star'
+                mode === 'sakura'
+                  ? 'sun'
+                  : mode === 'ocean'
+                    ? 'droplet'
+                    : mode === 'midnight'
+                      ? 'star'
+                      : mode === 'forest'
+                        ? 'feather'
                         : 'sun'
               }
               size={22}
@@ -278,25 +278,25 @@ export function SettingsScreen() {
             <Text style={styles.menuSubtext}>
               {mode === 'light'
                 ? t('themeLight')
-                : mode === 'dark'
-                  ? t('themeDark')
-                  : mode === 'sakura'
-                    ? t('themeSakura')
-                    : mode === 'ocean'
-                      ? t('themeOcean')
-                      : t('themeMidnight')}
+                : mode === 'sakura'
+                  ? t('themeSakura')
+                  : mode === 'ocean'
+                    ? t('themeOcean')
+                    : mode === 'midnight'
+                      ? t('themeMidnight')
+                      : t('themeForest')}
             </Text>
           </View>
           <Text style={styles.menuValue}>
             {mode === 'light'
               ? t('themeLight')
-              : mode === 'dark'
-                ? t('themeDark')
-                : mode === 'sakura'
-                  ? t('themeSakura')
-                  : mode === 'ocean'
-                    ? t('themeOcean')
-                    : t('themeMidnight')}
+              : mode === 'sakura'
+                ? t('themeSakura')
+                : mode === 'ocean'
+                  ? t('themeOcean')
+                  : mode === 'midnight'
+                    ? t('themeMidnight')
+                    : t('themeForest')}
           </Text>
           <Feather name="chevron-right" size={20} color={theme.textTertiary} />
         </Pressable>

@@ -3,7 +3,7 @@
  * 깔끔한 요즘 스타일 UI
  */
 
-export type ThemeMode = 'light' | 'dark' | 'sakura' | 'ocean' | 'midnight';
+export type ThemeMode = 'light' | 'sakura' | 'ocean' | 'midnight' | 'forest';
 
 export interface ThemeColors {
   // 배경
@@ -71,35 +71,6 @@ export const lightTheme: ThemeColors = {
   orderButtonDisabled: '#f8fafc',
   orderButtonText: '#475569',
   orderButtonTextDisabled: '#94a3b8',
-};
-
-export const darkTheme: ThemeColors = {
-  background: '#0f172a',
-  backgroundSecondary: '#1e293b',
-  surface: '#1e293b',
-  surfaceVariant: '#334155',
-  text: '#f8fafc',
-  textSecondary: '#cbd5e1',
-  textTertiary: '#94a3b8',
-  primary: '#3b82f6',
-  primaryPressed: '#60a5fa',
-  border: '#334155',
-  borderLight: '#475569',
-  danger: '#ef4444',
-  dangerPressed: '#f87171',
-  tabBar: '#1e293b',
-  tabBarBorder: '#334155',
-  tabBarActive: '#60a5fa',
-  tabBarInactive: '#94a3b8',
-  inputBackground: '#334155',
-  inputBorder: '#475569',
-  placeholder: '#64748b',
-  buttonSecondary: '#334155',
-  buttonSecondaryText: '#cbd5e1',
-  orderButton: '#334155',
-  orderButtonDisabled: '#1e293b',
-  orderButtonText: '#cbd5e1',
-  orderButtonTextDisabled: '#64748b',
 };
 
 export const sakuraTheme: ThemeColors = {
@@ -188,4 +159,34 @@ export const midnightTheme: ThemeColors = {
   orderButtonDisabled: '#1e1a2e',
   orderButtonText: '#c4b5fd',
   orderButtonTextDisabled: '#6d28d9',
+};
+
+/** 포레스트 그린: 숲/잎사귀 느낌의 초록 계열 */
+export const forestTheme: ThemeColors = {
+  background: '#f0fdf4',
+  backgroundSecondary: '#dcfce7',
+  surface: '#ffffff',
+  surfaceVariant: '#dcfce7',
+  text: '#14532d',
+  textSecondary: '#166534',
+  textTertiary: '#15803d',
+  primary: '#16a34a',
+  primaryPressed: '#15803d',
+  border: '#bbf7d0',
+  borderLight: '#dcfce7',
+  danger: '#dc2626',
+  dangerPressed: '#b91c1c',
+  tabBar: '#ffffff',
+  tabBarBorder: '#bbf7d0',
+  tabBarActive: '#16a34a',
+  tabBarInactive: '#15803d',
+  inputBackground: '#f8fff9',
+  inputBorder: '#bbf7d0',
+  placeholder: '#22c55e',
+  buttonSecondary: '#dcfce7',
+  buttonSecondaryText: '#166534',
+  orderButton: '#dcfce7',
+  orderButtonDisabled: '#f0fdf4',
+  orderButtonText: '#166534',
+  orderButtonTextDisabled: '#4ade80',
 };

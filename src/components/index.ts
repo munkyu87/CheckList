@@ -4,3 +4,4 @@ export { ThemeToggleButton } from './ThemeToggleButton';
 export { SakuraLayer } from './SakuraLayer';
 export { BubbleLayer } from './BubbleLayer';
 export { MidnightLayer } from './MidnightLayer';
+export { ForestLayer } from './ForestLayer';

@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { AppNavigator } from './src/navigation';
-import { SplashScreen, SakuraLayer, BubbleLayer, MidnightLayer } from './src/components';
+import { SplashScreen, SakuraLayer, BubbleLayer, MidnightLayer, ForestLayer } from './src/components';
 import { ThemeProvider, useTheme } from './src/theme';
 import { LanguageProvider } from './src/i18n';
 import { StatusBar, View } from 'react-native';
@@ -33,6 +33,7 @@ function AppContent() {
       <SakuraLayer />
       <BubbleLayer />
       <MidnightLayer />
+      <ForestLayer />
     </View>
   );
 }

@@ -6,24 +6,26 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 type SparkleConfig = {
   x: number;
+  y: number;
   size: number;
-  duration: number;
   delay: number;
+  pause: number;
   char: string;
 };
 
-const SPARKLE_COUNT = 12;
-const CHARS = ['✨', '✦', '·'];
+const SPARKLE_COUNT = 14;
+const CHARS = ['✨', '✦', '·', '⋆'];
 
 export function MidnightLayer() {
   const { mode } = useTheme();
 
   const sparkles = useMemo<SparkleConfig[]>(() => {
     return new Array(SPARKLE_COUNT).fill(null).map((_, i) => ({
-      x: Math.random() * SCREEN_WIDTH,
-      size: 10 + Math.random() * 8,
-      duration: 16000 + Math.random() * 6000,
-      delay: i * 1100,
+      x: Math.random() * (SCREEN_WIDTH - 40),
+      y: Math.random() * (SCREEN_HEIGHT - 80),
+      size: 12 + Math.random() * 10,
+      delay: i * 350 + Math.random() * 600,
+      pause: 1200 + Math.random() * 2200,
       char: CHARS[i % CHARS.length],
     }));
   }, []);
@@ -40,37 +42,34 @@ export function MidnightLayer() {
 }
 
 function AnimatedSparkle({ config }: { config: SparkleConfig }) {
-  const translateY = useMemo(() => new Animated.Value(-30), []);
-  const translateX = useMemo(() => new Animated.Value(0), []);
+  const opacity = useMemo(() => new Animated.Value(0), []);
 
   useEffect(() => {
-    const horizontalOffset = 25 + Math.random() * 30 * (Math.random() > 0.5 ? 1 : -1);
+    const fadeInDuration = 500;
+    const holdDuration = 300;
+    const fadeOutDuration = 600;
 
-    const fall = Animated.loop(
+    const twinkle = Animated.loop(
       Animated.sequence([
         Animated.delay(config.delay),
-        Animated.parallel([
-          Animated.timing(translateY, {
-            toValue: SCREEN_HEIGHT + 30,
-            duration: config.duration,
-            useNativeDriver: true,
-          }),
-          Animated.timing(translateX, {
-            toValue: horizontalOffset,
-            duration: config.duration,
-            useNativeDriver: true,
-          }),
-        ]),
-        Animated.parallel([
-          Animated.timing(translateY, { toValue: -30, duration: 0, useNativeDriver: true }),
-          Animated.timing(translateX, { toValue: 0, duration: 0, useNativeDriver: true }),
-        ]),
+        Animated.timing(opacity, {
+          toValue: 1,
+          duration: fadeInDuration,
+          useNativeDriver: true,
+        }),
+        Animated.delay(holdDuration),
+        Animated.timing(opacity, {
+          toValue: 0,
+          duration: fadeOutDuration,
+          useNativeDriver: true,
+        }),
+        Animated.delay(config.pause),
       ])
     );
 
-    fall.start();
-    return () => fall.stop();
-  }, [config.delay, config.duration, translateY, translateX]);
+    twinkle.start();
+    return () => twinkle.stop();
+  }, [config.delay, config.pause, opacity]);
 
   return (
     <Animated.View
@@ -79,7 +78,8 @@ function AnimatedSparkle({ config }: { config: SparkleConfig }) {
         styles.sparkle,
         {
           left: config.x,
-          transform: [{ translateY }, { translateX }],
+          top: config.y,
+          opacity,
         },
       ]}
     >
@@ -91,13 +91,12 @@ function AnimatedSparkle({ config }: { config: SparkleConfig }) {
 const styles = StyleSheet.create({
   sparkle: {
     position: 'absolute',
-    top: 0,
     zIndex: 1,
   },
   sparkleText: {
     color: '#fef3c7',
-    textShadowColor: 'rgba(253, 230, 138, 0.8)',
+    textShadowColor: 'rgba(253, 230, 138, 0.9)',
     textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 4,
+    textShadowRadius: 6,
   },
 });
