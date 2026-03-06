@@ -26,8 +26,8 @@ export function MidnightLayer() {
       x: Math.random() * (SCREEN_WIDTH - 40),
       y: Math.random() * (SCREEN_HEIGHT - 80),
       size: 12 + Math.random() * 10,
-      delay: i * 350 + Math.random() * 600,
-      pause: 1200 + Math.random() * 2200,
+      delay: i * 550 + Math.random() * 900,
+      pause: 2200 + Math.random() * 3800,
       char: CHARS[i % CHARS.length],
     }));
   }, []);
@@ -47,9 +47,9 @@ function AnimatedSparkle({ config }: { config: SparkleConfig }) {
   const opacity = useMemo(() => new Animated.Value(0), []);
 
   useEffect(() => {
-    const fadeInDuration = 500;
-    const holdDuration = 300;
-    const fadeOutDuration = 600;
+    const fadeInDuration = 800;
+    const holdDuration = 500;
+    const fadeOutDuration = 1000;
 
     const twinkle = Animated.loop(
       Animated.sequence([

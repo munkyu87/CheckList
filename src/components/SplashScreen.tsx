@@ -5,6 +5,7 @@ import { useTheme } from '../theme';
 
 const DISPLAY_DURATION = 1800;
 const FADE_DURATION = 400;
+const ICON_ANIM_DURATION = 250;
 
 type Props = {
   onFinish: () => void;
@@ -13,6 +14,23 @@ type Props = {
 export function SplashScreen({ onFinish }: Props) {
   const { theme } = useTheme();
   const opacity = useRef(new Animated.Value(1)).current;
+  const iconScale = useRef(new Animated.Value(0.9)).current;
+  const iconOpacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(iconScale, {
+        toValue: 1,
+        duration: ICON_ANIM_DURATION,
+        useNativeDriver: true,
+      }),
+      Animated.timing(iconOpacity, {
+        toValue: 1,
+        duration: ICON_ANIM_DURATION,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, [iconScale, iconOpacity]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -29,9 +47,15 @@ export function SplashScreen({ onFinish }: Props) {
   return (
     <Animated.View style={[styles.container, { backgroundColor: theme.background }, { opacity }]}>
       <View style={styles.content}>
-        <View style={[styles.iconWrap, { backgroundColor: theme.primary + '20' }]}>
-          <Feather name="check-square" size={56} color={theme.primary} />
-        </View>
+        <Animated.View
+          style={[
+            styles.iconWrap,
+            { backgroundColor: theme.primary + '20' },
+            { opacity: iconOpacity, transform: [{ scale: iconScale }] },
+          ]}
+        >
+          <Feather name="check-square" size={68} color={theme.primary} />
+        </Animated.View>
         <Text style={[styles.title, { color: theme.text }]}>ThinkLess</Text>
         <Text style={[styles.subtitle, { color: theme.textSecondary }]}>Record More</Text>
       </View>
@@ -49,9 +73,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   iconWrap: {
-    width: 100,
-    height: 100,
-    borderRadius: 24,
+    width: 120,
+    height: 120,
+    borderRadius: 28,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 24,

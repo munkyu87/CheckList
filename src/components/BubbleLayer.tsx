@@ -22,8 +22,8 @@ export function BubbleLayer() {
     return new Array(BUBBLE_COUNT).fill(null).map((_, i) => ({
       x: Math.random() * SCREEN_WIDTH,
       size: 8 + Math.random() * 10,
-      duration: 12000 + Math.random() * 6000,
-      delay: i * 1400,
+      duration: 22000 + Math.random() * 10000,
+      delay: i * 2200,
     }));
   }, []);
 
