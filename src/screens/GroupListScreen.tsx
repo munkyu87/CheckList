@@ -51,12 +51,16 @@ export function GroupListScreen() {
         empty: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24 },
         emptyText: { fontSize: 16, color: theme.text, marginBottom: 8 },
         emptyHint: { fontSize: 14, color: theme.textSecondary },
+        swipeableContainer: {
+          borderRadius: 12,
+          overflow: 'hidden',
+          marginBottom: 8,
+        },
         item: {
           flexDirection: 'row',
           alignItems: 'stretch',
           backgroundColor: theme.surface,
           borderRadius: 12,
-          marginBottom: 8,
           borderWidth: 1,
           borderColor: theme.borderLight,
           ...cardShadow,
@@ -102,12 +106,12 @@ export function GroupListScreen() {
           backgroundColor: theme.danger,
           justifyContent: 'center',
           alignItems: 'center',
-          paddingHorizontal: 16,
-          minWidth: 56,
+          paddingHorizontal: 20,
+          paddingVertical: 12,
+          minWidth: 64,
           borderWidth: 0,
           borderTopRightRadius: 12,
           borderBottomRightRadius: 12,
-          overflow: 'hidden',
         },
         modalOverlay: {
           flex: 1,
@@ -243,6 +247,7 @@ export function GroupListScreen() {
 
     return (
       <Swipeable
+        containerStyle={styles.swipeableContainer}
         renderRightActions={(_, __, swipeable) => (
           <RectButton
             style={styles.swipeDeleteAction}

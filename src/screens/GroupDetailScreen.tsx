@@ -46,6 +46,7 @@ export function GroupDetailScreen({ route }: Props) {
   const [editOptions, setEditOptions] = useState<string[]>(['', '']);
   const addInputRef = useRef<TextInput>(null);
   const groupNameInputRef = useRef<TextInput>(null);
+  const editModalScrollRef = useRef<ScrollView>(null);
 
   const MIN_OPTIONS = 2;
   const MAX_OPTIONS = 5;
@@ -159,6 +160,7 @@ export function GroupDetailScreen({ route }: Props) {
   const addEditOption = () => {
     if (editOptions.length >= MAX_OPTIONS) return;
     setEditOptions(prev => [...prev, '']);
+    setTimeout(() => editModalScrollRef.current?.scrollToEnd({ animated: true }), 150);
   };
 
   const setEditOptionAt = (index: number, value: string) => {
@@ -269,12 +271,12 @@ export function GroupDetailScreen({ route }: Props) {
           backgroundColor: theme.danger,
           justifyContent: 'center',
           alignItems: 'center',
-          paddingHorizontal: 16,
-          minWidth: 56,
+          paddingHorizontal: 20,
+          paddingVertical: 12,
+          minWidth: 64,
           borderWidth: 0,
           borderTopRightRadius: 12,
           borderBottomRightRadius: 12,
-          overflow: 'hidden',
         },
         modalOverlay: {
           flex: 1,
@@ -378,7 +380,7 @@ export function GroupDetailScreen({ route }: Props) {
         rightThreshold={40}
       >
         <View style={[styles.itemRow, isActive && { opacity: 0.95 }]}>
-          <Pressable style={styles.dragHandle} onLongPress={drag} delayLongPress={150} accessibilityLabel="드래그">
+          <Pressable style={styles.dragHandle} onLongPress={drag} delayLongPress={200} accessibilityLabel="드래그">
             <Text style={styles.dragHandleIcon}>≡</Text>
           </Pressable>
           <Pressable style={styles.itemLeft} onPress={() => openEditItem(item)}>
@@ -506,9 +508,20 @@ export function GroupDetailScreen({ route }: Props) {
         onRequestClose={() => setEditItem(null)}
       >
         <Pressable style={styles.modalOverlay} onPress={() => setEditItem(null)}>
-          <Pressable style={styles.modalBox} onPress={e => e.stopPropagation()}>
-            <Text style={styles.modalTitle}>{t('editItemTitle')}</Text>
-            <ScrollView style={{ maxHeight: 360 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={{ flex: 1, justifyContent: 'center', width: '100%' }}
+          >
+            <Pressable style={styles.modalBox} onPress={e => e.stopPropagation()}>
+              <Text style={styles.modalTitle}>{t('editItemTitle')}</Text>
+              <ScrollView
+                ref={editModalScrollRef}
+                style={{ maxHeight: 360 }}
+                keyboardShouldPersistTaps="handled"
+                keyboardDismissMode="on-drag"
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: 16 }}
+              >
               <TextInput
                 style={styles.input}
                 placeholder={t('itemTitlePlaceholder')}
@@ -622,6 +635,7 @@ export function GroupDetailScreen({ route }: Props) {
               </Pressable>
             </View>
           </Pressable>
+          </KeyboardAvoidingView>
         </Pressable>
       </Modal>
     </View>

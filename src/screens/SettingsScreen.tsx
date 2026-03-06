@@ -317,12 +317,13 @@ export function SettingsScreen() {
           <Feather name="chevron-right" size={20} color={theme.textTertiary} />
         </Pressable>
 
-        <View style={styles.menuRow}>
+        <View style={[styles.menuRow, { justifyContent: 'center' }]}>
           <View style={styles.menuIcon}>
             <Feather name="zap" size={22} color={theme.primary} />
           </View>
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, justifyContent: 'center' }}>
             <Text style={styles.menuText}>{t('animationSetting')}</Text>
+            <Text style={styles.menuSubtext}>{t('animationSettingHint')}</Text>
           </View>
           <Switch
             value={animationEnabled}
