@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { Animated, Dimensions, StyleSheet, Text } from 'react-native';
+import { useAnimationEnabled } from '../contexts/AnimationContext';
 import { useTheme } from '../theme';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -17,6 +18,7 @@ const LEAF_CHARS = ['🍃', '🍂', '🍃'];
 
 export function ForestLayer() {
   const { mode } = useTheme();
+  const { animationEnabled } = useAnimationEnabled();
 
   const leaves = useMemo<LeafConfig[]>(() => {
     return new Array(LEAF_COUNT).fill(null).map((_, i) => ({
@@ -28,7 +30,7 @@ export function ForestLayer() {
     }));
   }, []);
 
-  if (mode !== 'forest') return null;
+  if (mode !== 'forest' || !animationEnabled) return null;
 
   return (
     <>

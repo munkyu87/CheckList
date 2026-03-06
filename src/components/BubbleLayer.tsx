@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { Animated, Dimensions, StyleSheet, View } from 'react-native';
+import { useAnimationEnabled } from '../contexts/AnimationContext';
 import { useTheme } from '../theme';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -15,6 +16,7 @@ const BUBBLE_COUNT = 10;
 
 export function BubbleLayer() {
   const { mode } = useTheme();
+  const { animationEnabled } = useAnimationEnabled();
 
   const bubbles = useMemo<BubbleConfig[]>(() => {
     return new Array(BUBBLE_COUNT).fill(null).map((_, i) => ({
@@ -25,7 +27,7 @@ export function BubbleLayer() {
     }));
   }, []);
 
-  if (mode !== 'ocean') return null;
+  if (mode !== 'ocean' || !animationEnabled) return null;
 
   return (
     <>

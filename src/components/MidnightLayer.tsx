@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { Animated, Dimensions, StyleSheet, Text } from 'react-native';
+import { useAnimationEnabled } from '../contexts/AnimationContext';
 import { useTheme } from '../theme';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -18,6 +19,7 @@ const CHARS = ['✨', '✦', '·', '⋆'];
 
 export function MidnightLayer() {
   const { mode } = useTheme();
+  const { animationEnabled } = useAnimationEnabled();
 
   const sparkles = useMemo<SparkleConfig[]>(() => {
     return new Array(SPARKLE_COUNT).fill(null).map((_, i) => ({
@@ -30,7 +32,7 @@ export function MidnightLayer() {
     }));
   }, []);
 
-  if (mode !== 'midnight') return null;
+  if (mode !== 'midnight' || !animationEnabled) return null;
 
   return (
     <>

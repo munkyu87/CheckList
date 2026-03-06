@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { Animated, Dimensions, StyleSheet, Text } from 'react-native';
+import { useAnimationEnabled } from '../contexts/AnimationContext';
 import { useTheme } from '../theme';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -15,6 +16,7 @@ const PETAL_COUNT = 10;
 
 export function SakuraLayer() {
   const { mode } = useTheme();
+  const { animationEnabled } = useAnimationEnabled();
 
   const petals = useMemo<PetalConfig[]>(() => {
     return new Array(PETAL_COUNT).fill(null).map((_, i) => ({
@@ -26,7 +28,7 @@ export function SakuraLayer() {
     }));
   }, []);
 
-  if (mode !== 'sakura') return null;
+  if (mode !== 'sakura' || !animationEnabled) return null;
 
   return (
     <>

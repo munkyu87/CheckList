@@ -10,4 +10,5 @@ export const STORAGE_KEYS = {
   APP_THEME: 'app_theme',
   APP_LANGUAGE: 'app_language',
   APP_ONBOARDING_SEEN: 'app_onboarding_seen',
+  APP_ANIMATION_ENABLED: 'app_animation_enabled',
 } as const;

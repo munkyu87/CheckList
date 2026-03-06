@@ -5,6 +5,7 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
+  Switch,
   Text,
   View,
 } from 'react-native';
@@ -13,6 +14,7 @@ import ReactNativeBlobUtil from 'react-native-blob-util';
 import Share from 'react-native-share';
 import Feather from 'react-native-vector-icons/Feather';
 import { Checkbox } from '../components';
+import { useAnimationEnabled } from '../contexts/AnimationContext';
 import { useLanguage } from '../i18n';
 import { useTheme } from '../theme';
 import { APP_VERSION } from '../constants';
@@ -29,6 +31,7 @@ const BACKUP_FILENAME = 'ThinkLess-GroupBackup.json';
 
 export function SettingsScreen() {
   const { theme, isDark, mode, setThemeMode } = useTheme();
+  const { animationEnabled, setAnimationEnabled } = useAnimationEnabled();
   const { locale, setLocale, t } = useLanguage();
   const [backingUp, setBackingUp] = useState(false);
   const [restoring, setRestoring] = useState(false);
@@ -313,6 +316,21 @@ export function SettingsScreen() {
           </Text>
           <Feather name="chevron-right" size={20} color={theme.textTertiary} />
         </Pressable>
+
+        <View style={styles.menuRow}>
+          <View style={styles.menuIcon}>
+            <Feather name="zap" size={22} color={theme.primary} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.menuText}>{t('animationSetting')}</Text>
+          </View>
+          <Switch
+            value={animationEnabled}
+            onValueChange={setAnimationEnabled}
+            trackColor={{ false: theme.borderLight, true: theme.primary }}
+            thumbColor="#fff"
+          />
+        </View>
 
         <Text style={[styles.sectionTitle, { marginTop: 24 }]}>{t('language')}</Text>
         <Pressable

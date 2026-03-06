@@ -12,6 +12,7 @@ import { StatusBar, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { STORAGE_KEYS } from './src/constants';
+import { AnimationProvider } from './src/contexts/AnimationContext';
 import { OnboardingScreen } from './src/screens/OnboardingScreen';
 
 function AppContent() {
@@ -80,9 +81,11 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <ThemeProvider>
-          <LanguageProvider>
-            <AppContent />
-          </LanguageProvider>
+          <AnimationProvider>
+            <LanguageProvider>
+              <AppContent />
+            </LanguageProvider>
+          </AnimationProvider>
         </ThemeProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
