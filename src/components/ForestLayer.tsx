@@ -24,8 +24,8 @@ export function ForestLayer() {
     return new Array(LEAF_COUNT).fill(null).map((_, i) => ({
       x: Math.random() * SCREEN_WIDTH,
       size: 14 + Math.random() * 8,
-      duration: 20000 + Math.random() * 8000,
-      delay: i * 1600,
+      duration: 30000 + Math.random() * 10000,
+      delay: i * 2000,
       char: LEAF_CHARS[i % LEAF_CHARS.length],
     }));
   }, []);

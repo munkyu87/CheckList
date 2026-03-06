@@ -14,7 +14,7 @@ type SparkleConfig = {
   char: string;
 };
 
-const SPARKLE_COUNT = 14;
+const SPARKLE_COUNT = 9;
 const CHARS = ['✨', '✦', '·', '⋆'];
 
 export function MidnightLayer() {
@@ -47,9 +47,9 @@ function AnimatedSparkle({ config }: { config: SparkleConfig }) {
   const opacity = useMemo(() => new Animated.Value(0), []);
 
   useEffect(() => {
-    const fadeInDuration = 800;
-    const holdDuration = 500;
-    const fadeOutDuration = 1000;
+    const fadeInDuration = 1100;
+    const holdDuration = 700;
+    const fadeOutDuration = 1400;
 
     const twinkle = Animated.loop(
       Animated.sequence([

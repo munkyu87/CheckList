@@ -22,8 +22,8 @@ export function SakuraLayer() {
     return new Array(PETAL_COUNT).fill(null).map((_, i) => ({
       x: Math.random() * SCREEN_WIDTH,
       size: 14 + Math.random() * 8,
-      duration: 22000 + Math.random() * 8000,
-      delay: i * 1800,
+      duration: 32000 + Math.random() * 10000,
+      delay: i * 2200,
     }));
   }, []);
 
