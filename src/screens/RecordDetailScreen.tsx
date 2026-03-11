@@ -133,6 +133,25 @@ export function RecordDetailScreen({ route, navigation }: Props) {
     [refresh]
   );
 
+  const toggleItemMultiSelectionAll = useCallback(
+    (recordItem: RecordItem, optionCount: number) => {
+      const data = loadAll();
+      const idx = data.recordItems.findIndex(ri => ri.id === recordItem.id);
+      if (idx < 0 || optionCount <= 0) return;
+      const current = data.recordItems[idx].selectedOptionIndices ?? [];
+      const allIndices = Array.from({ length: optionCount }, (_, i) => i);
+      const allSelected = current.length === optionCount && allIndices.every(i => current.includes(i));
+      data.recordItems[idx] = {
+        ...data.recordItems[idx],
+        selectedOptionIndices: allSelected ? [] : allIndices,
+        checked: !allSelected,
+      };
+      saveAll(data);
+      refresh();
+    },
+    [refresh]
+  );
+
   const deleteRecord = useCallback(() => {
     Alert.alert(t('deleteRecordTitle'), t('deleteRecordMessage'), [
       { text: t('cancel'), style: 'cancel' },
@@ -373,6 +392,9 @@ export function RecordDetailScreen({ route, navigation }: Props) {
         colStatusIcon: { marginRight: 12, justifyContent: 'center' },
         colContent: { flex: 1 },
         rowTitle: { fontSize: 16, color: theme.text, marginBottom: 2 },
+        rowTitleRow: { flexDirection: 'row', alignItems: 'baseline', flexWrap: 'wrap', gap: 6 },
+        multiCount: { fontSize: 13, color: theme.textTertiary },
+        headerCheckDisabled: { opacity: 0.5 },
         selectionOptionsList: { marginTop: 10 },
         selectionOptionRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 6 },
         checklistCheck: { marginRight: 10 },
@@ -500,6 +522,10 @@ export function RecordDetailScreen({ route, navigation }: Props) {
               : recordItem.checked;
           const rowPressable = !isSelection && !isMultiSelection;
 
+          const optionCount = template?.options?.length ?? 0;
+          const multiTotal = isMultiSelection ? optionCount : 0;
+          const multiChecked = multiIndices.length;
+
           return (
             <Pressable
               key={recordItem.id}
@@ -507,11 +533,26 @@ export function RecordDetailScreen({ route, navigation }: Props) {
               onPress={rowPressable ? () => toggleItemCheck(recordItem) : undefined}
             >
               <Text style={styles.colNum}>{index}.</Text>
-              <View style={styles.colStatusIcon}>
-                <Checkbox checked={!!checked} size={22} />
+              <View style={[styles.colStatusIcon, isSelection && !isMultiSelection && styles.headerCheckDisabled]}>
+                {isMultiSelection && multiTotal > 0 ? (
+                  <Checkbox
+                    checked={multiChecked === multiTotal}
+                    onPress={() => toggleItemMultiSelectionAll(recordItem, multiTotal)}
+                    size={22}
+                  />
+                ) : isSelection ? (
+                  <Checkbox checked={!!checked} size={22} />
+                ) : (
+                  <Checkbox checked={!!checked} size={22} />
+                )}
               </View>
               <View style={styles.colContent}>
-                <Text style={styles.rowTitle}>{title || '(제목 없음)'}</Text>
+                <View style={styles.rowTitleRow}>
+                  <Text style={styles.rowTitle}>{title || '(제목 없음)'}</Text>
+                  {isMultiSelection && multiTotal > 0 ? (
+                    <Text style={styles.multiCount}>({multiChecked} / {multiTotal})</Text>
+                  ) : null}
+                </View>
                 {isMultiSelection && template!.options!.length > 0 ? (
                   <View style={styles.selectionOptionsList}>
                     {template!.options!.map((opt, oi) => {

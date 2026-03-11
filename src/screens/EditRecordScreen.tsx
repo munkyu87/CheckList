@@ -118,6 +118,15 @@ export function EditRecordScreen({ route, navigation }: Props) {
     });
   }, []);
 
+  const toggleMultiSelectionAll = useCallback((templateId: string, optionCount: number) => {
+    setItemMultiSelections(prev => {
+      const arr = prev[templateId] ?? [];
+      const allIndices = Array.from({ length: optionCount }, (_, i) => i);
+      const allSelected = arr.length === optionCount && allIndices.every(i => arr.includes(i));
+      return { ...prev, [templateId]: allSelected ? [] : allIndices };
+    });
+  }, []);
+
   const addCustomItem = useCallback(() => {
     setCustomItems(prev => [
       ...prev,
@@ -248,6 +257,9 @@ export function EditRecordScreen({ route, navigation }: Props) {
         checklistCheck: { marginRight: 12 },
         checklistBody: { flex: 1 },
         checklistTitle: { fontSize: 16, color: theme.text },
+        rowTitleRow: { flexDirection: 'row', alignItems: 'baseline', flexWrap: 'wrap', gap: 6 },
+        multiCount: { fontSize: 13, color: theme.textSecondary },
+        headerCheckDisabled: { opacity: 0.5 },
         selectionOptionsList: { marginTop: 10 },
         selectionOptionRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 8 },
         optionCheckboxWrap: { marginRight: 10 },
@@ -415,8 +427,21 @@ export function EditRecordScreen({ route, navigation }: Props) {
             <View key={template.id} style={styles.checklistItem}>
               <Text style={styles.itemIndex}>{idx + 1}.</Text>
               {isMultiSelection ? (
-                <View style={styles.checklistBody}>
-                  <Text style={styles.checklistTitle}>{template.title}</Text>
+                <>
+                  <View style={styles.checklistCheck}>
+                    <Checkbox
+                      checked={(itemMultiSelections[template.id] ?? []).length === (template.options?.length ?? 0)}
+                      onPress={() => toggleMultiSelectionAll(template.id, template.options?.length ?? 0)}
+                      size={26}
+                    />
+                  </View>
+                  <View style={styles.checklistBody}>
+                    <View style={styles.rowTitleRow}>
+                      <Text style={styles.checklistTitle}>{template.title}</Text>
+                      <Text style={styles.multiCount}>
+                        ({(itemMultiSelections[template.id] ?? []).length} / {template.options?.length ?? 0})
+                      </Text>
+                    </View>
                   <View style={styles.selectionOptionsList}>
                     {template.options!.map((opt, oi) => {
                       const selected = (itemMultiSelections[template.id] ?? []).includes(oi);
@@ -435,10 +460,15 @@ export function EditRecordScreen({ route, navigation }: Props) {
                       );
                     })}
                   </View>
-                </View>
+                  </View>
+                </>
               ) : isSelection ? (
-                <View style={styles.checklistBody}>
-                  <Text style={styles.checklistTitle}>{template.title}</Text>
+                <>
+                  <View style={[styles.checklistCheck, styles.headerCheckDisabled]}>
+                    <Checkbox checked={itemSelections[template.id] !== undefined} size={26} />
+                  </View>
+                  <View style={styles.checklistBody}>
+                    <Text style={styles.checklistTitle}>{template.title}</Text>
                   <View style={styles.selectionOptionsList}>
                     {template.options!.map((opt, oi) => {
                       const selected = itemSelections[template.id] === oi;
@@ -457,7 +487,8 @@ export function EditRecordScreen({ route, navigation }: Props) {
                       );
                     })}
                   </View>
-                </View>
+                  </View>
+                </>
               ) : (
                 <>
                   <View style={styles.checklistCheck}>
